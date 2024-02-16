@@ -3,6 +3,7 @@ package com.photoeditor;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -43,10 +44,10 @@ public class PhotoEditorGUI extends JFrame {
       g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
   }
+
   private JLabel toolStatusLabel; // Added JLabel to display currently selected tool
 
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
-
 
   public BufferedImage loadImage(String filename) {
     BufferedImage image = null;
@@ -72,8 +73,7 @@ public class PhotoEditorGUI extends JFrame {
   private JButton selectToolButton;
 
   public PhotoEditorGUI() {
-
-     String sidebarStatus="Paint";
+    String sidebarStatus = "Paint";
     // Set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,8 +92,8 @@ public class PhotoEditorGUI extends JFrame {
 
     // Initialize components
     //.setBounds(1, y_pos, 30, 25).setBorder(new RoundedBorder(10));;
-    loadButton = createButton("folder.png", "Load");
-    saveButton = createButton("saveicon.png", "Save");
+    loadButton = createLoadButton("folder.png", "Load", "type");
+    saveButton = createSaveButton("saveicon.png", "Save","type");
     undoButton = createButton("undo_topbar.png", "Undo");
     paintButton = createButton("saveicon.png", "Paint");
     fillButton = createButton("paintbucketsidebar.png", "Fill");
@@ -115,7 +115,6 @@ public class PhotoEditorGUI extends JFrame {
     toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
     toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Add some padding
     mainPanel.add(toolStatusLabel, BorderLayout.SOUTH);
-
 
     // Add sidebar
     JPanel sidebarPanel = new JPanel();
@@ -141,14 +140,13 @@ public class PhotoEditorGUI extends JFrame {
   }
 
   private JButton createButton(String iconPath, String toolTipText) {
-    
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
     Image image = (Image) image2;
     // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
     // System.out.println(imageIcon.toString());
     // Image image = imageIcon.getImage(); // transform it
-    
+
     Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
     System.out.println(newimg.toString());
 
@@ -170,19 +168,124 @@ public class PhotoEditorGUI extends JFrame {
         public void mouseExited(MouseEvent e) {
           button.setBackground(UIManager.getColor("Button.background")); // Reset background color when mouse exits
         }
+
         public void mouseClicked(MouseEvent e) {
           sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
           toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
         }
-        
       }
     );
-    
 
     return button;
   }
 
-  
+  private JButton createLoadButton(
+    String iconPath,
+    String toolTipText,
+    String type
+  ) {
+    BufferedImage image2 = loadImage(iconPath);
+    System.out.println(iconPath);
+    Image image = (Image) image2;
+    // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
+    // System.out.println(imageIcon.toString());
+    // Image image = imageIcon.getImage(); // transform it
+
+    Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    System.out.println(newimg.toString());
+
+    ImageIcon imageIcon = new ImageIcon(newimg);
+
+    JButton button = new JButton(imageIcon);
+    button.setToolTipText(toolTipText);
+
+    button.setToolTipText(toolTipText);
+
+    button.addMouseListener(
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // Reset background color when mouse exits
+        }
+
+        public void mouseClicked(MouseEvent e) {
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+          int returnValue = fileChooser.showOpenDialog(null);
+
+          if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println(
+              "Selected File: " + selectedFile.getAbsolutePath()
+            );
+          } else {
+            System.out.println("No file selected");
+          }
+        }
+      }
+    );
+
+    return button;
+  }
+
+  private JButton createSaveButton(
+    String iconPath,
+    String toolTipText,
+    String type
+  ) {
+    BufferedImage image2 = loadImage(iconPath);
+    System.out.println(iconPath);
+    Image image = (Image) image2;
+    // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
+    // System.out.println(imageIcon.toString());
+    // Image image = imageIcon.getImage(); // transform it
+
+    Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    System.out.println(newimg.toString());
+
+    ImageIcon imageIcon = new ImageIcon(newimg);
+
+    JButton button = new JButton(imageIcon);
+    button.setToolTipText(toolTipText);
+
+    button.setToolTipText(toolTipText);
+
+    button.addMouseListener(
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // Reset background color when mouse exits
+        }
+
+        public void mouseClicked(MouseEvent e) {
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+          int returnValue = fileChooser.showOpenDialog(null);
+
+          if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+            System.out.println(
+              "Selected Directory: " + selectedDirectory.getAbsolutePath()
+            );
+          } else {
+            System.out.println("No directory selected");
+          }
+        }
+      }
+    );
+
+    return button;
+  }
 
   public static void main(String[] args) {
     // Create and show the GUI
@@ -197,5 +300,3 @@ public class PhotoEditorGUI extends JFrame {
   }
 }
 //    Add a UIManger container this enture thing that can have the following: UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-
-
