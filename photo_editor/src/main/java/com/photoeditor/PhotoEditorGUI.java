@@ -1,4 +1,4 @@
-
+package com.photoeditor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
