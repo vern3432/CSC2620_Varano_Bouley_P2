@@ -2,9 +2,24 @@ package com.photoeditor;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PhotoEditorGUI extends JFrame {
+
+
+      public  BufferedImage loadImage(String filename) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(ImageLoader.class.getResourceAsStream("/icon/" + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
 
   // Components
   private JButton saveButton;
@@ -15,23 +30,37 @@ public class PhotoEditorGUI extends JFrame {
   private JButton textButton;
   private JButton filterButton;
   private JButton selectToolButton;
+  
 
   public PhotoEditorGUI() {
     // Set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(800, 600));
+    // "folder.jpg"
+    // "mirror_sidebar2.png"
+    // "mirror_sidebar.png"
+    // "paint_brush_sidebar.png"
+    // "paint_bucket_sidebar.png"
+    // "saveicon.png"
+    // "select_tool_box.png"
+    // "select_tool_lasso.png"
+    // "text_feild.png"
+    // "undo_topbar.png"
+    
+
+
 
     // Initialize components
-    saveButton = createButton("resources/icons/save_icon.png", "Save");
-    loadButton = createButton("resources/icons/load_icon.png", "Load");
-    undoButton = createButton("resources/icons/undo_icon.png", "Undo");
-    paintButton = createButton("resources/icons/paint_icon.png", "Paint");
-    fillButton = createButton("resources/icons/fill_icon.png", "Fill");
-    textButton = createButton("resources/icons/text_icon.png", "Text");
-    filterButton = createButton("resources/icons/filter_icon.png", "Filter");
+    saveButton = createButton("saveicon.png", "Save");
+    loadButton = createButton("folder.jpg", "Load");
+    undoButton = createButton("undo_topbar.png", "Undo");
+    paintButton = createButton("saveicon.png", "Paint");
+    fillButton = createButton("paint_bucket_sidebar.png", "Fill");
+    textButton = createButton("text_feild.png", "Text");
+    filterButton = createButton("saveicon.png", "Filter");
     selectToolButton =
-      createButton("resources/icons/select_tool_icon.png", "Select Tool");
+      createButton("select_tool_box.png", "Select Tool");
 
     // Set up layout using GridBagLayout
     JPanel mainPanel = new JPanel();
@@ -68,17 +97,24 @@ public class PhotoEditorGUI extends JFrame {
   }
 
   private JButton createButton(String iconPath, String toolTipText) {
-    ImageIcon imageIcon = new ImageIcon("./" + iconPath);
-    System.out.println(imageIcon.toString());
-    Image image = imageIcon.getImage(); // transform it
+
+    BufferedImage image2=loadImage(iconPath);
+    System.out.println(iconPath);
+    Image image=(Image)image2;
+    // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
+    // System.out.println(imageIcon.toString());
+    // Image image = imageIcon.getImage(); // transform it
     Image newimg = image.getScaledInstance(
       120,
       120,
       java.awt.Image.SCALE_SMOOTH
     ); // scale it the smooth way
-    imageIcon = new ImageIcon(newimg);
+    System.out.println(newimg.toString());
 
-    JButton button = new JButton();
+    ImageIcon imageIcon = new ImageIcon(newimg);
+
+
+    JButton button = new JButton(imageIcon);
     button.setToolTipText(toolTipText);
 
     button.setToolTipText(toolTipText);
