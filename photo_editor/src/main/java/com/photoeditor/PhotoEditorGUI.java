@@ -48,6 +48,9 @@ public class PhotoEditorGUI extends JFrame {
   private JLabel toolStatusLabel; // Added JLabel to display currently selected tool
 
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
+  private String saveDirectory = ""; 
+  private String loadedImageDirectory = ""; 
+  private boolean Undo = false;
 
   public BufferedImage loadImage(String filename) {
     BufferedImage image = null;
