@@ -43,10 +43,9 @@ public class PhotoEditorGUI extends JFrame {
       g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
   }
+
   private JLabel toolStatusLabel; // Added JLabel to display currently selected tool
-
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
-
 
   public BufferedImage loadImage(String filename) {
     BufferedImage image = null;
@@ -73,25 +72,12 @@ public class PhotoEditorGUI extends JFrame {
 
   public PhotoEditorGUI() {
 
-     String sidebarStatus="Paint";
     // Set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(800, 600));
 
-    // "folder.jpg"
-    // "mirror_sidebar2.png"
-    // "mirror_sidebar.png"
-    // "paint_brush_sidebar.png"
-    // "paint_bucket_sidebar.png"
-    // "saveicon.png"
-    // "select_tool_box.png"
-    // "select_tool_lasso.png"
-    // "text_feild.png"
-    // "undo_topbar.png"
-
     // Initialize components
-    //.setBounds(1, y_pos, 30, 25).setBorder(new RoundedBorder(10));;
     loadButton = createButton("folder.png", "Load");
     saveButton = createButton("saveicon.png", "Save");
     undoButton = createButton("undo_topbar.png", "Undo");
@@ -111,11 +97,6 @@ public class PhotoEditorGUI extends JFrame {
     topPanel.add(undoButton);
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
-    toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
-    toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Add some padding
-    mainPanel.add(toolStatusLabel, BorderLayout.SOUTH);
-
 
     // Add sidebar
     JPanel sidebarPanel = new JPanel();
@@ -131,6 +112,12 @@ public class PhotoEditorGUI extends JFrame {
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
 
+    // Add toolStatusLabel above the sidebar
+    toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
+    toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Add some padding
+    mainPanel.add(toolStatusLabel, BorderLayout.NORTH);
+
     // Add main panel to content pane
     getContentPane().add(mainPanel);
 
@@ -143,15 +130,9 @@ public class PhotoEditorGUI extends JFrame {
   private JButton createButton(String iconPath, String toolTipText) {
     
     BufferedImage image2 = loadImage(iconPath);
-    System.out.println(iconPath);
     Image image = (Image) image2;
-    // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
-    // System.out.println(imageIcon.toString());
-    // Image image = imageIcon.getImage(); // transform it
     
-    Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-    System.out.println(newimg.toString());
-
+    Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
     ImageIcon imageIcon = new ImageIcon(newimg);
 
     JButton button = new JButton(imageIcon);
@@ -170,19 +151,17 @@ public class PhotoEditorGUI extends JFrame {
         public void mouseExited(MouseEvent e) {
           button.setBackground(UIManager.getColor("Button.background")); // Reset background color when mouse exits
         }
+
+        @Override
         public void mouseClicked(MouseEvent e) {
           sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
           toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
         }
-        
       }
     );
-    
 
     return button;
   }
-
-  
 
   public static void main(String[] args) {
     // Create and show the GUI
@@ -196,6 +175,3 @@ public class PhotoEditorGUI extends JFrame {
     );
   }
 }
-//    Add a UIManger container this enture thing that can have the following: UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-
-
