@@ -70,6 +70,8 @@ public class PhotoEditorGUI extends JFrame {
   private JButton selectToolButton;
 
   public PhotoEditorGUI() {
+
+     String sidebarStatus="Paint";
     // Set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,7 +90,7 @@ public class PhotoEditorGUI extends JFrame {
 
     // Initialize components
     //.setBounds(1, y_pos, 30, 25).setBorder(new RoundedBorder(10));;
-    loadButton = createButton("folder.jpg", "Load");
+    loadButton = createButton("folder.png", "Load");
     saveButton = createButton("saveicon.png", "Save");
     undoButton = createButton("undo_topbar.png", "Undo");
     paintButton = createButton("saveicon.png", "Paint");
@@ -139,6 +141,7 @@ public class PhotoEditorGUI extends JFrame {
     // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
     // System.out.println(imageIcon.toString());
     // Image image = imageIcon.getImage(); // transform it
+    
     Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
     System.out.println(newimg.toString());
 
@@ -162,6 +165,7 @@ public class PhotoEditorGUI extends JFrame {
         }
       }
     );
+    
 
     return button;
   }
@@ -179,3 +183,5 @@ public class PhotoEditorGUI extends JFrame {
   }
 }
 //    Add a UIManger container this enture thing that can have the following: UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+
+

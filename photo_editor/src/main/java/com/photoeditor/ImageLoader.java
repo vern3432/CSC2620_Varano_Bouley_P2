@@ -41,7 +41,7 @@ public class ImageLoader {
         
 
         ArrayList<String> imageNames = new ArrayList<>(Arrays.asList(
-            "folder.jpg",
+            "folder.png",
             "mirrorsidebar2.png",
             "mirrorsidebar.png",
             "paintbrushsidebar.png",
