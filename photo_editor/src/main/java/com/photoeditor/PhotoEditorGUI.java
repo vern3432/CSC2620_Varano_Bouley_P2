@@ -4,11 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PhotoEditorGUI extends JFrame {
 
@@ -51,6 +53,8 @@ public class PhotoEditorGUI extends JFrame {
   private String saveDirectory = ""; 
   private String loadedImageDirectory = ""; 
   private boolean Undo = false;
+  private Color selectedColor = Color.BLACK;
+
 
   public BufferedImage loadImage(String filename) {
     BufferedImage image = null;
@@ -130,6 +134,10 @@ public class PhotoEditorGUI extends JFrame {
     sidebarPanel.add(textButton);
     sidebarPanel.add(filterButton);
     sidebarPanel.add(selectToolButton);
+    JButton colorPickerButton = new JButton("Select Color");
+    colorPickerButton.addActionListener(new ColorPickerListener());
+    sidebarPanel.add(colorPickerButton);
+
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
 
@@ -141,7 +149,13 @@ public class PhotoEditorGUI extends JFrame {
     setLocationRelativeTo(null);
     setVisible(true);
   }
+  private class ColorPickerListener implements ActionListener {
+    @Override
 
+    public void actionPerformed(ActionEvent e) {
+        selectedColor = JColorChooser.showDialog(PhotoEditorGUI.this, "Select a Color", selectedColor);
+    }
+}
   private JButton createButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -217,8 +231,12 @@ public class PhotoEditorGUI extends JFrame {
         }
 
         public void mouseClicked(MouseEvent e) {
+          FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
+            System.out.println(imageFilter);
           JFileChooser fileChooser = new JFileChooser();
+          fileChooser.addChoosableFileFilter(imageFilter);
           fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
           int returnValue = fileChooser.showOpenDialog(null);
 
           if (returnValue == JFileChooser.APPROVE_OPTION) {
