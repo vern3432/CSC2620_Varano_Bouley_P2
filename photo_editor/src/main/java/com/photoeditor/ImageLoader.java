@@ -42,10 +42,10 @@ public class ImageLoader {
 
         ArrayList<String> imageNames = new ArrayList<>(Arrays.asList(
             "folder.jpg",
-            "mirror_sidebar2.png",
-            "mirror_sidebar.png",
-            "paint_brush_sidebar.png",
-            "paint_bucket_sidebar.png",
+            "mirrorsidebar2.png",
+            "mirrorsidebar.png",
+            "paintbrushsidebar.png",
+            "paintbucketsidebar.png",
             "saveicon.png",
             "select_tool_box.png",
             "select_tool_lasso.png",
@@ -59,6 +59,7 @@ public class ImageLoader {
         // Load an image
         BufferedImage image=new BufferedImage(1, 1, 1);
         for(int i=0;i<imageNames.size();i++){
+            System.out.println(imageNames.get(i));
              image = loadImage(imageNames.get(i));
                 if(image==null){
                         System.out.println(imageNames.get(i)+":null");
