@@ -167,51 +167,6 @@ public class PhotoEditorGUI extends JFrame {
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
 
-    JMenuBar menuBar = new JMenuBar();
-
-        
-    JMenu fileMenu = new JMenu("File");
-    JMenuItem openMenuItem = new JMenuItem("Open");
-
-
-          openMenuItem.addActionListener(new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                  JFileChooser fileChooser = new JFileChooser();
-                  int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
-                  if (result == JFileChooser.APPROVE_OPTION) {
-                      File selectedFile = fileChooser.getSelectedFile();
-                      try {
-                          image = ImageIO.read(selectedFile);
-                          drawingPanel.repaint();
-                      } catch (IOException ex) {
-                          ex.printStackTrace();
-                      }
-                  }
-              }
-          });
-          JMenuItem saveMenuItem = new JMenuItem("Save As");
-          saveMenuItem.addActionListener(new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                  if (image != null) {
-                      JFileChooser fileChooser = new JFileChooser();
-                      int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
-                      if (result == JFileChooser.APPROVE_OPTION) {
-                          File outputFile = fileChooser.getSelectedFile();
-                          try {
-                              ImageIO.write(image, "png", outputFile);
-                          } catch (IOException ex) {
-                              ex.printStackTrace();
-                          }
-                      }
-                  }
-              }
-          });
-    fileMenu.add(openMenuItem);
-    fileMenu.add(saveMenuItem);
-    menuBar.add(fileMenu);
-    setJMenuBar(menuBar);
 
 
 
@@ -230,6 +185,7 @@ public class PhotoEditorGUI extends JFrame {
 
 
 
+    
     // Add main panel to content pane
     getContentPane().add(mainPanel);
 
