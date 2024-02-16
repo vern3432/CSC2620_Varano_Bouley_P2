@@ -54,6 +54,7 @@ public class PhotoEditorGUI extends JFrame {
   private String loadedImageDirectory = ""; 
   private boolean Undo = false;
   private Color selectedColor = Color.BLACK;
+  private JButton colorPickerButton; // Added colorPickerButton instance variable
 
 
   public BufferedImage loadImage(String filename) {
@@ -107,6 +108,7 @@ public class PhotoEditorGUI extends JFrame {
     textButton = createButton("text_feild.png", "Text");
     filterButton = createButton("saveicon.png", "Filter");
     selectToolButton = createButton("select_tool_box.png", "Select Tool");
+    colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
     // Set up layout using GridBagLayout
     JPanel mainPanel = new JPanel();
@@ -134,10 +136,9 @@ public class PhotoEditorGUI extends JFrame {
     sidebarPanel.add(textButton);
     sidebarPanel.add(filterButton);
     sidebarPanel.add(selectToolButton);
-    JButton colorPickerButton = new JButton("Select Color");
-    colorPickerButton.addActionListener(new ColorPickerListener());
+    colorPickerButton.addActionListener(new ColorPickerListener()); // Add ActionListener to colorPickerButton
+    colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
     sidebarPanel.add(colorPickerButton);
-
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
 
@@ -149,13 +150,18 @@ public class PhotoEditorGUI extends JFrame {
     setLocationRelativeTo(null);
     setVisible(true);
   }
-  private class ColorPickerListener implements ActionListener {
+  
+  class ColorPickerListener implements ActionListener {
     @Override
-
     public void actionPerformed(ActionEvent e) {
-        selectedColor = JColorChooser.showDialog(PhotoEditorGUI.this, "Select a Color", selectedColor);
+        Color newColor = JColorChooser.showDialog(PhotoEditorGUI.this, "Select a Color", selectedColor);
+        if (newColor != null) {
+            selectedColor = newColor;
+            colorPickerButton.setBackground(selectedColor); // Change background color of colorPickerButton
+        }
     }
 }
+
   private JButton createButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -320,4 +326,3 @@ public class PhotoEditorGUI extends JFrame {
     );
   }
 }
-//    Add a UIManger container this enture thing that can have the following: UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
