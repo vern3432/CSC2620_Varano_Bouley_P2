@@ -6,11 +6,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.List;
 
 public class PhotoEditorGUI extends JFrame {
 
@@ -79,6 +83,23 @@ public class PhotoEditorGUI extends JFrame {
   private JButton textButton;
   private JButton filterButton;
   private JButton selectToolButton;
+  private JButton straightLineMenuItem;
+
+
+
+
+  //drawing components 
+    private BufferedImage image;
+    private JPanel drawingPanel;
+    private Point startPoint;
+    private Point endPoint;
+    private Color currentColor = Color.BLACK;
+    private List<Line> lines = new ArrayList<>();
+    private boolean isDrawing = false;
+    private boolean fillBucketMode = false;
+    private boolean drawStraightLineMode = false;
+    private int fillTolerance = 10; // Adjust this for sensitivity
+
 
   public PhotoEditorGUI() {
     String sidebarStatus = "Paint";
@@ -108,6 +129,9 @@ public class PhotoEditorGUI extends JFrame {
     textButton = createButton("text_feild.png", "Text");
     filterButton = createButton("saveicon.png", "Filter");
     selectToolButton = createButton("select_tool_box.png", "Select Tool");
+    straightLineMenuItem = createButton("straightLine.png","Straigt Line Tool"); // Initialize colorPickerButton
+    
+    
     colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
     // Set up layout using GridBagLayout
@@ -136,11 +160,75 @@ public class PhotoEditorGUI extends JFrame {
     sidebarPanel.add(textButton);
     sidebarPanel.add(filterButton);
     sidebarPanel.add(selectToolButton);
+    sidebarPanel.add(straightLineMenuItem);
     colorPickerButton.addActionListener(new ColorPickerListener()); // Add ActionListener to colorPickerButton
     colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
     sidebarPanel.add(colorPickerButton);
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
+
+    JMenuBar menuBar = new JMenuBar();
+
+        
+    JMenu fileMenu = new JMenu("File");
+    JMenuItem openMenuItem = new JMenuItem("Open");
+
+
+          openMenuItem.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                  JFileChooser fileChooser = new JFileChooser();
+                  int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
+                  if (result == JFileChooser.APPROVE_OPTION) {
+                      File selectedFile = fileChooser.getSelectedFile();
+                      try {
+                          image = ImageIO.read(selectedFile);
+                          drawingPanel.repaint();
+                      } catch (IOException ex) {
+                          ex.printStackTrace();
+                      }
+                  }
+              }
+          });
+          JMenuItem saveMenuItem = new JMenuItem("Save As");
+          saveMenuItem.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                  if (image != null) {
+                      JFileChooser fileChooser = new JFileChooser();
+                      int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
+                      if (result == JFileChooser.APPROVE_OPTION) {
+                          File outputFile = fileChooser.getSelectedFile();
+                          try {
+                              ImageIO.write(image, "png", outputFile);
+                          } catch (IOException ex) {
+                              ex.printStackTrace();
+                          }
+                      }
+                  }
+              }
+          });
+    fileMenu.add(openMenuItem);
+    fileMenu.add(saveMenuItem);
+    menuBar.add(fileMenu);
+    setJMenuBar(menuBar);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Add main panel to content pane
     getContentPane().add(mainPanel);
