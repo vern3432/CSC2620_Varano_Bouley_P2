@@ -204,7 +204,7 @@ saveMenuItem.addActionListener(new ActionListener() {
                 g2d.drawImage(image, 0, 0, null);
 
                 // Draw the lines on the combined image
-                g2d.setColor(currentColor);
+                g2d.setColor(selectedColor);
                 for (Line line : lines) {
                     g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
                 }
@@ -269,7 +269,7 @@ saveMenuItem.addActionListener(new ActionListener() {
           if (image != null) {
             g.drawImage(image, 0, 0, this);
           }
-          g.setColor(currentColor);
+          g.setColor(selectedColor);
           if (!fillBucketMode) {
             for (Line line : lines) {
               g.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
@@ -302,9 +302,9 @@ saveMenuItem.addActionListener(new ActionListener() {
           if (isDrawing && !fillBucketMode) {
             endPoint = e.getPoint();
             if (drawStraightLineMode) {
-              lines.add(new Line(startPoint, endPoint));
+              lines.add(new Line(startPoint, endPoint,selectedColor));
             } else {
-              lines.add(new Line(startPoint, startPoint)); // Add single point for freehand drawing
+              lines.add(new Line(startPoint, startPoint,selectedColor)); // Add single point for freehand drawing
             }
             isDrawing = false;
             drawingPanel.repaint();
@@ -323,7 +323,7 @@ saveMenuItem.addActionListener(new ActionListener() {
             endPoint = e.getPoint();
             if (!drawStraightLineMode) {
 
-              lines.add(new Line(startPoint, endPoint));
+              lines.add(new Line(startPoint, endPoint,selectedColor));
             }
             startPoint = endPoint;
             drawingPanel.repaint();
@@ -344,15 +344,21 @@ saveMenuItem.addActionListener(new ActionListener() {
   }
 
   private class Line {
-
     Point start;
     Point end;
+    Color color;
 
-    public Line(Point start, Point end) {
-      this.start = start;
-      this.end = end;
+    public Line(Point start, Point end, Color color) {
+        this.start = start;
+        this.end = end;
+        this.color = color; // Store the color of the line
     }
-  }
+
+    public void draw(Graphics g) {
+        g.setColor(selectedColor); // Set the color before drawing the line
+        g.drawLine(start.x, start.y, end.x, end.y);
+    }
+}
 
   private void fillBucket(Point point) {
     if (image != null) {
