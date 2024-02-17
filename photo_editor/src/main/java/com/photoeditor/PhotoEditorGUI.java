@@ -50,14 +50,14 @@ public class PhotoEditorGUI extends JFrame {
     }
   }
 
-  private JLabel toolStatusLabel; // Added JLabel to display currently selected tool
+  private JLabel toolStatusLabel; //  JLabel to display currently selected tool
 
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
   private String saveDirectory = "";
   private String loadedImageDirectory = "";
   private boolean Undo = false;
   private Color selectedColor = Color.BLACK;
-  private JButton colorPickerButton; // Added colorPickerButton instance variable
+  private JButton colorPickerButton; 
 
   public BufferedImage loadImage(String filename) {
     BufferedImage image = null;
@@ -93,7 +93,8 @@ public class PhotoEditorGUI extends JFrame {
   private boolean isDrawing = false;
   private boolean fillBucketMode = false;
   private boolean drawStraightLineMode = false;
-  private int fillTolerance = 10; // Adjust this for sensitivity
+  private int fillTolerance = 10; // Adjust this for sensitivity of bucket fill
+  
 
   public PhotoEditorGUI() {
     String sidebarStatus = "Paint";
@@ -356,7 +357,7 @@ saveMenuItem.addActionListener(new ActionListener() {
   private void fillBucket(Point point) {
     if (image != null) {
       int targetColor = image.getRGB(point.x, point.y);
-      int replacementColor = currentColor.getRGB();
+      int replacementColor = selectedColor.getRGB();
       if (targetColor != replacementColor) {
         floodFill(point.x, point.y, targetColor, replacementColor);
       }
