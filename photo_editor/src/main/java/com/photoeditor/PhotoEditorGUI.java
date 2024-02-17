@@ -46,7 +46,7 @@ public class PhotoEditorGUI extends JFrame {
     private JButton paintButton;
     private JButton fillButton;
     private JButton textButton;
-    private JButton filterButton;
+    // private JButton filterButton;
     private JButton selectToolButton;
     private JButton straightLineMenuItem;
 
@@ -74,7 +74,7 @@ public class PhotoEditorGUI extends JFrame {
         paintButton = createPaintButton("paintbrush.png", "Paint");
         fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
         textButton = createButton("text_feild.png", "Text");
-        filterButton = createButton("saveicon.png", "Filter");
+        // filterButton = createButton("saveicon.png", "Filter");
         selectToolButton = createButton("select_tool_box.png", "Select Tool");
         straightLineMenuItem =
                 createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize colorPickerButton
@@ -114,7 +114,7 @@ public class PhotoEditorGUI extends JFrame {
         sidebarPanel.add(paintButton);
         sidebarPanel.add(fillButton);
         sidebarPanel.add(textButton);
-        sidebarPanel.add(filterButton);
+        // sidebarPanel.add(filterButton);
         sidebarPanel.add(selectToolButton);
         sidebarPanel.add(straightLineMenuItem);
         colorPickerButton.addActionListener(new ColorPickerListener()); // add ActionListener to colorPickerButton
