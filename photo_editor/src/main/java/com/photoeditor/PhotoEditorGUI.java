@@ -59,19 +59,19 @@ public class PhotoEditorGUI extends JFrame {
     private boolean isDrawing = false;
     private boolean fillBucketMode = false;
     private boolean drawStraightLineMode = false;
-    private int fillTolerance = 10; // Adjust this for sensitivity of bucket fill
+    private int fillTolerance = 10; // changes this for sensitivity of bucket fill
 
     public PhotoEditorGUI() {
-        // Set up the JFrame
+        // set up the JFrame
         setTitle("Photo Editor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 600));
 
-        // Initialize components
+        // create components
         loadButton = createLoadButton("folder.png", "Load", "type");
         saveButton = createSaveButton("saveicon.png", "Save", "type");
         undoButton = createButton("undo_topbar.png", "Undo");
-        paintButton = createPaintButton("saveicon.png", "Paint");
+        paintButton = createPaintButton("paintbrush.png", "Paint");
         fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
         textButton = createButton("text_feild.png", "Text");
         filterButton = createButton("saveicon.png", "Filter");
@@ -88,15 +88,24 @@ public class PhotoEditorGUI extends JFrame {
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(saveButton);
         topPanel.add(loadButton);
+        undoButton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              if (!lines.isEmpty()) {
+                  lines.remove(lines.size() - 1); // remove the last drawn line
+                  drawingPanel.repaint(); // repaint the drawing panel to reflect the change
+              }
+          }
+      });
         topPanel.add(undoButton);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
         toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Add some padding
+        toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); //  some padding to the toolar
         mainPanel.add(toolStatusLabel, BorderLayout.SOUTH);
 
-        // Add sidebar
+        // add sidebar
         JPanel sidebarPanel = new JPanel();
         sidebarPanel.setLayout(new GridLayout(0, 1));
         sidebarPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -108,8 +117,12 @@ public class PhotoEditorGUI extends JFrame {
         sidebarPanel.add(filterButton);
         sidebarPanel.add(selectToolButton);
         sidebarPanel.add(straightLineMenuItem);
-        colorPickerButton.addActionListener(new ColorPickerListener()); // Add ActionListener to colorPickerButton
+        colorPickerButton.addActionListener(new ColorPickerListener()); // add ActionListener to colorPickerButton
         colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
+       
+        JButton Filter=createFilterButton("filter2.png", "Apply Filter");
+
+        sidebarPanel.add(Filter);
         sidebarPanel.add(colorPickerButton);
 
         mainPanel.add(sidebarPanel, BorderLayout.EAST);
@@ -248,7 +261,7 @@ public class PhotoEditorGUI extends JFrame {
                             if (drawStraightLineMode) {
                                 lines.add(new Line(startPoint, endPoint, selectedColor));
                             } else {
-                                lines.add(new Line(startPoint, startPoint, selectedColor)); // Add single point for freehand drawing
+                                lines.add(new Line(startPoint, startPoint, selectedColor)); // add single point for freehand drawing
                             }
                             isDrawing = false;
                             drawingPanel.repaint();
@@ -274,7 +287,7 @@ public class PhotoEditorGUI extends JFrame {
 
         mainPanel.add(drawingPanel);
 
-        // Add main panel to content pane
+        // add main panel to content pane
         getContentPane().add(mainPanel);
 
         // Pack and set visible
@@ -352,7 +365,7 @@ public class PhotoEditorGUI extends JFrame {
             );
             if (newColor != null) {
                 selectedColor = newColor;
-                colorPickerButton.setBackground(selectedColor); // Change background color of colorPickerButton
+                colorPickerButton.setBackground(selectedColor); // change background color of colorPickerButton
             }
         }
     }
@@ -373,13 +386,12 @@ public class PhotoEditorGUI extends JFrame {
     JButton button = new JButton(imageIcon);
     button.setToolTipText(toolTipText);
 
-    button.setToolTipText(toolTipText);
 
     button.addMouseListener(
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
@@ -419,7 +431,7 @@ public class PhotoEditorGUI extends JFrame {
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
@@ -460,7 +472,7 @@ public class PhotoEditorGUI extends JFrame {
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
@@ -479,6 +491,98 @@ public class PhotoEditorGUI extends JFrame {
 
     return button;
   }
+
+
+
+  public JButton createFilterButton(String iconPath, String toolTipText) {
+    BufferedImage image2 = loadImage(iconPath);
+    System.out.println(iconPath);
+    Image image = (Image) image2;
+
+
+    Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    System.out.println(newimg.toString());
+
+    ImageIcon imageIcon = new ImageIcon(newimg);
+
+    JButton button = new JButton(imageIcon);
+    button.setToolTipText(toolTipText);
+
+    button.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPopupMenu popupMenu = new JPopupMenu();
+            JMenuItem grayscaleItem = new JMenuItem("Grayscale");
+            JMenuItem invertColorsItem = new JMenuItem("Inverted Colors");
+            JMenuItem blurItem = new JMenuItem("Blur with Gaussian Noise");
+            JMenuItem staticItem = new JMenuItem("Static with Perlin Noise");
+            JMenuItem cartoonifyItem = new JMenuItem("Cartoonify");
+
+            grayscaleItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("View the image in greyscale");
+                }
+            });
+
+            invertColorsItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("View the image with inverted colors");
+                }
+            });
+
+            blurItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Adding blur with Gaussian Noise");
+                }
+            });
+
+            staticItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Adding static with Perlin Noise");
+                }
+            });
+
+            cartoonifyItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Cartoonify");
+                }
+            });
+
+            popupMenu.add(grayscaleItem);
+            popupMenu.add(invertColorsItem);
+            popupMenu.add(blurItem);
+            popupMenu.add(staticItem);
+            popupMenu.add(cartoonifyItem);
+
+            popupMenu.show(button, button.getWidth() / 2, button.getHeight() / 2);
+        }
+    });
+    return button;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 
   private JButton createStraightButton(String iconPath, String toolTipText) {
@@ -503,7 +607,7 @@ public class PhotoEditorGUI extends JFrame {
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
@@ -556,7 +660,7 @@ public class PhotoEditorGUI extends JFrame {
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
@@ -617,7 +721,7 @@ public class PhotoEditorGUI extends JFrame {
       new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
-          button.setBackground(Color.LIGHT_GRAY); // Change background color on hover
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
         }
 
         @Override
