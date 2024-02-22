@@ -89,6 +89,7 @@ public class PhotoEditorGUI extends JFrame {
     loadButton = createLoadButton("folder.png", "Load", "type");
     saveButton = createSaveButton("saveicon.png", "Save", "type");
     undoButton = createButton("undo_topbar.png", "Undo");
+
     paintButton = createPaintButton("paintbrush.png", "Paint");
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
     textButton = createButton("text_feild.png", "Text");
@@ -262,6 +263,92 @@ public class PhotoEditorGUI extends JFrame {
         }
     });
 
+
+    JMenuItem newImage = new JMenuItem("New");
+
+    newImage.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        lines.clear();
+
+          // Create a dialog to input height and width
+          JTextField heightField = new JTextField(5);
+          JTextField widthField = new JTextField(5);
+          JPanel panel = new JPanel();
+          panel.add(new JLabel("Height:"));
+          panel.add(heightField);
+          panel.add(Box.createHorizontalStrut(15)); // Add some space between components
+          panel.add(new JLabel("Width:"));
+          panel.add(widthField);
+
+          int result = JOptionPane.showConfirmDialog(null, panel, "Enter Height and Width", JOptionPane.OK_CANCEL_OPTION);
+          if (result == JOptionPane.OK_OPTION) {
+
+            
+              int height = Integer.parseInt(heightField.getText());
+              int width = Integer.parseInt(widthField.getText());
+              System.out.println("Creating new image with height: " + height + " and width: " + width);
+              BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+              Graphics2D g2d = bufferedImage.createGraphics();
+              g2d.setColor(Color.WHITE);
+              g2d.fillRect(0, 0, width, height);
+              g2d.dispose();
+              
+              
+              
+              image = bufferedImage;
+              drawingPanel.repaint();
+              
+              FilterButton filterButton = null;
+              Component[] components = sidebarPanel.getComponents();
+              
+              for (Component component : components) {
+                  if (component instanceof FilterButton) {
+                      filterButton = (FilterButton) component;
+                      break;
+                  }
+              }
+              if (filterButton != null) {
+                // Remove the filterButton from the sidePanel
+                sidebarPanel.remove(filterButton);
+            
+                // Create a copy of the filterButton
+            
+                // Update the copy with new properties or image
+                // For example, if you want to set a new image:
+                filterButton.setImage(image);
+            
+                // Add the updated copy back to the sidePanel
+                sidebarPanel.add(filterButton);
+            
+                // Revalidate and repaint the sidePanel to reflect the changes
+                sidebarPanel.revalidate();
+                sidebarPanel.repaint();
+            }
+                          
+              
+
+
+            }
+      }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK ));
 
   saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK ));
@@ -269,7 +356,7 @@ public class PhotoEditorGUI extends JFrame {
 
 
     // saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
-
+  fileMenu.add(newImage);
     fileMenu.add(openMenuItem);
     fileMenu.add(saveMenuItem);
     menuBar.add(fileMenu);
