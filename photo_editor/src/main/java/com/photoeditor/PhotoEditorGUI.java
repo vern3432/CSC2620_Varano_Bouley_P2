@@ -32,27 +32,24 @@ public class PhotoEditorGUI extends JFrame {
   private Color selectedColor = Color.BLACK;
   private JButton colorPickerButton;
 
-
-
-  
-
- 
   public BufferedImage loadImage(String filename) {
     BufferedImage iconImage = null;
     try {
-        // Load the icon image using ClassLoader
-        InputStream inputStream = ImageLoader.class.getResourceAsStream("/icon/" + filename);
-        if (inputStream != null) {
-            iconImage = ImageIO.read(inputStream);
-            inputStream.close();
-        } else {
-            System.err.println("Icon image not found: " + filename);
-        }
+      // Load the icon image using ClassLoader
+      InputStream inputStream =
+        ImageLoader.class.getResourceAsStream("/icon/" + filename);
+      if (inputStream != null) {
+        iconImage = ImageIO.read(inputStream);
+        inputStream.close();
+      } else {
+        System.err.println("Icon image not found: " + filename);
+      }
     } catch (IOException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
     return iconImage;
-}
+  }
+
   // Components
   private JButton saveButton;
   private JButton loadButton;
@@ -65,7 +62,6 @@ public class PhotoEditorGUI extends JFrame {
   private JButton straightLineMenuItem;
   private JSlider toleranceSlider; // New tolerance slider
   private FilterButton Filter;
-
 
   //drawing components
   private BufferedImage image;
@@ -107,11 +103,6 @@ public class PhotoEditorGUI extends JFrame {
     toleranceSlider.setPaintLabels(true);
     toleranceSlider.addChangeListener(new ToleranceSliderListener());
 
-
-
-
-
-
     // Set up layout using GridBagLayout
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
@@ -140,7 +131,7 @@ public class PhotoEditorGUI extends JFrame {
     System.out.println("top bar  picker added");
 
     // add sidebar
-     sidebarPanel = new JPanel();
+    sidebarPanel = new JPanel();
     sidebarPanel.setLayout(new GridLayout(0, 1));
     sidebarPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     sidebarPanel.setPreferredSize(new Dimension(70, 70));
@@ -156,15 +147,14 @@ public class PhotoEditorGUI extends JFrame {
     System.out.println("color picker added");
     colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
 
-
     // JButton Filter = new FilterButton("filter2.png", "Apply Filter",this.image);
-     Filter = new FilterButton("filter2.png", "Apply Filter",this.image);
+    Filter = new FilterButton("filter2.png", "Apply Filter", this.image);
 
     sidebarPanel.add(Filter);
     sidebarPanel.add(colorPickerButton);
-    
+
     // // JTextField toleranceSlider = createToleranceTextField();
-    // sidebarPanel.add(toleranceSlider); 
+    // sidebarPanel.add(toleranceSlider);
     // sidebarPanel.add(toleranceSlider);
 
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
@@ -189,31 +179,24 @@ public class PhotoEditorGUI extends JFrame {
 
               FilterButton filterButton = null;
               Component[] components = sidebarPanel.getComponents();
-              
+
               for (Component component : components) {
-                  if (component instanceof FilterButton) {
-                      filterButton = (FilterButton) component;
-                      break;
-                  }
+                if (component instanceof FilterButton) {
+                  filterButton = (FilterButton) component;
+                  break;
+                }
               }
               if (filterButton != null) {
-                // Remove the filterButton from the sidePanel
                 sidebarPanel.remove(filterButton);
-            
-                // Create a copy of the filterButton
-            
-                // Update the copy with new properties or image
-                // For example, if you want to set a new image:
+
                 filterButton.setImage(image);
-            
-                // Add the updated copy back to the sidePanel
+
                 sidebarPanel.add(filterButton);
-            
-                // Revalidate and repaint the sidePanel to reflect the changes
+
                 sidebarPanel.revalidate();
                 sidebarPanel.repaint();
-            }
-                          } catch (IOException ex) {
+              }
+            } catch (IOException ex) {
               ex.printStackTrace();
             }
           }
@@ -221,55 +204,57 @@ public class PhotoEditorGUI extends JFrame {
       }
     );
 
-      JMenuItem saveMenuItem = new JMenuItem("Save As");
-      saveMenuItem.addActionListener(new ActionListener() {
+    JMenuItem saveMenuItem = new JMenuItem("Save As");
+    saveMenuItem.addActionListener(
+      new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Your save logic here
-            if (image != null) {
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
+          // Your save logic here
+          if (image != null) {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
 
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    File outputFile = fileChooser.getSelectedFile();
+            if (result == JFileChooser.APPROVE_OPTION) {
+              File outputFile = fileChooser.getSelectedFile();
 
-                    // Create a new BufferedImage to draw the lines on
-                    BufferedImage combinedImage = new BufferedImage(
-                            image.getWidth(),
-                            image.getHeight(),
-                            BufferedImage.TYPE_INT_ARGB
-                    );
-                    Graphics2D g2d = combinedImage.createGraphics();
-                    g2d.drawImage(image, 0, 0, null);
+              // Create a new BufferedImage to draw the lines on
+              BufferedImage combinedImage = new BufferedImage(
+                image.getWidth(),
+                image.getHeight(),
+                BufferedImage.TYPE_INT_ARGB
+              );
+              Graphics2D g2d = combinedImage.createGraphics();
+              g2d.drawImage(image, 0, 0, null);
 
-                    // Draw the lines on the combined image
-                    g2d.setColor(selectedColor);
-                    for (Line line : lines) {
-                        g2d.drawLine(
-                                line.start.x,
-                                line.start.y,
-                                line.end.x,
-                                line.end.y
-                        );
-                    }
-                    g2d.dispose(); // Dispose the Graphics2D object
-                    try {
-                        ImageIO.write(combinedImage, "png", outputFile);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
+              // Draw the lines on the combined image
+              g2d.setColor(selectedColor);
+              for (Line line : lines) {
+                g2d.drawLine(
+                  line.start.x,
+                  line.start.y,
+                  line.end.x,
+                  line.end.y
+                );
+              }
+              g2d.dispose(); // Dispose the Graphics2D object
+              try {
+                ImageIO.write(combinedImage, "png", outputFile);
+              } catch (IOException ex) {
+                ex.printStackTrace();
+              }
             }
+          }
         }
-    });
-
+      }
+    );
 
     JMenuItem newImage = new JMenuItem("New");
 
-    newImage.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        lines.clear();
+    newImage.addActionListener(
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          lines.clear();
 
           // Create a dialog to input height and width
           JTextField heightField = new JTextField(5);
@@ -281,80 +266,69 @@ public class PhotoEditorGUI extends JFrame {
           panel.add(new JLabel("Width:"));
           panel.add(widthField);
 
-          int result = JOptionPane.showConfirmDialog(null, panel, "Enter Height and Width", JOptionPane.OK_CANCEL_OPTION);
+          int result = JOptionPane.showConfirmDialog(
+            null,
+            panel,
+            "Enter Height and Width",
+            JOptionPane.OK_CANCEL_OPTION
+          );
           if (result == JOptionPane.OK_OPTION) {
+            int height = Integer.parseInt(heightField.getText());
+            int width = Integer.parseInt(widthField.getText());
+            System.out.println(
+              "Creating new image with height: " +
+              height +
+              " and width: " +
+              width
+            );
+            BufferedImage bufferedImage = new BufferedImage(
+              width,
+              height,
+              BufferedImage.TYPE_INT_RGB
+            );
+            Graphics2D g2d = bufferedImage.createGraphics();
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, width, height);
+            g2d.dispose();
 
-            
-              int height = Integer.parseInt(heightField.getText());
-              int width = Integer.parseInt(widthField.getText());
-              System.out.println("Creating new image with height: " + height + " and width: " + width);
-              BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-              Graphics2D g2d = bufferedImage.createGraphics();
-              g2d.setColor(Color.WHITE);
-              g2d.fillRect(0, 0, width, height);
-              g2d.dispose();
-              
-              
-              
-              image = bufferedImage;
-              drawingPanel.repaint();
-              
-              FilterButton filterButton = null;
-              Component[] components = sidebarPanel.getComponents();
-              
-              for (Component component : components) {
-                  if (component instanceof FilterButton) {
-                      filterButton = (FilterButton) component;
-                      break;
-                  }
+            image = bufferedImage;
+            drawingPanel.repaint();
+
+            FilterButton filterButton = null;
+            Component[] components = sidebarPanel.getComponents();
+
+            for (Component component : components) {
+              if (component instanceof FilterButton) {
+                filterButton = (FilterButton) component;
+                break;
               }
-              if (filterButton != null) {
-                // Remove the filterButton from the sidePanel
-                sidebarPanel.remove(filterButton);
-            
-                // Create a copy of the filterButton
-            
-                // Update the copy with new properties or image
-                // For example, if you want to set a new image:
-                filterButton.setImage(image);
-            
-                // Add the updated copy back to the sidePanel
-                sidebarPanel.add(filterButton);
-            
-                // Revalidate and repaint the sidePanel to reflect the changes
-                sidebarPanel.revalidate();
-                sidebarPanel.repaint();
             }
-                          
-              
+            if (filterButton != null) {
+              sidebarPanel.remove(filterButton);
 
+              filterButton.setImage(image);
 
+              sidebarPanel.add(filterButton);
+
+              sidebarPanel.revalidate();
+              sidebarPanel.repaint();
             }
+          }
+        }
       }
-  });
+    );
 
+    newImage.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK)
+    );
 
+    openMenuItem.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK)
+    );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  newImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK ));
-
-  openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK ));
-
-  saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK ));
-
-
+    saveMenuItem.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK)
+    );
 
     // saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
     fileMenu.add(newImage);
@@ -370,7 +344,7 @@ public class PhotoEditorGUI extends JFrame {
     //   new ActionListener() {
     //     @Override
     //     public void actionPerformed(ActionEvent e) {
-    //       fillBucketMode = false;
+    //       fillBucketMode = false;   h
     //       drawStraightLineMode = false;
     //     }
     //   }
@@ -420,12 +394,10 @@ public class PhotoEditorGUI extends JFrame {
         @Override
         public void mousePressed(MouseEvent e) {
           if (fillBucketMode) {
-            
             fillBucket(e.getPoint());
 
             drawingPanel.repaint();
             drawingPanel.repaint();
-
           } else {
             startPoint = e.getPoint();
             isDrawing = true;
@@ -473,41 +445,40 @@ public class PhotoEditorGUI extends JFrame {
     setLocationRelativeTo(null);
     setVisible(true);
   }
-//   private JTextField createToleranceTextField() {
-//     JTextField toleranceTextField = new JTextField("10", 5); // Default value is 10
-//     toleranceTextField.setHorizontalAlignment(JTextField.CENTER);
-    
-//     // Add a focus listener to update the tolerance value when focus is lost
-//     toleranceTextField.addFocusListener(new FocusAdapter() {
-//         @Override
-//         public void focusLost(FocusEvent e) {
-//             updateTolerance();
-//         }
-//     });
 
-//     // Add an action listener to update the tolerance value when the user presses Enter
-//     toleranceTextField.addActionListener(e -> updateTolerance());
+  //   private JTextField createToleranceTextField() {
+  //     JTextField toleranceTextField = new JTextField("10", 5); // Default value is 10
+  //     toleranceTextField.setHorizontalAlignment(JTextField.CENTER);
 
-//     return toleranceTextField;
-// }
+  //     // Add a focus listener to update the tolerance value when focus is lost
+  //     toleranceTextField.addFocusListener(new FocusAdapter() {
+  //         @Override
+  //         public void focusLost(FocusEvent e) {
+  //             updateTolerance();
+  //         }
+  //     });
 
-// private void updateTolerance() {
-//     String text = toleranceTextField.getText();
-//     try {
-//         int value = Integer.parseInt(text);
-//         if (value < 1 || value > 100) {
-//             throw new NumberFormatException();
-//         }
-//         fillTolerance = value;
-//     } catch (NumberFormatException ex) {
-//         // Handle invalid input (not within the range 1-100)
-//         // For now, let's reset to the default value of 10
-//         toleranceTextField.setText("10");
-//         fillTolerance = 10;
-//     }
-// }
+  //     // Add an action listener to update the tolerance value when the user presses Enter
+  //     toleranceTextField.addActionListener(e -> updateTolerance());
 
+  //     return toleranceTextField;
+  // }
 
+  // private void updateTolerance() {
+  //     String text = toleranceTextField.getText();
+  //     try {
+  //         int value = Integer.parseInt(text);
+  //         if (value < 1 || value > 100) {
+  //             throw new NumberFormatException();
+  //         }
+  //         fillTolerance = value;
+  //     } catch (NumberFormatException ex) {
+  //         // Handle invalid input (not within the range 1-100)
+  //         // For now, let's reset to the default value of 10
+  //         toleranceTextField.setText("10");
+  //         fillTolerance = 10;
+  //     }
+  // }
 
   private class Line {
 
@@ -522,7 +493,7 @@ public class PhotoEditorGUI extends JFrame {
     }
 
     public void draw(Graphics g) {
-      g.setColor(color); 
+      g.setColor(color);
       g.drawLine(start.x, start.y, end.x, end.y);
     }
   }
@@ -613,7 +584,7 @@ public class PhotoEditorGUI extends JFrame {
         }
 
         public void mouseClicked(MouseEvent e) {
-          sidebarStatus = toolTipText; 
+          sidebarStatus = toolTipText;
           toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
         }
       }
@@ -706,11 +677,19 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
-  public JButton createFilterButton(String iconPath, String toolTipText,BufferedImage image) {
+  public JButton createFilterButton(
+    String iconPath,
+    String toolTipText,
+    BufferedImage image
+  ) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
 
-    Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    Image newimg = image2.getScaledInstance(
+      30,
+      30,
+      java.awt.Image.SCALE_SMOOTH
+    ); // scale it the smooth way
     System.out.println(newimg.toString());
 
     ImageIcon imageIcon = new ImageIcon(newimg);
@@ -774,13 +753,15 @@ public class PhotoEditorGUI extends JFrame {
             }
           );
           JMenuItem saveAsTextMenuItem = new JMenuItem("Save as Text");
-          saveAsTextMenuItem.addActionListener(new ActionListener() {
+          saveAsTextMenuItem.addActionListener(
+            new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent e) {
-                  // Call your method to save the image as text here
-                  saveAsciiArt((BufferedImage)image);
+                // Call your method to save the image as text here
+                saveAsciiArt((BufferedImage) image);
               }
-          });
+            }
+          );
 
           popupMenu.add(grayscaleItem);
           popupMenu.add(invertColorsItem);
@@ -790,68 +771,95 @@ public class PhotoEditorGUI extends JFrame {
           popupMenu.add(saveAsTextMenuItem);
 
           popupMenu.show(button, button.getWidth() / 2, button.getHeight() / 2);
-        }      
+        }
       }
     );
     return button;
   }
-   public void saveAsciiArt(BufferedImage image) {
-        String resolutionInput = JOptionPane.showInputDialog(null, "Enter resolution percentage (1-100):");
-        if (resolutionInput != null) {
-            try {
-                int resolutionPercentage = Integer.parseInt(resolutionInput);
-                if (resolutionPercentage >= 1 && resolutionPercentage <= 100) {
-                    int scaledWidth = (int) (image.getWidth() * (resolutionPercentage / 100.0));
-                    int scaledHeight = (int) (image.getHeight() * (resolutionPercentage / 100.0));
-                    BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
-                    Graphics2D g = scaledImage.createGraphics();
-                    g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
-                    g.dispose();
 
-                    StringBuilder asciiBuilder = new StringBuilder();
-                    for (int y = 0; y < scaledImage.getHeight(); y++) {
-                        for (int x = 0; x < scaledImage.getWidth(); x++) {
-                            int pixel = scaledImage.getRGB(x, y);
-                            int brightness = getBrightness(pixel);
-                            int index = (int) (brightness / 255.0 * (ASCIICHARS.length() - 1));
-                            asciiBuilder.append(ASCIICHARS.charAt(index));
-                        }
-                        asciiBuilder.append("\n");
-                    }
+  public void saveAsciiArt(BufferedImage image) {
+    String resolutionInput = JOptionPane.showInputDialog(
+      null,
+      "Enter resolution percentage (1-100):"
+    );
+    if (resolutionInput != null) {
+      try {
+        int resolutionPercentage = Integer.parseInt(resolutionInput);
+        if (resolutionPercentage >= 1 && resolutionPercentage <= 100) {
+          int scaledWidth = (int) (
+            image.getWidth() * (resolutionPercentage / 100.0)
+          );
+          int scaledHeight = (int) (
+            image.getHeight() * (resolutionPercentage / 100.0)
+          );
+          BufferedImage scaledImage = new BufferedImage(
+            scaledWidth,
+            scaledHeight,
+            BufferedImage.TYPE_INT_RGB
+          );
+          Graphics2D g = scaledImage.createGraphics();
+          g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+          g.dispose();
 
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    int result = fileChooser.showSaveDialog(null);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedDirectory = fileChooser.getSelectedFile();
-                        File outputFile = new File(selectedDirectory, "ascii_art.txt");
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
-                            writer.write(asciiBuilder.toString());
-                            JOptionPane.showMessageDialog(null, "ASCII art saved successfully to " + outputFile.getAbsolutePath());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            JOptionPane.showMessageDialog(null, "Error occurred while saving ASCII art");
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please enter a resolution percentage between 1 and 100");
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid number");
+          StringBuilder asciiBuilder = new StringBuilder();
+          for (int y = 0; y < scaledImage.getHeight(); y++) {
+            for (int x = 0; x < scaledImage.getWidth(); x++) {
+              int pixel = scaledImage.getRGB(x, y);
+              int brightness = getBrightness(pixel);
+              int index = (int) (
+                brightness / 255.0 * (ASCIICHARS.length() - 1)
+              );
+              asciiBuilder.append(ASCIICHARS.charAt(index));
             }
+            asciiBuilder.append("\n");
+          }
+
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+          int result = fileChooser.showSaveDialog(null);
+          if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+            File outputFile = new File(selectedDirectory, "ascii_art.txt");
+            try (
+              BufferedWriter writer = new BufferedWriter(
+                new FileWriter(outputFile)
+              )
+            ) {
+              writer.write(asciiBuilder.toString());
+              JOptionPane.showMessageDialog(
+                null,
+                "ASCII art saved successfully to " +
+                outputFile.getAbsolutePath()
+              );
+            } catch (IOException e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(
+                null,
+                "Error occurred while saving ASCII art"
+              );
+            }
+          }
+        } else {
+          JOptionPane.showMessageDialog(
+            null,
+            "Please enter a resolution percentage between 1 and 100"
+          );
         }
+      } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid number");
+      }
     }
+  }
 
-    private int getBrightness(int pixel) {
-        int red = (pixel >> 16) & 0xff;
-        int green = (pixel >> 8) & 0xff;
-        int blue = pixel & 0xff;
-        return (red + green + blue) / 3;
-    }
+  private int getBrightness(int pixel) {
+    int red = (pixel >> 16) & 0xff;
+    int green = (pixel >> 8) & 0xff;
+    int blue = pixel & 0xff;
+    return (red + green + blue) / 3;
+  }
 
-    private static final String ASCIICHARS = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
-
-  
+  private static final String ASCIICHARS =
+    "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
   private JButton createStraightButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
@@ -1009,26 +1017,28 @@ public class PhotoEditorGUI extends JFrame {
 
     return button;
   }
+
   class ToleranceSliderListener implements ChangeListener {
+
     @Override
     public void stateChanged(ChangeEvent e) {
-        JSlider source = (JSlider) e.getSource();
-        if (!source.getValueIsAdjusting()) {
-            fillTolerance = source.getValue();
-            System.out.println("Tolerance changed to: " + fillTolerance);
-        }
+      JSlider source = (JSlider) e.getSource();
+      if (!source.getValueIsAdjusting()) {
+        fillTolerance = source.getValue();
+        System.out.println("Tolerance changed to: " + fillTolerance);
+      }
     }
-}
+  }
 
-private void updateToleranceSliderVisibility() {
+  private void updateToleranceSliderVisibility() {
     toleranceSlider.setVisible(fillBucketMode);
-}
+  }
 
-private void updateToleranceSliderValue() {
+  private void updateToleranceSliderValue() {
     toleranceSlider.setValue(fillTolerance);
-}
+  }
 
-private void configureToleranceSlider() {
+  private void configureToleranceSlider() {
     toleranceSlider.setMinimum(0);
     toleranceSlider.setMaximum(50);
     toleranceSlider.setMajorTickSpacing(50);
@@ -1037,17 +1047,17 @@ private void configureToleranceSlider() {
     toleranceSlider.setPaintLabels(true);
     toleranceSlider.setSnapToTicks(true);
     toleranceSlider.setValue(fillTolerance);
-}
+  }
 
-private void addToleranceSliderChangeListener() {
+  private void addToleranceSliderChangeListener() {
     toleranceSlider.addChangeListener(new ToleranceSliderListener());
-}
+  }
 
-private void setupToleranceSlider() {
+  private void setupToleranceSlider() {
     configureToleranceSlider();
     addToleranceSliderChangeListener();
     updateToleranceSliderVisibility();
-}
+  }
 
   public static void main(String[] args) {
     System.out.println("Testing Space");
