@@ -220,89 +220,97 @@ public class PhotoEditorGUI extends JFrame {
       }
     );
 
-    JMenuItem saveMenuItem = new JMenuItem("Save As");
-    saveMenuItem.addActionListener(
-      new ActionListener() {
+      JMenuItem saveMenuItem = new JMenuItem("Save As");
+      saveMenuItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          if (image != null) {
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
+            // Your save logic here
+            if (image != null) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
 
-            if (result == JFileChooser.APPROVE_OPTION) {
-              File outputFile = fileChooser.getSelectedFile();
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File outputFile = fileChooser.getSelectedFile();
 
-              // Create a new BufferedImage to draw the lines on
-              BufferedImage combinedImage = new BufferedImage(
-                image.getWidth(),
-                image.getHeight(),
-                BufferedImage.TYPE_INT_ARGB
-              );
-              Graphics2D g2d = combinedImage.createGraphics();
-              g2d.drawImage(image, 0, 0, null);
+                    // Create a new BufferedImage to draw the lines on
+                    BufferedImage combinedImage = new BufferedImage(
+                            image.getWidth(),
+                            image.getHeight(),
+                            BufferedImage.TYPE_INT_ARGB
+                    );
+                    Graphics2D g2d = combinedImage.createGraphics();
+                    g2d.drawImage(image, 0, 0, null);
 
-              // Draw the lines on the combined image
-              g2d.setColor(selectedColor);
-              for (Line line : lines) {
-                g2d.drawLine(
-                  line.start.x,
-                  line.start.y,
-                  line.end.x,
-                  line.end.y
-                );
-              }
-              g2d.dispose(); // Dispose the Graphics2D object
-              try {
-                ImageIO.write(combinedImage, "png", outputFile);
-              } catch (IOException ex) {
-                ex.printStackTrace();
-              }
+                    // Draw the lines on the combined image
+                    g2d.setColor(selectedColor);
+                    for (Line line : lines) {
+                        g2d.drawLine(
+                                line.start.x,
+                                line.start.y,
+                                line.end.x,
+                                line.end.y
+                        );
+                    }
+                    g2d.dispose(); // Dispose the Graphics2D object
+                    try {
+                        ImageIO.write(combinedImage, "png", outputFile);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
-          }
         }
-      }
-    );
+    });
+
+  openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK ));
+
+  saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK ));
+
+
+
+    // saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
+
     fileMenu.add(openMenuItem);
     fileMenu.add(saveMenuItem);
     menuBar.add(fileMenu);
     setJMenuBar(menuBar);
 
-    JMenu toolMenu = new JMenu("Tools");
+    // JMenu toolMenu = new JMenu("Tools");
 
-    JMenuItem freehandMenuItem = new JMenuItem("Freehand");
-    freehandMenuItem.addActionListener(
-      new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          fillBucketMode = false;
-          drawStraightLineMode = false;
-        }
-      }
-    );
-    JMenuItem fillBucketMenuItem = new JMenuItem("Fill Bucket");
-    fillBucketMenuItem.addActionListener(
-      new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          fillBucketMode = true;
-          drawStraightLineMode = false;
-        }
-      }
-    );
-    JMenuItem straightLineMenuItem = new JMenuItem("Straight Line");
-    straightLineMenuItem.addActionListener(
-      new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          drawStraightLineMode = true;
-          fillBucketMode = false;
-        }
-      }
-    );
-    toolMenu.add(freehandMenuItem);
-    toolMenu.add(fillBucketMenuItem);
-    toolMenu.add(straightLineMenuItem);
-    menuBar.add(toolMenu);
+    // JMenuItem freehandMenuItem = new JMenuItem("Freehand");
+    // freehandMenuItem.addActionListener(
+    //   new ActionListener() {
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //       fillBucketMode = false;
+    //       drawStraightLineMode = false;
+    //     }
+    //   }
+    // );
+    // JMenuItem fillBucketMenuItem = new JMenuItem("Fill Bucket");
+    // fillBucketMenuItem.addActionListener(
+    //   new ActionListener() {
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //       fillBucketMode = true;
+    //       drawStraightLineMode = false;
+    //     }
+    //   }
+    // );
+    // JMenuItem straightLineMenuItem = new JMenuItem("Straight Line");
+    // straightLineMenuItem.addActionListener(
+    //   new ActionListener() {
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //       drawStraightLineMode = true;
+    //       fillBucketMode = false;
+    //     }
+    //   }
+    // );
+    // toolMenu.add(freehandMenuItem);
+    // toolMenu.add(fillBucketMenuItem);
+    // toolMenu.add(straightLineMenuItem);
+    // menuBar.add(toolMenu);
 
     drawingPanel =
       new JPanel() {
