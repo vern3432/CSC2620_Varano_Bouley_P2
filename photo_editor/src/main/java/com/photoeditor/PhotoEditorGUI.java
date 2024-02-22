@@ -348,6 +348,7 @@ public class PhotoEditorGUI extends JFrame {
 
 
 
+  newImage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK ));
 
   openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK ));
 
@@ -356,7 +357,7 @@ public class PhotoEditorGUI extends JFrame {
 
 
     // saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
-  fileMenu.add(newImage);
+    fileMenu.add(newImage);
     fileMenu.add(openMenuItem);
     fileMenu.add(saveMenuItem);
     menuBar.add(fileMenu);
