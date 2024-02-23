@@ -23,6 +23,8 @@ import javax.swing.plaf.basic.BasicSliderUI;
 
 public class PhotoEditorGUI extends JFrame {
 
+  private static boolean trace = true;
+
   private JLabel toolStatusLabel; // JLabel to display currently selected tool
 
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
@@ -56,6 +58,7 @@ public class PhotoEditorGUI extends JFrame {
   private JButton paintButton;
   private JButton fillButton;
   private JButton textButton;
+
   // private JButton filterButton;
   private JButton selectToolButton;
   private JButton straightLineMenuItem;
@@ -67,7 +70,7 @@ public class PhotoEditorGUI extends JFrame {
   private JPanel drawingPanel;
   private Point startPoint;
   private Point endPoint;
-  private List<Line> lines = new ArrayList<>();
+  private ArrayList<Line> lines = new ArrayList<>();
   private boolean isDrawing = false;
   private boolean fillBucketMode = false;
   private boolean drawStraightLineMode = false;
@@ -79,7 +82,7 @@ public class PhotoEditorGUI extends JFrame {
     // set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setPreferredSize(new Dimension(800, 600));
+    setPreferredSize(new Dimension(600, 400));
 
     // create components
     loadButton = createLoadButton("folder.png", "Load", "type");
@@ -89,11 +92,11 @@ public class PhotoEditorGUI extends JFrame {
     paintButton = createPaintButton("paintbrush.png", "Paint");
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
     textButton = createButton("text_feild.png", "Text");
+
     // filterButton = createButton("saveicon.png", "Filter");
     selectToolButton = createButton("select_tool_box.png", "Select Tool");
     straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
                                                                                           // colorPickerButton
-
     colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
     toleranceSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, fillTolerance);
@@ -104,23 +107,35 @@ public class PhotoEditorGUI extends JFrame {
     toleranceSlider.addChangeListener(new ToleranceSliderListener());
 
     // Set up layout using GridBagLayout
+    // Main Panel
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
+
+    // Top panel
     JPanel topPanel = new JPanel();
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     topPanel.add(saveButton);
     topPanel.add(loadButton);
-    undoButton.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            if (!lines.isEmpty()) {
-              int size = lines.size();
-              lines.remove(size - 1); // remove the last drawn line
-              drawingPanel.repaint(); // repaint the drawing panel to reflect the change
-            }
+    undoButton.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        int size = lines.size(); // List size
+        if (lines.size() != 0) {
+
+          lines.remove(size - 1); // remove the last drawn line
+          drawingPanel.repaint(); // repaint the drawing panel to reflect the change
+          if (trace) {
+            System.out.println("Line removed: size " + size);
           }
-        });
+        } else {
+          if (trace) {
+            System.out.println("Nothing to undo");
+          }
+        }
+      }
+    });
+
     topPanel.add(undoButton);
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -164,44 +179,43 @@ public class PhotoEditorGUI extends JFrame {
     JMenu fileMenu = new JMenu("File");
     JMenuItem openMenuItem = new JMenuItem("Open");
 
-    openMenuItem.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
-            if (result == JFileChooser.APPROVE_OPTION) {
-              File selectedFile = fileChooser.getSelectedFile();
-              try {
-                image = ImageIO.read(selectedFile);
-                drawingPanel.repaint();
-                Filter.setImage(image);
+    openMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+          File selectedFile = fileChooser.getSelectedFile();
+          try {
+            image = ImageIO.read(selectedFile);
+            drawingPanel.repaint();
+            Filter.setImage(image);
 
-                FilterButton filterButton = null;
-                Component[] components = sidebarPanel.getComponents();
+            FilterButton filterButton = null;
+            Component[] components = sidebarPanel.getComponents();
 
-                for (Component component : components) {
-                  if (component instanceof FilterButton) {
-                    filterButton = (FilterButton) component;
-                    break;
-                  }
-                }
-                if (filterButton != null) {
-                  sidebarPanel.remove(filterButton);
-
-                  filterButton.setImage(image);
-
-                  sidebarPanel.add(filterButton);
-
-                  sidebarPanel.revalidate();
-                  sidebarPanel.repaint();
-                }
-              } catch (IOException ex) {
-                ex.printStackTrace();
+            for (Component component : components) {
+              if (component instanceof FilterButton) {
+                filterButton = (FilterButton) component;
+                break;
               }
             }
+            if (filterButton != null) {
+              sidebarPanel.remove(filterButton);
+
+              filterButton.setImage(image);
+
+              sidebarPanel.add(filterButton);
+
+              sidebarPanel.revalidate();
+              sidebarPanel.repaint();
+            }
+          } catch (IOException ex) {
+            ex.printStackTrace();
           }
-        });
+        }
+      }
+    });
 
     JMenuItem saveMenuItem = new JMenuItem("Save As");
     saveMenuItem.addActionListener(
@@ -491,7 +505,7 @@ public class PhotoEditorGUI extends JFrame {
   private void fillBucket(Point point) {
     if (image != null) {
       int targetColor = image.getRGB(point.x, point.y);
-      int replacementColor = selectedColor.getRGB();
+      int replacementColor = selectedColor.getRed();
       if (targetColor != replacementColor) {
         floodFill(point.x, point.y, targetColor, replacementColor);
       }
@@ -863,6 +877,7 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  // Create the buttons
   private JButton createLoadButton(
       String iconPath,
       String toolTipText,

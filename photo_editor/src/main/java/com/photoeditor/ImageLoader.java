@@ -1,4 +1,5 @@
 package com.photoeditor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,19 +13,16 @@ import java.util.Objects;
 import java.io.ByteArrayInputStream;
 import java.util.Base64;
 
-
-
 import javax.imageio.ImageIO;
 
 public class ImageLoader {
 
-
-        public static boolean allNull(Object target) {
+    public static boolean allNull(Object target) {
         return Arrays.stream(target.getClass()
                 .getDeclaredFields())
-            .peek(f -> f.setAccessible(true))
-            .map(f -> getFieldValue(f, target))
-            .allMatch(Objects::isNull);
+                .peek(f -> f.setAccessible(true))
+                .map(f -> getFieldValue(f, target))
+                .allMatch(Objects::isNull);
     }
 
     public static Object getFieldValue(Field field, Object target) {
@@ -35,44 +33,35 @@ public class ImageLoader {
         }
     }
 
-
     public static void main(String[] args) {
 
-        
-
         ArrayList<String> imageNames = new ArrayList<>(Arrays.asList(
-            "folder.png",
-            "mirrorsidebar2.png",
-            "mirrorsidebar.png",
-            "paintbrushsidebar.png",
-            "paintbucketsidebar.png",
-            "saveicon.png",
-            "select_tool_box.png",
-            "select_tool_lasso.png",
-            "text_feild.png",
-            "undo_topbar.png"
-        ));
-
-
-
+                "folder.png",
+                "mirrorsidebar2.png",
+                "mirrorsidebar.png",
+                "paintbrushsidebar.png",
+                "paintbucketsidebar.png",
+                "saveicon.png",
+                "select_tool_box.png",
+                "select_tool_lasso.png",
+                "text_feild.png",
+                "undo_topbar.png"));
 
         // Load an image
-        BufferedImage image=new BufferedImage(1, 1, 1);
-        for(int i=0;i<imageNames.size();i++){
+        BufferedImage image = new BufferedImage(1, 1, 1);
+        for (int i = 0; i < imageNames.size(); i++) {
             System.out.println(imageNames.get(i));
-             image = loadImage(imageNames.get(i));
-                if(image==null){
-                        System.out.println(imageNames.get(i)+":null");
+            image = loadImage(imageNames.get(i));
+            if (image == null) {
+                System.out.println(imageNames.get(i) + ":null");
 
-                }
-                System.out.println(image);
-  
+            }
+            System.out.println(image);
 
         }
 
         // displayImage(image);
 
-        
         // Display the image in a window
     }
 
