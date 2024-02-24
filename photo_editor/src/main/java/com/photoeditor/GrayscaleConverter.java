@@ -1,4 +1,5 @@
 package com.photoeditor;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -55,12 +56,11 @@ public class GrayscaleConverter extends JFrame {
     public void actionPerformed(ActionEvent e) {
       JFileChooser fileChooser = new JFileChooser();
       FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "Image Files",
-        "jpg",
-        "jpeg",
-        "png",
-        "gif"
-      );
+          "Image Files",
+          "jpg",
+          "jpeg",
+          "png",
+          "gif");
       fileChooser.setFileFilter(filter);
       int returnValue = fileChooser.showOpenDialog(null);
       if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -80,11 +80,10 @@ public class GrayscaleConverter extends JFrame {
     int width = image.getWidth();
     int height = image.getHeight();
     BufferedImage grayscaleImage = new BufferedImage(
-      width,
-      height,
-      BufferedImage.TYPE_BYTE_GRAY
-    );
-    Graphics g = grayscaleImage.getGraphics();
+        width,
+        height,
+        BufferedImage.TYPE_BYTE_GRAY);
+    java.awt.Graphics g = grayscaleImage.getGraphics();
     g.drawImage(image, 0, 0, null);
     g.dispose();
     return grayscaleImage;
@@ -92,11 +91,10 @@ public class GrayscaleConverter extends JFrame {
 
   public static void main(String[] args) {
     SwingUtilities.invokeLater(
-      new Runnable() {
-        public void run() {
-          new GrayscaleConverter().setVisible(true);
-        }
-      }
-    );
+        new Runnable() {
+          public void run() {
+            new GrayscaleConverter().setVisible(true);
+          }
+        });
   }
 }
