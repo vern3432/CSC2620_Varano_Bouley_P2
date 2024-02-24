@@ -3,9 +3,6 @@ package com.photoeditor;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
 
 public class GaussianBlur {
 //source for implimentation https://stackoverflow.com/questions/39684820/java-implementation-of-gaussian-blur

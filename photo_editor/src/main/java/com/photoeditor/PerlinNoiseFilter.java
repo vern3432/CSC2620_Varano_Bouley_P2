@@ -2,8 +2,7 @@ package com.photoeditor;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+
 
 public class PerlinNoiseFilter {
     private int threshold;
