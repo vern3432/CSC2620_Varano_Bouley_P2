@@ -60,7 +60,7 @@ public class BWCartoonEffect extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (inputImage != null) {
                     int threshold = thresholdSlider.getValue();
-                    BufferedImage outputImage = applyCartoonEffect(inputImage, threshold);
+                    BufferedImage outputImage = applyBWCartoonEffect(inputImage, threshold);
                     displayImage(outputImage);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please open an image first", "Error",
@@ -87,7 +87,7 @@ public class BWCartoonEffect extends JFrame {
         getContentPane().add(scrollPane, BorderLayout.CENTER);
     }
 
-    private BufferedImage applyCartoonEffect(BufferedImage image, int threshold) {
+    public BufferedImage applyBWCartoonEffect(BufferedImage image, int threshold) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage gray = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);

@@ -93,7 +93,7 @@ public class CartoonEffect extends JFrame {
     }
   }
 
-  private BufferedImage applyCartoonEffect(BufferedImage image, int threshold) {
+  public BufferedImage applyCartoonEffect(BufferedImage image, int threshold) {
     int width = image.getWidth();
     int height = image.getHeight();
     BufferedImage cartoonImage = new BufferedImage(

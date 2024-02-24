@@ -80,7 +80,7 @@ public class PhotoEditorGUI extends JFrame {
         }
     }
 
-    // Calculate average pixel values for each channel
+    // calc average pixel values for each channel
     double avgRed = (double) sumRed / totalPixels;
     double avgGreen = (double) sumGreen / totalPixels;
     double avgBlue = (double) sumBlue / totalPixels;
@@ -90,7 +90,6 @@ public class PhotoEditorGUI extends JFrame {
   }
 
 
-  // Components
   private JButton saveButton;
   private JButton loadButton;
   private JButton undoButton;
@@ -724,96 +723,7 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
-  public JButton createFilterButton(
-      String iconPath,
-      String toolTipText,
-      BufferedImage image) {
-    BufferedImage image2 = loadImage(iconPath);
-    System.out.println(iconPath);
 
-    Image newimg = image2.getScaledInstance(
-        30,
-        30,
-        java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-    System.out.println(newimg.toString());
-
-    ImageIcon imageIcon = new ImageIcon(newimg);
-
-    JButton button = new JButton(imageIcon);
-    button.setToolTipText(toolTipText);
-
-    button.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            JPopupMenu popupMenu = new JPopupMenu();
-            JMenuItem grayscaleItem = new JMenuItem("Grayscale");
-            JMenuItem invertColorsItem = new JMenuItem("Inverted Colors");
-            JMenuItem blurItem = new JMenuItem("Blur with Gaussian Noise");
-            JMenuItem staticItem = new JMenuItem("Static with Perlin Noise");
-            JMenuItem cartoonifyItem = new JMenuItem("Cartoonify");
-
-            grayscaleItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    System.out.println("View the image in greyscale");
-                  }
-                });
-
-            invertColorsItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    System.out.println("View the image with inverted colors");
-                  }
-                });
-
-            blurItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    System.out.println("Adding blur with Gaussian Noise");
-                  }
-                });
-
-            staticItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    System.out.println("Adding static with Perlin Noise");
-                  }
-                });
-
-            cartoonifyItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    System.out.println("Cartoonify");
-                  }
-                });
-            JMenuItem saveAsTextMenuItem = new JMenuItem("Save as Text");
-            saveAsTextMenuItem.addActionListener(
-                new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                    // Call your method to save the image as text here
-                    saveAsciiArt((BufferedImage) image);
-                  }
-                });
-
-            popupMenu.add(grayscaleItem);
-            popupMenu.add(invertColorsItem);
-            popupMenu.add(blurItem);
-            popupMenu.add(staticItem);
-            popupMenu.add(cartoonifyItem);
-            popupMenu.add(saveAsTextMenuItem);
-
-            popupMenu.show(button, button.getWidth() / 2, button.getHeight() / 2);
-          }
-        });
-    return button;
-  }
 
   public void saveAsciiArt(BufferedImage image) {
     String resolutionInput = JOptionPane.showInputDialog(

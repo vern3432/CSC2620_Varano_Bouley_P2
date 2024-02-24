@@ -1,7 +1,6 @@
 package com.photoeditor;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
@@ -31,8 +30,7 @@ public class FilterButton extends JButton {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
     
-        Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        System.out.println(newimg.toString());
+        Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
     
         ImageIcon imageIcon = new ImageIcon(newimg);
     
@@ -91,10 +89,11 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("printing"+image);
-                        // Call your method to save the image as text here
                         saveAsciiArt(getImage());
                     }
                 });
+            saveAsTextMenuItem.setAccelerator(
+                  KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
 
                 popupMenu.add(grayscaleItem);
                 popupMenu.add(invertColorsItem);
