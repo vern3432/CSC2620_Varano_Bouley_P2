@@ -26,13 +26,14 @@ public class PhotoEditorGUI extends JFrame {
   private static boolean trace = true;
 
   private JLabel toolStatusLabel; // JLabel to display currently selected tool
-
+  private JLabel imageStatusLabel;
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
   private String saveDirectory = "";
   private String loadedImageDirectory = "";
   private boolean Undo = false;
   private Color selectedColor = Color.BLACK;
   private JButton colorPickerButton;
+  private String Filename="";
 
   public BufferedImage loadImage(String filename) {
     BufferedImage iconImage = null;
@@ -50,6 +51,44 @@ public class PhotoEditorGUI extends JFrame {
     }
     return iconImage;
   }
+
+  public static double round(double value, int places) {
+    if (places < 0) throw new IllegalArgumentException();
+
+    long factor = (long) Math.pow(10, places);
+    value = value * factor;
+    long tmp = Math.round(value);
+    return (double) tmp / factor;
+}
+  private void updateImageinfo(BufferedImage updated){
+    int width = updated.getWidth();
+    int height = updated.getHeight();
+    int totalPixels = width * height;
+    int sumRed = 0;
+    int sumGreen = 0;
+    int sumBlue = 0;
+
+      for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int rgb = image.getRGB(x, y);
+            int red = (rgb >> 16) & 0xFF;
+            int green = (rgb >> 8) & 0xFF;
+            int blue = rgb & 0xFF;
+            sumRed += red;
+            sumGreen += green;
+            sumBlue += blue;
+        }
+    }
+
+    // Calculate average pixel values for each channel
+    double avgRed = (double) sumRed / totalPixels;
+    double avgGreen = (double) sumGreen / totalPixels;
+    double avgBlue = (double) sumBlue / totalPixels;
+  
+    imageStatusLabel.setText("File:"+Filename+" "+"avgRed:"+round(avgRed, 2)+" "+"avgGreen:"+round(avgGreen, 2)+" "+"avgBlue:"+round(avgBlue, 2)+" "+"Resolution="+width+"*"+height+"="+totalPixels+"px");;
+
+  }
+
 
   // Components
   private JButton saveButton;
@@ -141,8 +180,16 @@ public class PhotoEditorGUI extends JFrame {
     mainPanel.add(topPanel, BorderLayout.NORTH);
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
     toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); // some padding to the toolar
+    toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); 
+    imageStatusLabel= new JLabel("No selected Image");
+    imageStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    imageStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0)); 
+
+
     mainPanel.add(toolStatusLabel, BorderLayout.SOUTH);
+    
+    mainPanel.add(imageStatusLabel, BorderLayout.SOUTH);
+
     System.out.println("top bar  picker added");
 
     // add sidebar
@@ -190,7 +237,9 @@ public class PhotoEditorGUI extends JFrame {
             image = ImageIO.read(selectedFile);
             drawingPanel.repaint();
             Filter.setImage(image);
-
+            Filename=selectedFile.toString();
+            
+            updateImageinfo(image);
             FilterButton filterButton = null;
             Component[] components = sidebarPanel.getComponents();
 
