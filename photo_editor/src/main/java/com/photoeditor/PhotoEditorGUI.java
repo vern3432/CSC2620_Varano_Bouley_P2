@@ -838,11 +838,15 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  // Number of images loaded
+  int imageCount = 0;
+
   // Create the buttons
-  private JButton createLoadButton(
-      String iconPath,
-      String toolTipText,
-      String type) {
+  private JButton createLoadButton(String iconPath, String toolTipText, String type) {
+
+    // Total number of images selected so they can be stored in another card when
+    // more are added
+
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
     Image image = (Image) image2;
@@ -887,6 +891,8 @@ public class PhotoEditorGUI extends JFrame {
               File selectedFile = fileChooser.getSelectedFile();
               System.out.println(
                   "Selected File: " + selectedFile.getAbsolutePath());
+              imageCount = imageCount + 1;
+              System.out.println("Number of images: " + imageCount);
             } else {
               System.out.println("No file selected");
             }
