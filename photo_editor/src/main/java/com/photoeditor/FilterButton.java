@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 
 public class FilterButton extends JButton {
     public BufferedImage image;
-
     public FilterButton(String iconPath, String toolTipText, BufferedImage image) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
@@ -81,9 +80,25 @@ public class FilterButton extends JButton {
                         saveAsciiArt(getImage());
                     }
                 });
-            saveAsTextMenuItem.setAccelerator(
-                  KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
+                grayscaleItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK));
 
+                invertColorsItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_DOWN_MASK));
+
+                blurItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
+
+                staticItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
+
+                cartoonifyItem.setAccelerator(
+                  KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
+
+
+                  saveAsTextMenuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
+  
                 popupMenu.add(grayscaleItem);
                 popupMenu.add(invertColorsItem);
                 popupMenu.add(blurItem);
@@ -94,6 +109,19 @@ public class FilterButton extends JButton {
                 popupMenu.show(FilterButton.this, getWidth() / 2, getHeight() / 2);
             }
         });
+        // set up key binding for CTRL+F
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK), "filterAction");
+        getActionMap().put("filterAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            System.out.println("clicked");           
+            doClick();
+            }
+        });
+
+
+
+
     }
 
     public void saveAsciiArt(BufferedImage image) {

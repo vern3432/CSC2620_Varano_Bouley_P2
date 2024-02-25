@@ -39,7 +39,8 @@ public class PhotoEditorGUI extends JFrame {
     BufferedImage iconImage = null;
     try {
       // Load the icon image using ClassLoader
-      InputStream inputStream = ImageLoader.class.getResourceAsStream("/icon/" + filename);
+      InputStream inputStream =
+        ImageLoader.class.getResourceAsStream("/icon/" + filename);
       if (inputStream != null) {
         iconImage = ImageIO.read(inputStream);
         inputStream.close();
@@ -53,8 +54,7 @@ public class PhotoEditorGUI extends JFrame {
   }
 
   public static double round(double value, int places) {
-    if (places < 0)
-      throw new IllegalArgumentException();
+    if (places < 0) throw new IllegalArgumentException();
 
     long factor = (long) Math.pow(10, places);
     value = value * factor;
@@ -87,11 +87,27 @@ public class PhotoEditorGUI extends JFrame {
     double avgGreen = (double) sumGreen / totalPixels;
     double avgBlue = (double) sumBlue / totalPixels;
 
-    imageStatusLabel
-        .setText("File:" + Filename + " " + "avgRed:" + round(avgRed, 2) + " " + "avgGreen:" + round(avgGreen, 2) + " "
-            + "avgBlue:" + round(avgBlue, 2) + " " + "Resolution=" + width + "*" + height + "=" + totalPixels + "px");
-    ;
-
+    imageStatusLabel.setText(
+      "File:" +
+      Filename +
+      " " +
+      "avgRed:" +
+      round(avgRed, 2) +
+      " " +
+      "avgGreen:" +
+      round(avgGreen, 2) +
+      " " +
+      "avgBlue:" +
+      round(avgBlue, 2) +
+      " " +
+      "Resolution=" +
+      width +
+      "*" +
+      height +
+      "=" +
+      totalPixels +
+      "px"
+    );
   }
 
   private JButton saveButton;
@@ -120,7 +136,6 @@ public class PhotoEditorGUI extends JFrame {
   JPanel sidebarPanel;
 
   public PhotoEditorGUI() {
-
     // set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,13 +147,58 @@ public class PhotoEditorGUI extends JFrame {
     undoButton = createButton("undo_topbar.png", "Undo");
 
     paintButton = createPaintButton("paintbrush.png", "Paint");
+
+    paintButton
+      .getInputMap()
+      .put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK),
+        "buttonAction"
+      );
+
+    paintButton
+      .getActionMap()
+      .put(
+        "buttonAction",
+        new AbstractAction() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            // Perform the same action as clicking the button
+            paintButton.doClick();
+          }
+        }
+      );
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
+
+
+    fillButton
+    .getInputMap()
+    .put(
+      KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK),
+      "buttonAction"
+    );
+    
+    fillButton
+    .getActionMap()
+    .put(
+      "buttonAction",
+      new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          // Perform the same action as clicking the button
+          fillButton.doClick();
+        }
+      }
+    );
+
+
+
     textButton = createButton("text_feild.png", "Text");
 
     // filterButton = createButton("saveicon.png", "Filter");
     selectToolButton = createButton("select_tool_box.png", "Select Tool");
-    straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
-                                                                                          // colorPickerButton
+    straightLineMenuItem =
+      createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
+    // colorPickerButton
     colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
     toleranceSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, fillTolerance);
@@ -158,25 +218,25 @@ public class PhotoEditorGUI extends JFrame {
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     topPanel.add(saveButton);
     topPanel.add(loadButton);
-    undoButton.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        int size = lines.size(); // List size
-        if (lines.size() != 0) {
-
-          lines.remove(size - 1); // remove the last drawn line
-          drawingPanel.repaint(); // repaint the drawing panel to reflect the change
-          if (trace) {
-            System.out.println("Line removed: size " + size);
-          }
-        } else {
-          if (trace) {
-            System.out.println("Nothing to undo");
+    undoButton.addActionListener(
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          int size = lines.size(); // List size
+          if (lines.size() != 0) {
+            lines.remove(size - 1); // remove the last drawn line
+            drawingPanel.repaint(); // repaint the drawing panel to reflect the change
+            if (trace) {
+              System.out.println("Line removed: size " + size);
+            }
+          } else {
+            if (trace) {
+              System.out.println("Nothing to undo");
+            }
           }
         }
       }
-    });
+    );
 
     topPanel.add(undoButton);
 
@@ -228,131 +288,21 @@ public class PhotoEditorGUI extends JFrame {
     JMenu fileMenu = new JMenu("File");
     JMenuItem openMenuItem = new JMenuItem("Open");
 
-    openMenuItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-          File selectedFile = fileChooser.getSelectedFile();
-          try {
-            image = ImageIO.read(selectedFile);
-            drawingPanel.repaint();
-            Filter.setImage(image);
-            Filename = selectedFile.toString();
-
-            updateImageinfo(image);
-            FilterButton filterButton = null;
-            Component[] components = sidebarPanel.getComponents();
-
-            for (Component component : components) {
-              if (component instanceof FilterButton) {
-                filterButton = (FilterButton) component;
-                break;
-              }
-            }
-            if (filterButton != null) {
-              sidebarPanel.remove(filterButton);
-
-              filterButton.setImage(image);
-
-              sidebarPanel.add(filterButton);
-
-              sidebarPanel.revalidate();
-              sidebarPanel.repaint();
-            }
-          } catch (IOException ex) {
-            ex.printStackTrace();
-          }
-        }
-      }
-    });
-
-    JMenuItem saveMenuItem = new JMenuItem("Save As");
-    saveMenuItem.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            // Your save logic here
-            if (image != null) {
-              JFileChooser fileChooser = new JFileChooser();
-              int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
-
-              if (result == JFileChooser.APPROVE_OPTION) {
-                File outputFile = fileChooser.getSelectedFile();
-
-                // Create a new BufferedImage to draw the lines on
-                BufferedImage combinedImage = new BufferedImage(
-                    image.getWidth(),
-                    image.getHeight(),
-                    BufferedImage.TYPE_INT_ARGB);
-                Graphics2D g2d = combinedImage.createGraphics();
-                g2d.drawImage(image, 0, 0, null);
-
-                // Draw the lines on the combined image
-
-                g2d.setColor(selectedColor);
-                for (Line line : lines) {
-                  g2d.drawLine(
-                      line.start.x,
-                      line.start.y,
-                      line.end.x,
-                      line.end.y);
-                }
-                g2d.dispose(); // Dispose the Graphics2D object
-                try {
-                  ImageIO.write(combinedImage, "png", outputFile);
-                } catch (IOException ex) {
-                  ex.printStackTrace();
-                }
-              }
-            }
-          }
-        });
-
-    JMenuItem newImage = new JMenuItem("New");
-
-    newImage.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            lines.clear();
-
-            // Create a dialog to input height and width
-            JTextField heightField = new JTextField(5);
-            JTextField widthField = new JTextField(5);
-            JPanel panel = new JPanel();
-            panel.add(new JLabel("Height:"));
-            panel.add(heightField);
-            panel.add(Box.createHorizontalStrut(15)); // Add some space between components
-            panel.add(new JLabel("Width:"));
-            panel.add(widthField);
-
-            int result = JOptionPane.showConfirmDialog(
-                null,
-                panel,
-                "Enter Height and Width",
-                JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION) {
-              int height = Integer.parseInt(heightField.getText());
-              int width = Integer.parseInt(widthField.getText());
-              System.out.println(
-                  "Creating new image with height: " +
-                      height +
-                      " and width: " +
-                      width);
-              BufferedImage bufferedImage = new BufferedImage(
-                  width,
-                  height,
-                  BufferedImage.TYPE_INT_RGB);
-              Graphics2D g2d = bufferedImage.createGraphics();
-              g2d.setColor(Color.WHITE);
-              g2d.fillRect(0, 0, width, height);
-              g2d.dispose();
-
-              image = bufferedImage;
+    openMenuItem.addActionListener(
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          JFileChooser fileChooser = new JFileChooser();
+          int result = fileChooser.showOpenDialog(PhotoEditorGUI.this);
+          if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+              image = ImageIO.read(selectedFile);
               drawingPanel.repaint();
+              Filter.setImage(image);
+              Filename = selectedFile.toString();
 
+              updateImageinfo(image);
               FilterButton filterButton = null;
               Component[] components = sidebarPanel.getComponents();
 
@@ -372,18 +322,140 @@ public class PhotoEditorGUI extends JFrame {
                 sidebarPanel.revalidate();
                 sidebarPanel.repaint();
               }
+            } catch (IOException ex) {
+              ex.printStackTrace();
             }
           }
-        });
+        }
+      }
+    );
+
+    JMenuItem saveMenuItem = new JMenuItem("Save As");
+    saveMenuItem.addActionListener(
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          // Your save logic here
+          if (image != null) {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+              File outputFile = fileChooser.getSelectedFile();
+
+              // Create a new BufferedImage to draw the lines on
+              BufferedImage combinedImage = new BufferedImage(
+                image.getWidth(),
+                image.getHeight(),
+                BufferedImage.TYPE_INT_ARGB
+              );
+              Graphics2D g2d = combinedImage.createGraphics();
+              g2d.drawImage(image, 0, 0, null);
+
+              // Draw the lines on the combined image
+
+              g2d.setColor(selectedColor);
+              for (Line line : lines) {
+                g2d.drawLine(
+                  line.start.x,
+                  line.start.y,
+                  line.end.x,
+                  line.end.y
+                );
+              }
+              g2d.dispose(); // Dispose the Graphics2D object
+              try {
+                ImageIO.write(combinedImage, "png", outputFile);
+              } catch (IOException ex) {
+                ex.printStackTrace();
+              }
+            }
+          }
+        }
+      }
+    );
+
+    JMenuItem newImage = new JMenuItem("New");
+
+    newImage.addActionListener(
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          lines.clear();
+
+          // Create a dialog to input height and width
+          JTextField heightField = new JTextField(5);
+          JTextField widthField = new JTextField(5);
+          JPanel panel = new JPanel();
+          panel.add(new JLabel("Height:"));
+          panel.add(heightField);
+          panel.add(Box.createHorizontalStrut(15)); // Add some space between components
+          panel.add(new JLabel("Width:"));
+          panel.add(widthField);
+
+          int result = JOptionPane.showConfirmDialog(
+            null,
+            panel,
+            "Enter Height and Width",
+            JOptionPane.OK_CANCEL_OPTION
+          );
+          if (result == JOptionPane.OK_OPTION) {
+            int height = Integer.parseInt(heightField.getText());
+            int width = Integer.parseInt(widthField.getText());
+            System.out.println(
+              "Creating new image with height: " +
+              height +
+              " and width: " +
+              width
+            );
+            BufferedImage bufferedImage = new BufferedImage(
+              width,
+              height,
+              BufferedImage.TYPE_INT_RGB
+            );
+            Graphics2D g2d = bufferedImage.createGraphics();
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, width, height);
+            g2d.dispose();
+
+            image = bufferedImage;
+            drawingPanel.repaint();
+
+            FilterButton filterButton = null;
+            Component[] components = sidebarPanel.getComponents();
+
+            for (Component component : components) {
+              if (component instanceof FilterButton) {
+                filterButton = (FilterButton) component;
+                break;
+              }
+            }
+            if (filterButton != null) {
+              sidebarPanel.remove(filterButton);
+
+              filterButton.setImage(image);
+
+              sidebarPanel.add(filterButton);
+
+              sidebarPanel.revalidate();
+              sidebarPanel.repaint();
+            }
+          }
+        }
+      }
+    );
 
     newImage.setAccelerator(
-        KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+      KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK)
+    );
 
     openMenuItem.setAccelerator(
-        KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+      KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK)
+    );
 
     saveMenuItem.setAccelerator(
-        KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
+      KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK)
+    );
 
     // saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control alt P"));
     fileMenu.add(newImage);
@@ -431,64 +503,66 @@ public class PhotoEditorGUI extends JFrame {
     // toolMenu.add(straightLineMenuItem);
     // menuBar.add(toolMenu);
 
-    drawingPanel = new JPanel() {
-      @Override
-      protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (image != null) {
-          g.drawImage(image, 0, 0, this);
+    drawingPanel =
+      new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+          super.paintComponent(g);
+          if (image != null) {
+            g.drawImage(image, 0, 0, this);
+          }
+          if (!fillBucketMode) {
+            for (Line line : lines) {
+              line.draw(g);
+            }
+          }
         }
-        if (!fillBucketMode) {
-          for (Line line : lines) {
-            line.draw(g);
+      };
+    drawingPanel.addMouseListener(
+      new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent e) {
+          if (fillBucketMode) {
+            fillBucket(e.getPoint());
+
+            drawingPanel.repaint();
+            drawingPanel.repaint();
+          } else {
+            startPoint = e.getPoint();
+            isDrawing = true;
+          }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+          if (isDrawing && !fillBucketMode) {
+            endPoint = e.getPoint();
+            if (drawStraightLineMode) {
+              lines.add(new Line(startPoint, endPoint, selectedColor));
+            } else {
+              lines.add(new Line(startPoint, startPoint, selectedColor)); // add single point for freehand drawing
+            }
+            isDrawing = false;
+            drawingPanel.repaint();
           }
         }
       }
-    };
-    drawingPanel.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mousePressed(MouseEvent e) {
-            if (fillBucketMode) {
-              fillBucket(e.getPoint());
-
-              drawingPanel.repaint();
-              drawingPanel.repaint();
-            } else {
-              startPoint = e.getPoint();
-              isDrawing = true;
-            }
-          }
-
-          @Override
-          public void mouseReleased(MouseEvent e) {
-            if (isDrawing && !fillBucketMode) {
-              endPoint = e.getPoint();
-              if (drawStraightLineMode) {
-                lines.add(new Line(startPoint, endPoint, selectedColor));
-              } else {
-                lines.add(new Line(startPoint, startPoint, selectedColor)); // add single point for freehand drawing
-              }
-              isDrawing = false;
-              drawingPanel.repaint();
-            }
-          }
-        });
+    );
     drawingPanel.addMouseMotionListener(
-        new MouseMotionAdapter() {
-          @Override
-          public void mouseDragged(MouseEvent e) {
-            if (isDrawing && !fillBucketMode) {
-              endPoint = e.getPoint();
-              if (!drawStraightLineMode) {
-                lines.add(new Line(startPoint, endPoint, selectedColor));
-              }
-              startPoint = endPoint;
-              drawingPanel.repaint();
+      new MouseMotionAdapter() {
+        @Override
+        public void mouseDragged(MouseEvent e) {
+          if (isDrawing && !fillBucketMode) {
+            endPoint = e.getPoint();
+            if (!drawStraightLineMode) {
+              lines.add(new Line(startPoint, endPoint, selectedColor));
             }
+            startPoint = endPoint;
+            drawingPanel.repaint();
           }
-        });
-
+        }
+      }
+    );
     mainPanel.add(drawingPanel);
 
     // add main panel to content pane
@@ -535,7 +609,6 @@ public class PhotoEditorGUI extends JFrame {
   // fillTolerance = 10;
   // }
   // }
-
   private class Line {
 
     Point start;
@@ -557,7 +630,7 @@ public class PhotoEditorGUI extends JFrame {
   private void fillBucket(Point point) {
     if (image != null) {
       int targetColor = image.getRGB(point.x, point.y);
-      int replacementColor = selectedColor.getRed();
+      int replacementColor = selectedColor.getRGB();
       if (targetColor != replacementColor) {
         floodFill(point.x, point.y, targetColor, replacementColor);
       }
@@ -590,7 +663,9 @@ public class PhotoEditorGUI extends JFrame {
     int deltaGreen = Math.abs(green1 - green2);
     int deltaBlue = Math.abs(blue1 - blue2);
 
-    return (deltaRed <= tolerance && deltaGreen <= tolerance && deltaBlue <= tolerance);
+    return (
+      deltaRed <= tolerance && deltaGreen <= tolerance && deltaBlue <= tolerance
+    );
   }
 
   class ColorPickerListener implements ActionListener {
@@ -598,9 +673,10 @@ public class PhotoEditorGUI extends JFrame {
     @Override
     public void actionPerformed(ActionEvent e) {
       Color newColor = JColorChooser.showDialog(
-          PhotoEditorGUI.this,
-          "Select a Color",
-          selectedColor);
+        PhotoEditorGUI.this,
+        "Select a Color",
+        selectedColor
+      );
       if (newColor != null) {
         selectedColor = newColor;
         colorPickerButton.setBackground(selectedColor); // change background color of colorPickerButton
@@ -625,22 +701,23 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
-          }
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+        }
 
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
 
-          public void mouseClicked(MouseEvent e) {
-            sidebarStatus = toolTipText;
-            toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
-          }
-        });
+        public void mouseClicked(MouseEvent e) {
+          sidebarStatus = toolTipText;
+          toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+        }
+      }
+    );
 
     return button;
   }
@@ -664,24 +741,25 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
-          }
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+        }
 
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
 
-          public void mouseClicked(MouseEvent e) {
-            sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
-            toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
-            fillBucketMode = false;
-            drawStraightLineMode = false;
-          }
-        });
+        public void mouseClicked(MouseEvent e) {
+          sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
+          toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+          fillBucketMode = false;
+          drawStraightLineMode = false;
+        }
+      }
+    );
 
     return button;
   }
@@ -705,42 +783,49 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.WHITE); // change background color on hover
-          }
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.WHITE); // change background color on hover
+        }
 
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
 
-          public void mouseClicked(MouseEvent e) {
-            sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
-            toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update toolStatusLabel
-            fillBucketMode = true;
-            drawStraightLineMode = false;
-          }
-        });
+        public void mouseClicked(MouseEvent e) {
+          sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
+          toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update toolStatusLabel
+          fillBucketMode = true;
+          drawStraightLineMode = false;
+        }
+      }
+    );
 
     return button;
   }
 
   public void saveAsciiArt(BufferedImage image) {
     String resolutionInput = JOptionPane.showInputDialog(
-        null,
-        "Enter resolution percentage (1-100):");
+      null,
+      "Enter resolution percentage (1-100):"
+    );
     if (resolutionInput != null) {
       try {
         int resolutionPercentage = Integer.parseInt(resolutionInput);
         if (resolutionPercentage >= 1 && resolutionPercentage <= 100) {
-          int scaledWidth = (int) (image.getWidth() * (resolutionPercentage / 100.0));
-          int scaledHeight = (int) (image.getHeight() * (resolutionPercentage / 100.0));
+          int scaledWidth = (int) (
+            image.getWidth() * (resolutionPercentage / 100.0)
+          );
+          int scaledHeight = (int) (
+            image.getHeight() * (resolutionPercentage / 100.0)
+          );
           BufferedImage scaledImage = new BufferedImage(
-              scaledWidth,
-              scaledHeight,
-              BufferedImage.TYPE_INT_RGB);
+            scaledWidth,
+            scaledHeight,
+            BufferedImage.TYPE_INT_RGB
+          );
           Graphics2D g = scaledImage.createGraphics();
           g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
           g.dispose();
@@ -750,7 +835,9 @@ public class PhotoEditorGUI extends JFrame {
             for (int x = 0; x < scaledImage.getWidth(); x++) {
               int pixel = scaledImage.getRGB(x, y);
               int brightness = getBrightness(pixel);
-              int index = (int) (brightness / 255.0 * (ASCIICHARS.length() - 1));
+              int index = (int) (
+                brightness / 255.0 * (ASCIICHARS.length() - 1)
+              );
               asciiBuilder.append(ASCIICHARS.charAt(index));
             }
             asciiBuilder.append("\n");
@@ -763,24 +850,29 @@ public class PhotoEditorGUI extends JFrame {
             File selectedDirectory = fileChooser.getSelectedFile();
             File outputFile = new File(selectedDirectory, "ascii_art.txt");
             try (
-                BufferedWriter writer = new BufferedWriter(
-                    new FileWriter(outputFile))) {
+              BufferedWriter writer = new BufferedWriter(
+                new FileWriter(outputFile)
+              )
+            ) {
               writer.write(asciiBuilder.toString());
               JOptionPane.showMessageDialog(
-                  null,
-                  "ASCII art saved successfully to " +
-                      outputFile.getAbsolutePath());
+                null,
+                "ASCII art saved successfully to " +
+                outputFile.getAbsolutePath()
+              );
             } catch (IOException e) {
               e.printStackTrace();
               JOptionPane.showMessageDialog(
-                  null,
-                  "Error occurred while saving ASCII art");
+                null,
+                "Error occurred while saving ASCII art"
+              );
             }
           }
         } else {
           JOptionPane.showMessageDialog(
-              null,
-              "Please enter a resolution percentage between 1 and 100");
+            null,
+            "Please enter a resolution percentage between 1 and 100"
+          );
         }
       } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Please enter a valid number");
@@ -795,7 +887,8 @@ public class PhotoEditorGUI extends JFrame {
     return (red + green + blue) / 3;
   }
 
-  private static final String ASCIICHARS = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+  private static final String ASCIICHARS =
+    "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
   private JButton createStraightButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
@@ -816,24 +909,25 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
-          }
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+        }
 
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
 
-          public void mouseClicked(MouseEvent e) {
-            sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
-            toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
-            fillBucketMode = false;
-            drawStraightLineMode = true;
-          }
-        });
+        public void mouseClicked(MouseEvent e) {
+          sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
+          toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+          fillBucketMode = false;
+          drawStraightLineMode = true;
+        }
+      }
+    );
 
     return button;
   }
@@ -842,8 +936,11 @@ public class PhotoEditorGUI extends JFrame {
   int imageCount = 0;
 
   // Create the buttons
-  private JButton createLoadButton(String iconPath, String toolTipText, String type) {
-
+  private JButton createLoadButton(
+    String iconPath,
+    String toolTipText,
+    String type
+  ) {
     // Total number of images selected so they can be stored in another card when
     // more are added
 
@@ -865,47 +962,51 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
+
+        public void mouseClicked(MouseEvent e) {
+          FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
+            "Image files",
+            ImageIO.getReaderFileSuffixes()
+          );
+          System.out.println(imageFilter);
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.addChoosableFileFilter(imageFilter);
+          fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+          int returnValue = fileChooser.showOpenDialog(null);
+
+          if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println(
+              "Selected File: " + selectedFile.getAbsolutePath()
+            );
+            imageCount = imageCount + 1;
+            System.out.println("Number of images: " + imageCount);
+          } else {
+            System.out.println("No file selected");
           }
-
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
-
-          public void mouseClicked(MouseEvent e) {
-            FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-                "Image files",
-                ImageIO.getReaderFileSuffixes());
-            System.out.println(imageFilter);
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.addChoosableFileFilter(imageFilter);
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-            int returnValue = fileChooser.showOpenDialog(null);
-
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-              File selectedFile = fileChooser.getSelectedFile();
-              System.out.println(
-                  "Selected File: " + selectedFile.getAbsolutePath());
-              imageCount = imageCount + 1;
-              System.out.println("Number of images: " + imageCount);
-            } else {
-              System.out.println("No file selected");
-            }
-          }
-        });
+        }
+      }
+    );
 
     return button;
   }
 
   private JButton createSaveButton(
-      String iconPath,
-      String toolTipText,
-      String type) {
+    String iconPath,
+    String toolTipText,
+    String type
+  ) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
     Image image = (Image) image2;
@@ -924,31 +1025,33 @@ public class PhotoEditorGUI extends JFrame {
     button.setToolTipText(toolTipText);
 
     button.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseEntered(MouseEvent e) {
-            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
-          }
+      new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+          button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+        }
 
-          @Override
-          public void mouseExited(MouseEvent e) {
-            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
-          }
+        @Override
+        public void mouseExited(MouseEvent e) {
+          button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+        }
 
-          public void mouseClicked(MouseEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int returnValue = fileChooser.showOpenDialog(null);
+        public void mouseClicked(MouseEvent e) {
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+          int returnValue = fileChooser.showOpenDialog(null);
 
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-              File selectedDirectory = fileChooser.getSelectedFile();
-              System.out.println(
-                  "Selected Directory: " + selectedDirectory.getAbsolutePath());
-            } else {
-              System.out.println("No directory selected");
-            }
+          if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedDirectory = fileChooser.getSelectedFile();
+            System.out.println(
+              "Selected Directory: " + selectedDirectory.getAbsolutePath()
+            );
+          } else {
+            System.out.println("No directory selected");
           }
-        });
+        }
+      }
+    );
 
     return button;
   }
@@ -999,11 +1102,12 @@ public class PhotoEditorGUI extends JFrame {
 
     // Create and show the GUI
     SwingUtilities.invokeLater(
-        new Runnable() {
-          @Override
-          public void run() {
-            new PhotoEditorGUI();
-          }
-        });
+      new Runnable() {
+        @Override
+        public void run() {
+          new PhotoEditorGUI();
+        }
+      }
+    );
   }
 }
