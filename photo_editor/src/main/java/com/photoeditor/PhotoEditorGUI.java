@@ -153,11 +153,23 @@ public class PhotoEditorGUI extends JFrame {
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
+    //Card panels
+    JPanel cards;
+    String item1 = "item1";
+    String item2 = "item2";
+
+    String comboBoxItems[] = {item1, item2};
+    JComboBox comboBox = new JComboBox(comboBoxItems);
+
+    JPanel card1 = new JPanel();
+    JPanel card2 = new JPanel();
+
     // Top panel
-    JPanel topPanel = new JPanel();
+    JPanel topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     topPanel.add(saveButton);
     topPanel.add(loadButton);
+    
     undoButton.addActionListener(new ActionListener() {
 
       @Override
@@ -179,6 +191,7 @@ public class PhotoEditorGUI extends JFrame {
     });
 
     topPanel.add(undoButton);
+    topPanel.add(comboBox);
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
