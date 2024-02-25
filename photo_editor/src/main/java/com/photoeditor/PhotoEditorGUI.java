@@ -168,62 +168,54 @@ public class PhotoEditorGUI extends JFrame {
         }
       );
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
-    fillButton.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
+    fillButton.addMouseListener(
+      new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
           // Your mouseClicked action here
           BufferedImage combinedImage = new BufferedImage(
-              image.getWidth(),
-              image.getHeight(),
-              BufferedImage.TYPE_INT_ARGB
+            image.getWidth(),
+            image.getHeight(),
+            BufferedImage.TYPE_INT_ARGB
           );
           Graphics2D g2d = combinedImage.createGraphics();
           g2d.drawImage(image, 0, 0, null);
-  
+
           // Draw the lines on the combined image
           g2d.setColor(selectedColor);
           for (Line line : lines) {
-              g2d.drawLine(
-                  line.start.x,
-                  line.start.y,
-                  line.end.x,
-                  line.end.y
-              );
+            g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
           }
-          image=combinedImage;
+          image = combinedImage;
           g2d.dispose();
 
           // sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
           // toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update toolStatusLabel
           fillBucketMode = true;
           drawStraightLineMode = false;
-      }
-  });
-
-
-
-
-    fillButton
-    .getInputMap()
-    .put(
-      KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK),
-      "buttonAction"
-    );
-    
-    fillButton
-    .getActionMap()
-    .put(
-      "buttonAction",
-      new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          // Perform the same action as clicking the button
-          fillButton.doClick();
         }
       }
     );
 
+    fillButton
+      .getInputMap()
+      .put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK),
+        "buttonAction"
+      );
 
+    fillButton
+      .getActionMap()
+      .put(
+        "buttonAction",
+        new AbstractAction() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            // Perform the same action as clicking the button
+            fillButton.doClick();
+          }
+        }
+      );
 
     textButton = createButton("text_feild.png", "Text");
 
@@ -817,10 +809,6 @@ public class PhotoEditorGUI extends JFrame {
 
     button.addMouseListener(
       new MouseAdapter() {
-
-
-
-        
         @Override
         public void mouseEntered(MouseEvent e) {
           button.setBackground(Color.WHITE); // change background color on hover
@@ -830,12 +818,8 @@ public class PhotoEditorGUI extends JFrame {
         public void mouseExited(MouseEvent e) {
           button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
         }
-
         // public void mouseClicked(MouseEvent e) {
 
-
-
-          
         //   sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
         //   toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update toolStatusLabel
         //   fillBucketMode = true;
