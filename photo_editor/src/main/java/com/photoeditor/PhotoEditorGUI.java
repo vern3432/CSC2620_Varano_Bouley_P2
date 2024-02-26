@@ -144,7 +144,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
   JPanel topPanel;
   JPanel mainPanel;
   JPanel cards;
-
   
   private String image1 = "Image 1";
   private String image2 = "Image 2";
@@ -163,6 +162,7 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     super("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(600, 400));
+    
 
     // create components
     loadButton = createLoadButton("folder.png", "Load", "type");
@@ -261,14 +261,19 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
-    
+    JPanel view1 = new JPanel();
+    view1.add(new JButton("Hello"));
+    JPanel view2 = new JPanel();
+    view2.add(new JButton("Hello"));
 
-    JPanel card1 = new JPanel();
-    
-
+    JPanel view3 = new JPanel();
 
     cards = new JPanel(new CardLayout());
-  
+    cards.add(view1, image1);
+    cards.add(view2, image2);
+    cards.add(view3, image3);
+
+    this.add(cards, BorderLayout.SOUTH);
     
     // Top panel
     JPanel topPanel = new JPanel();
@@ -276,13 +281,27 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     topPanel.add(saveButton);
     topPanel.add(loadButton);
 
+    cb.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        
+      CardLayout cl = (CardLayout) (cards.getLayout());
+      cl.show(cards, (String) cb.getSelectedItem());
+
+
+      }
+      
+    });
+      
     
-    
-    
+
+    //Undo button action listener
     undoButton.addActionListener(
       new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+          
           int size = lines.size(); // List size
           if (lines.size() != 0) {
             lines.remove(size - 1); // remove the last drawn line
@@ -301,8 +320,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
 
     topPanel.add(undoButton);
     topPanel.add(cb);
-
-    
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
@@ -642,6 +659,8 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     CardLayout cl = (CardLayout) (cards.getLayout());
     cl.show(cards, (String) evt.getItem());
     }
+
+ 
   
 
   // private JTextField createToleranceTextField() {
