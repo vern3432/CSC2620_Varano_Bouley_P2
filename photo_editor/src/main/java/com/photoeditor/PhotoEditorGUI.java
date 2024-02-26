@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Line;
@@ -21,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicSliderUI;
 
-public class PhotoEditorGUI extends JFrame {
+public class PhotoEditorGUI extends JFrame implements ItemListener{
 
   private static boolean trace = true; // Turn tracing on and off
 
@@ -35,6 +36,11 @@ public class PhotoEditorGUI extends JFrame {
   private JButton colorPickerButton;
   private String Filename = "";
 
+  /**
+   * Loads an image from a file
+   * @param filename
+   * @return
+   */
   public BufferedImage loadImage(String filename) {
     BufferedImage iconImage = null;
     try {
@@ -110,6 +116,7 @@ public class PhotoEditorGUI extends JFrame {
     );
   }
 
+  // Basic buttons
   private JButton saveButton;
   private JButton loadButton;
   private JButton undoButton;
@@ -117,7 +124,7 @@ public class PhotoEditorGUI extends JFrame {
   private JButton fillButton;
   private JButton textButton;
 
-  // private JButton filterButton;
+  // private JButton filterButton
   private JButton selectToolButton;
   private JButton straightLineMenuItem;
   private JSlider toleranceSlider; // New tolerance slider
@@ -134,10 +141,26 @@ public class PhotoEditorGUI extends JFrame {
   private boolean drawStraightLineMode = false;
   private int fillTolerance = 10; // changes this for sensitivity of bucket fill
   JPanel sidebarPanel;
+  JPanel topPanel;
+  JPanel mainPanel;
+  JPanel cards;
+
+  
+  private String image1 = "Image 1";
+  private String image2 = "Image 2";
+  private String image3 = "Image 3";
+  private String comboBoxItems[] = {image1, image2, image3}; 
+
+  JComboBox cb = new JComboBox(comboBoxItems);
+  
+
+   // Number of images loaded
+  int imageCount = 0;
+  private ArrayList<Image> imageArray = new ArrayList<>();
 
   public PhotoEditorGUI() {
     // set up the JFrame
-    setTitle("Photo Editor");
+    super("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(600, 400));
 
@@ -238,21 +261,23 @@ public class PhotoEditorGUI extends JFrame {
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
-    JPanel cards;
-    String item1 = "item1";
-    String item2 = "item2";
-
-    String comboBoxItems[] = {item1, item2};
-    JComboBox comboBox = new JComboBox(comboBoxItems);
+    
 
     JPanel card1 = new JPanel();
-    JPanel card2 = new JPanel();
+    
 
+
+    cards = new JPanel(new CardLayout());
+  
+    
     // Top panel
-    JPanel topPanel = new JPanel(new CardLayout());
+    JPanel topPanel = new JPanel();
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     topPanel.add(saveButton);
     topPanel.add(loadButton);
+
+    
+    
     
     undoButton.addActionListener(
       new ActionListener() {
@@ -275,7 +300,9 @@ public class PhotoEditorGUI extends JFrame {
     );
 
     topPanel.add(undoButton);
-    topPanel.add(comboBox);
+    topPanel.add(cb);
+
+    
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
@@ -289,7 +316,7 @@ public class PhotoEditorGUI extends JFrame {
 
     mainPanel.add(imageStatusLabel, BorderLayout.SOUTH);
 
-    System.out.println("top bar  picker added");
+    System.out.println("top bar picker added");
 
     // add sidebar
     sidebarPanel = new JPanel();
@@ -539,7 +566,7 @@ public class PhotoEditorGUI extends JFrame {
     // toolMenu.add(fillBucketMenuItem);
     // toolMenu.add(straightLineMenuItem);
     // menuBar.add(toolMenu);
-
+    
     drawingPanel =
       new JPanel() {
         @Override
@@ -611,6 +638,12 @@ public class PhotoEditorGUI extends JFrame {
     setVisible(true);
   }
 
+  public void itemStateChanged(ItemEvent evt) {
+    CardLayout cl = (CardLayout) (cards.getLayout());
+    cl.show(cards, (String) evt.getItem());
+    }
+  
+
   // private JTextField createToleranceTextField() {
   // JTextField toleranceTextField = new JTextField("10", 5); // Default value is
   // 10
@@ -662,6 +695,13 @@ public class PhotoEditorGUI extends JFrame {
       g.setColor(color);
       g.drawLine(start.x, start.y, end.x, end.y);
     }
+  }
+
+  //Create a new card when a new image is added
+  public void createCard(){
+   JPanel newCard = new JPanel();   
+   
+   
   }
 
   private void fillBucket(Point point) {
@@ -969,8 +1009,7 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
-  // Number of images loaded
-  int imageCount = 0;
+ 
 
   // Create the buttons
   private JButton createLoadButton(
@@ -1012,7 +1051,7 @@ public class PhotoEditorGUI extends JFrame {
 
         public void mouseClicked(MouseEvent e) {
           FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-            "Image files",
+            "Image Files",
             ImageIO.getReaderFileSuffixes()
           );
           System.out.println(imageFilter);
@@ -1028,6 +1067,10 @@ public class PhotoEditorGUI extends JFrame {
               "Selected File: " + selectedFile.getAbsolutePath()
             );
             imageCount = imageCount + 1;
+            imageArray.add(image);
+            System.out.println(imageArray.size());
+
+            createCard();
             System.out.println("Number of images: " + imageCount);
           } else {
             System.out.println("No file selected");
