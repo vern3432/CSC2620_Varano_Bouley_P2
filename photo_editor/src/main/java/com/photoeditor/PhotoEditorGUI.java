@@ -9,6 +9,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,10 +40,9 @@ public class PhotoEditorGUI extends JFrame {
   private String Filename = "";
   //primary image 
   private BufferedImage image;
-
   public HashMap<String,CardObject> GeneratedImages=new HashMap<>();
-
-
+  public String[] keysImage;
+  public int selectedImage=0;
 
 public void setImage(BufferedImage inputimage){
 this.image=inputimage;
@@ -52,6 +52,12 @@ this.image=inputimage;
 public BufferedImage getImage(){
     return this.image;    
   
+  }
+
+
+  public void selectCombobox(String name){
+      setImage(GeneratedImages.get(name).getAssociatedImag()); 
+
   }
 
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
@@ -64,18 +70,19 @@ public BufferedImage getImage(){
         }
 
         GeneratedImages.put(Name,new CardObject(image, Name));
-        
         UpdatedCombobox();
+        selectCombobox(Name);
       }
       
   public void UpdatedCombobox(){
-    comboBox = new JComboBox(GeneratedImages.keySet().toArray());
+
     JComboBox comboBoxtemp=null;
     Component[] components2 = topPanel.getComponents();
 
-    System.out.println("Current Value"+GeneratedImages.keySet().toArray().toString());
+    // System.out.println("Current Value"+GeneratedImages.keySet().toArray().toString());
     String[] strings = GeneratedImages.keySet().toArray(new String[GeneratedImages.size()]);
     comboBox = new JComboBox(strings);
+    keysImage=strings;
 
     for (Component component : components2) {
       if (component instanceof JComboBox) {
@@ -404,7 +411,9 @@ public BufferedImage getImage(){
               Component[] components = sidebarPanel.getComponents();
 
               GeneratedImages.clear();
+              
               String title="primImage";
+
               CardObject primImage=new CardObject(image,title);
               GeneratedImages.put(title,primImage);
               UpdatedCombobox();
