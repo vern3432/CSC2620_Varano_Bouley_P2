@@ -42,10 +42,29 @@ public class PhotoEditorGUI extends JFrame {
   public BufferedImage image;
   public HashMap<String, CardObject> GeneratedImages = new HashMap<>();
   public String[] keysImage;
-  public int selectedImage = 0;
+  // public int selectedImage = 0;
+  public String SelectedImage="";
+
+public void MergerImage(){
+      BufferedImage combinedImage = new BufferedImage(
+              image.getWidth(),
+              image.getHeight(),
+              BufferedImage.TYPE_INT_ARGB);
+          Graphics2D g2d = combinedImage.createGraphics();
+          g2d.drawImage(image, 0, 0, null);
+
+          // Draw the lines on the combined image
+          g2d.setColor(selectedColor);
+          for (Line line : lines) {
+            g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
+          }
+          image = combinedImage;
+          g2d.dispose();
+          lines.clear();
+
+}
 
   public void setImage(BufferedImage inputimage) {
-    System.out.println(inputimage);
     this.image = inputimage;
 
   }
@@ -56,7 +75,7 @@ public class PhotoEditorGUI extends JFrame {
   }
 
   public void selectCombobox(String name) {
-    System.out.println("Print:"+name);
+    GeneratedImages.get(SelectedImage).setAssociatedImag(image);
     setImage(GeneratedImages.get(name).getAssociatedImag());
     drawingPanel.repaint(); 
 
@@ -80,7 +99,6 @@ public class PhotoEditorGUI extends JFrame {
 
   public void UpdatedCombobox() {
 
-    System.out.println("running combo box");
     JComboBox comboBoxtemp = null;
     Component[] components2 = topPanel.getComponents();
 
@@ -96,17 +114,26 @@ public class PhotoEditorGUI extends JFrame {
         break;
       }
     }
-    comboBox.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-          String selectedValue = (String) comboBox.getSelectedItem();
-          System.out.println("selecting:"+selectedValue);
-          selectCombobox(selectedValue);
-      }
-  });
+
         if(comboBoxtemp !=null){
+          // topPanel.remove(comboBoxtemp);
+          // topPanel.repaint();
 
+        }  
+        
+        
+        comboBox.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            MergerImage();
 
-        }    
+              String selectedValue = (String) comboBox.getSelectedItem();
+              System.out.println("selecting:"+selectedValue);
+              selectCombobox(selectedValue);
+            System.out.println("previously selected: "+SelectedImage);
+              SelectedImage=selectedValue;
+              
+          }
+      });
         topPanel.add(comboBox);
         topPanel.repaint();       
         System.out.println("combo box done");
@@ -411,6 +438,7 @@ public class PhotoEditorGUI extends JFrame {
                 GeneratedImages.clear();
 
                 String title = "primImage";
+                SelectedImage=title;
 
                 CardObject primImage = new CardObject(image, title);
                 GeneratedImages.put(title, primImage);
