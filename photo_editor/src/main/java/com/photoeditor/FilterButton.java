@@ -1,4 +1,5 @@
 package com.photoeditor;
+
 import javax.swing.*;
 
 import java.awt.image.BufferedImage;
@@ -19,27 +20,26 @@ public class FilterButton extends JButton {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage grayscaleImage = new BufferedImage(
-            width,
-            height,
-            BufferedImage.TYPE_BYTE_GRAY);
+                width,
+                height,
+                BufferedImage.TYPE_BYTE_GRAY);
         java.awt.Graphics g = grayscaleImage.getGraphics();
         g.drawImage(image, 0, 0, null);
         g.dispose();
         return grayscaleImage;
-      }
-    
+    }
 
-    public FilterButton(String iconPath, String toolTipText, BufferedImage image,PhotoEditorGUI mainGui) {
+    public FilterButton(String iconPath, String toolTipText, BufferedImage image, PhotoEditorGUI mainGui) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
-        this.mainGui=mainGui;
+        this.mainGui = mainGui;
         Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-    
+
         ImageIcon imageIcon = new ImageIcon(newimg);
-    
+
         JButton button = new JButton(imageIcon);
         button.setToolTipText(toolTipText);
-    
+
         this.image = image;
 
         this.addActionListener(new ActionListener() {
@@ -51,13 +51,15 @@ public class FilterButton extends JButton {
                 JMenuItem blurItem = new JMenuItem("Blur with Gaussian Noise");
                 JMenuItem staticItem = new JMenuItem("Static with Perlin Noise");
                 JMenuItem cartoonifyItem = new JMenuItem("Cartoonify");
+                JMenuItem cartoonifyItemBW = new JMenuItem("Cartoonify(B&W)");
+                JMenuItem FilmGrane = new JMenuItem("FilmGrane");
 
                 grayscaleItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image in greyscale");
-                        BufferedImage gray=convertToGrayscale(mainGui.getImage());
-                        mainGui.addCardImageToState("GrayScale",gray);
+                        BufferedImage gray = convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("GrayScale", gray);
                         System.out.println("image returned");
 
                     }
@@ -67,7 +69,7 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image with inverted colors");
-                        BufferedImage inverted =convertToGrayscale(mainGui.getImage());
+                        BufferedImage inverted = convertToGrayscale(mainGui.getImage());
                         ColorInverter colorInverter = new ColorInverter();
                         BufferedImage invertedImage = colorInverter.invertColors(mainGui.getImage());
                         mainGui.addCardImageToState("Inverted Image", invertedImage);
@@ -84,17 +86,15 @@ public class FilterButton extends JButton {
                         try {
                             int threshold = Integer.parseInt(input);
                             System.out.println("Adding blur with Gaussian Noise");
-                            GaussianBlur blurObject=new GaussianBlur();
-                            BufferedImage blur = blurObject.apply(mainGui.getImage(),2,threshold);
+                            GaussianBlur blurObject = new GaussianBlur();
+                            BufferedImage blur = blurObject.apply(mainGui.getImage(), 2, threshold);
                             mainGui.addCardImageToState("Blured Image", blur);
                             System.out.println("image returned");
-                            } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(frame, "Invalid input! Please enter an integer.", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(frame, "Invalid input! Please enter an integer.", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
 
-
-
-                        
                     }
                 });
 
@@ -102,10 +102,10 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        PerlinNoiseFilter perLinobj=new PerlinNoiseFilter(10);
+                        PerlinNoiseFilter perLinobj = new PerlinNoiseFilter(10);
                         System.out.println("Adding static with Perlin Noise");
-                        BufferedImage perlin =perLinobj.applyFilter(mainGui.getImage());
-                                    mainGui.addCardImageToState("Perlin", perlin);
+                        BufferedImage perlin = perLinobj.applyFilter(mainGui.getImage());
+                        mainGui.addCardImageToState("Perlin", perlin);
                         System.out.println("image returned");
                     }
                 });
@@ -114,7 +114,18 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Cartoonify");
-                        BufferedImage cartoon =convertToGrayscale(mainGui.getImage());
+                        CartoonEffect cartoon1 = new CartoonEffect();
+                        BufferedImage cartoon = cartoon1.applyCartoonEffect(mainGui.getImage(), 124);
+                        mainGui.addCardImageToState("Cartoon Image", cartoon);
+                        System.out.println("image returned");
+                    }
+                });
+                cartoonifyItemBW.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Cartoonify");
+                        BWCartoonEffect cartoon1 = new BWCartoonEffect();
+                        BufferedImage cartoon = cartoon1.applyBWCartoonEffect(mainGui.getImage(), 124);
                         mainGui.addCardImageToState("Cartoon Image", cartoon);
                         System.out.println("image returned");
                     }
@@ -124,51 +135,49 @@ public class FilterButton extends JButton {
                 saveAsTextMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("printing"+image);
+                        System.out.println("printing" + image);
                         saveAsciiArt(getImage());
                     }
                 });
                 grayscaleItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK));
 
                 invertColorsItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_DOWN_MASK));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_DOWN_MASK));
 
                 blurItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_DOWN_MASK));
 
                 staticItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
 
                 cartoonifyItem.setAccelerator(
-                  KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
+                        KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
 
+                saveAsTextMenuItem.setAccelerator(
+                        KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
 
-                  saveAsTextMenuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
-  
                 popupMenu.add(grayscaleItem);
                 popupMenu.add(invertColorsItem);
                 popupMenu.add(blurItem);
                 popupMenu.add(staticItem);
                 popupMenu.add(cartoonifyItem);
                 popupMenu.add(saveAsTextMenuItem);
+                popupMenu.add(cartoonifyItemBW);
 
                 popupMenu.show(FilterButton.this, getWidth() / 2, getHeight() / 2);
             }
         });
         // set up key binding for CTRL+F
-        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK), "filterAction");
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK),
+                "filterAction");
         getActionMap().put("filterAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            System.out.println("clicked");           
-            doClick();
+                System.out.println("clicked");
+                doClick();
             }
         });
-
-
-
 
     }
 
@@ -180,7 +189,8 @@ public class FilterButton extends JButton {
                 if (resolutionPercentage >= 1 && resolutionPercentage <= 100) {
                     int scaledWidth = (int) (image.getWidth() * (resolutionPercentage / 100.0));
                     int scaledHeight = (int) (image.getHeight() * (resolutionPercentage / 100.0));
-                    BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+                    BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight,
+                            BufferedImage.TYPE_INT_RGB);
                     Graphics2D g = scaledImage.createGraphics();
                     g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
                     g.dispose();
@@ -204,7 +214,8 @@ public class FilterButton extends JButton {
                         File outputFile = new File(selectedDirectory, "ascii_art.txt");
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
                             writer.write(asciiBuilder.toString());
-                            JOptionPane.showMessageDialog(null, "ASCII art saved successfully to " + outputFile.getAbsolutePath());
+                            JOptionPane.showMessageDialog(null,
+                                    "ASCII art saved successfully to " + outputFile.getAbsolutePath());
                         } catch (IOException e) {
                             e.printStackTrace();
                             JOptionPane.showMessageDialog(null, "Error occurred while saving ASCII art");
@@ -225,21 +236,22 @@ public class FilterButton extends JButton {
         int blue = pixel & 0xff;
         return (red + green + blue) / 3;
     }
+
     public BufferedImage loadImage(String filename) {
-    BufferedImage iconImage = null;
-    try {
-        InputStream inputStream = ImageLoader.class.getResourceAsStream("/icon/" + filename);
-        if (inputStream != null) {
-            iconImage = ImageIO.read(inputStream);
-            inputStream.close();
-        } else {
-            System.err.println("Icon image not found: " + filename);
+        BufferedImage iconImage = null;
+        try {
+            InputStream inputStream = ImageLoader.class.getResourceAsStream("/icon/" + filename);
+            if (inputStream != null) {
+                iconImage = ImageIO.read(inputStream);
+                inputStream.close();
+            } else {
+                System.err.println("Icon image not found: " + filename);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+        return iconImage;
     }
-    return iconImage;
-}
 
     private static final String ASCIICHARS = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
@@ -249,7 +261,7 @@ public class FilterButton extends JButton {
     }
 
     public void setImage(BufferedImage image) {
-        if(this.image==null){
+        if (this.image == null) {
             this.image = image;
             System.out.println("Added Image");
 
