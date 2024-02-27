@@ -113,11 +113,21 @@ public class FilterButton extends JButton {
                 cartoonifyItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Cartoonify");
-                        CartoonEffect cartoon1 = new CartoonEffect();
-                        BufferedImage cartoon = cartoon1.applyCartoonEffect(mainGui.getImage(), 124);
-                        mainGui.addCardImageToState("Cartoon Image", cartoon);
-                        System.out.println("image returned");
+
+                        JFrame frame = new JFrame("Threshold Popup");
+                        String input = JOptionPane.showInputDialog(frame, "Enter threshold value(80 Recomended for hi res):");
+                        try {
+                            int threshold = Integer.parseInt(input);
+                            System.out.println("Cartoonify");
+                            CartoonEffect cartoon1 = new CartoonEffect();
+                            BufferedImage cartoon = cartoon1.applyCartoonEffect(mainGui.getImage(), threshold);
+                            mainGui.addCardImageToState("Cartoon Image", cartoon);
+                            System.out.println("image returned");
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(frame, "Invalid input! Please enter an integer.", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+
                     }
                 });
                 cartoonifyItemBW.addActionListener(new ActionListener() {
