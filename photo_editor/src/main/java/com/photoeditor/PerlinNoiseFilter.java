@@ -2,7 +2,9 @@ package com.photoeditor;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class PerlinNoiseFilter {
     private int threshold;
@@ -14,14 +16,15 @@ public class PerlinNoiseFilter {
     public BufferedImage applyFilter(BufferedImage inputImage) {
         int width = inputImage.getWidth();
         int height = inputImage.getHeight();
-        BufferedImage noiseImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage staticedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        double scale = 0.1;
+        Random random = new Random();
+
+        double noiseIntensity = 0.2; // Adjust noise intensity
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double noiseValue = perlinNoise(x * scale, y * scale);
-                int noise = (int) (128.0 + 128.0 * noiseValue);
+                int noise = (int) (random.nextDouble() * 255 * noiseIntensity);
 
                 Color color = new Color(inputImage.getRGB(x, y));
 
@@ -31,11 +34,15 @@ public class PerlinNoiseFilter {
 
                 Color newColor = new Color(red, green, blue);
 
-                noiseImage.setRGB(x, y, newColor.getRGB());
+                staticedImage.setRGB(x, y, newColor.getRGB());
             }
         }
 
-        return noiseImage;
+        return staticedImage;
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
     }
 
     private int applyThreshold(int colorValue, int noise) {
@@ -46,9 +53,5 @@ public class PerlinNoiseFilter {
             newValue = 255;
         }
         return Math.abs(newValue - 128) < threshold ? colorValue : newValue;
-    }
-
-    private double perlinNoise(double x, double y) {
-        return Math.random() * 2 - 1;
     }
 }

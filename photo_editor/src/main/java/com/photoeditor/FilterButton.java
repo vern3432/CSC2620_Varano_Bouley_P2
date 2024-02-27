@@ -102,7 +102,7 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        PerlinNoiseFilter perLinobj=new PerlinNoiseFilter(128);
+                        PerlinNoiseFilter perLinobj=new PerlinNoiseFilter(10);
                         System.out.println("Adding static with Perlin Noise");
                         BufferedImage perlin =perLinobj.applyFilter(mainGui.getImage());
                                     mainGui.addCardImageToState("Perlin", perlin);
