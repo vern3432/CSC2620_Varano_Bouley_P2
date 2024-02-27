@@ -36,12 +36,21 @@ public class PhotoEditorGUI extends JFrame {
   private Color selectedColor = Color.BLACK;
   private JButton colorPickerButton;
   private String Filename = "";
+  //primary image 
+  private BufferedImage image;
+
   public HashMap<String,CardObject> GeneratedImages=new HashMap<>();
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
 
-      public void addCardImageToState(String Name,BufferedImage image){
+      public void addCardImageToState(String Name,BufferedImage image){        
+        if(GeneratedImages.containsKey(Name)){
+          Name=Name+"2";  
+
+        }
+
         GeneratedImages.put(Name,new CardObject(image, Name));
+        
         UpdatedCombobox();
       }
       
@@ -164,7 +173,6 @@ public class PhotoEditorGUI extends JFrame {
   private FilterButton Filter;
 
   // drawing components
-  private BufferedImage image;
   private JPanel drawingPanel;
   private Point startPoint;
   private Point endPoint;
