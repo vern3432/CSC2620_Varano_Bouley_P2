@@ -56,8 +56,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image in greyscale");
-                        BufferedImage gray=convertToGrayscale(mainGui.getImage());
-                        mainGui.addCardImageToState("GrayScale",gray);
+                        ColorInverter colorInverter = new ColorInverter();
+                        BufferedImage invertedImage = colorInverter.invertColors(mainGui.getImage());
+                        mainGui.addCardImageToState("GrayScale",invertedImage);
                         System.out.println("image returned");
 
                     }
