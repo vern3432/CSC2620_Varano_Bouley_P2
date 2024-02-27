@@ -39,6 +39,7 @@ public class PerlinNoiseGUI extends JFrame {
                         originalImageLabel.setIcon(new ImageIcon(originalImage));
 
                         int threshold = thresholdSlider.getValue();
+                        System.out.println(threshold);
                         PerlinNoiseFilter filter = new PerlinNoiseFilter(threshold);
                         BufferedImage noiseImage = filter.applyFilter(originalImage);
                         noiseImageLabel.setIcon(new ImageIcon(noiseImage));

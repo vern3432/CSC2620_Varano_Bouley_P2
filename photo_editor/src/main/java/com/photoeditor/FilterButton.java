@@ -56,9 +56,8 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image in greyscale");
-                        ColorInverter colorInverter = new ColorInverter();
-                        BufferedImage invertedImage = colorInverter.invertColors(mainGui.getImage());
-                        mainGui.addCardImageToState("GrayScale",invertedImage);
+                        BufferedImage gray=convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("GrayScale",gray);
                         System.out.println("image returned");
 
                     }
@@ -69,27 +68,44 @@ public class FilterButton extends JButton {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image with inverted colors");
                         BufferedImage inverted =convertToGrayscale(mainGui.getImage());
-                        mainGui.addCardImageToState("Inverted Image", inverted);
+                        ColorInverter colorInverter = new ColorInverter();
+                        BufferedImage invertedImage = colorInverter.invertColors(mainGui.getImage());
+                        mainGui.addCardImageToState("Inverted Image", invertedImage);
                         System.out.println("image returned");
+                        colorInverter.dispose();
                     }
                 });
 
                 blurItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Adding blur with Gaussian Noise");
-                        BufferedImage blur =convertToGrayscale(mainGui.getImage());
-                        mainGui.addCardImageToState("Blured Image", blur);
-                        System.out.println("image returned");
+                        JFrame frame = new JFrame("Threshold Popup");
+                        String input = JOptionPane.showInputDialog(frame, "Enter threshold value(128 Recomended):");
+                        try {
+                            int threshold = Integer.parseInt(input);
+                            System.out.println("Adding blur with Gaussian Noise");
+                            GaussianBlur blurObject=new GaussianBlur();
+                            BufferedImage blur = blurObject.apply(mainGui.getImage(),2,threshold);
+                            mainGui.addCardImageToState("Blured Image", blur);
+                            System.out.println("image returned");
+                            } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(frame, "Invalid input! Please enter an integer.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+
+
+                        
                     }
                 });
 
                 staticItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
+                        PerlinNoiseFilter perLinobj=new PerlinNoiseFilter(128);
                         System.out.println("Adding static with Perlin Noise");
-                        BufferedImage perlin =convertToGrayscale(mainGui.getImage());
-                        mainGui.addCardImageToState("Perlin", perlin);
+                        BufferedImage perlin =perLinobj.applyFilter(mainGui.getImage());
+                                    mainGui.addCardImageToState("Perlin", perlin);
                         System.out.println("image returned");
                     }
                 });
