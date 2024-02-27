@@ -12,14 +12,7 @@ public class CardObject{
         this.title=Name;
         this.AssociatedImag=input;
 
-
-
     }
-
-
-
-
-
 
     public String getTitle() {
         return title;
@@ -34,8 +27,4 @@ public class CardObject{
         AssociatedImag = associatedImag;
     }
 
-
-    
-
-    
 }

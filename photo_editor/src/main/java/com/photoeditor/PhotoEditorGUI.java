@@ -40,6 +40,7 @@ public class PhotoEditorGUI extends JFrame {
   private Color selectedColor = Color.BLACK;
   private JButton colorPickerButton;
   private String Filename = "";
+
   // primary image
   public BufferedImage image;
   public HashMap<String, CardObject> GeneratedImages = new HashMap<>();
@@ -120,8 +121,8 @@ public void MergerImage(){
     }
 
         if(comboBoxtemp !=null){
-          // topPanel.remove(comboBoxtemp);
-          // topPanel.repaint();
+          topPanel.remove(comboBoxtemp);
+          topPanel.repaint();
 
         }  
         
@@ -137,11 +138,6 @@ public void MergerImage(){
               SelectedImage=selectedValue;
               
           }
-
-
-
-          
-
 
       });
       comboBox.addKeyListener(new KeyListener() {
@@ -162,10 +158,6 @@ public void MergerImage(){
         @Override
         public void keyTyped(KeyEvent e) {}
     });
-
-
-
-
       
         topPanel.add(comboBox);
         topPanel.repaint();       
@@ -522,7 +514,6 @@ public void MergerImage(){
                 g2d.drawImage(image, 0, 0, null);
 
                 // Draw the lines on the combined image
-
                 g2d.setColor(selectedColor);
                 for (Line line : lines) {
                   g2d.drawLine(
@@ -624,45 +615,6 @@ public void MergerImage(){
     menuBar.add(fileMenu);
     setJMenuBar(menuBar);
 
-    // Add tool tips to the buttons
-
-    // JMenu toolMenu = new JMenu("Tools");
-
-    // JMenuItem freehandMenuItem = new JMenuItem("Freehand");
-    // freehandMenuItem.addActionListener(
-    // new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // fillBucketMode = false; h
-    // drawStraightLineMode = false;
-    // }
-    // }
-    // );
-    // JMenuItem fillBucketMenuItem = new JMenuItem("Fill Bucket");
-    // fillBucketMenuItem.addActionListener(
-    // new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // fillBucketMode = true;
-    // drawStraightLineMode = false;
-    // }
-    // }
-    // );
-    // JMenuItem straightLineMenuItem = new JMenuItem("Straight Line");
-    // straightLineMenuItem.addActionListener(
-    // new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // drawStraightLineMode = true;
-    // fillBucketMode = false;
-    // }
-    // }
-    // );
-    // toolMenu.add(freehandMenuItem);
-    // toolMenu.add(fillBucketMenuItem);
-    // toolMenu.add(straightLineMenuItem);
-    // menuBar.add(toolMenu);
-
     drawingPanel = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
@@ -731,41 +683,6 @@ public void MergerImage(){
     setVisible(true);
   }
 
-  // private JTextField createToleranceTextField() {
-  // JTextField toleranceTextField = new JTextField("10", 5); // Default value is
-  // 10
-  // toleranceTextField.setHorizontalAlignment(JTextField.CENTER);
-
-  // // Add a focus listener to update the tolerance value when focus is lost
-  // toleranceTextField.addFocusListener(new FocusAdapter() {
-  // @Override
-  // public void focusLost(FocusEvent e) {
-  // updateTolerance();
-  // }
-  // });
-
-  // // Add an action listener to update the tolerance value when the user presses
-  // Enter
-  // toleranceTextField.addActionListener(e -> updateTolerance());
-
-  // return toleranceTextField;
-  // }
-
-  // private void updateTolerance() {
-  // String text = toleranceTextField.getText();
-  // try {
-  // int value = Integer.parseInt(text);
-  // if (value < 1 || value > 100) {
-  // throw new NumberFormatException();
-  // }
-  // fillTolerance = value;
-  // } catch (NumberFormatException ex) {
-  // // Handle invalid input (not within the range 1-100)
-  // // For now, let's reset to the default value of 10
-  // toleranceTextField.setText("10");
-  // fillTolerance = 10;
-  // }
-  // }
   private class Line {
 
     Point start;

@@ -29,9 +29,6 @@ public class FilterButton extends JButton {
       }
     
 
-
-
-
     public FilterButton(String iconPath, String toolTipText, BufferedImage image,PhotoEditorGUI mainGui) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
@@ -70,6 +67,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image with inverted colors");
+                        BufferedImage inverted =convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("Inverted Image", inverted);
+                        System.out.println("image returned");
                     }
                 });
 
@@ -77,6 +77,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Adding blur with Gaussian Noise");
+                        BufferedImage blur =convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("Blured Image", blur);
+                        System.out.println("image returned");
                     }
                 });
 
@@ -84,6 +87,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Adding static with Perlin Noise");
+                        BufferedImage perlin =convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("Perlin", perlin);
+                        System.out.println("image returned");
                     }
                 });
 
@@ -91,6 +97,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Cartoonify");
+                        BufferedImage cartoon =convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("Cartoon Image", cartoon);
+                        System.out.println("image returned");
                     }
                 });
 
