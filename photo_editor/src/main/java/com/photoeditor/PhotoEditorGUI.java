@@ -272,9 +272,9 @@ public void MergerImage(){
     setPreferredSize(new Dimension(600, 400));
 
     // create components
-    loadButton = createLoadButton("folder.png", "Load", "type");
-    saveButton = createSaveButton("saveicon.png", "Save", "type");
-    undoButton = createButton("undo_topbar.png", "Undo");
+    // loadButton = createLoadButton("folder.png", "Load", "type");
+    // saveButton = createSaveButton("saveicon.png", "Save", "type");
+    undoButton = createButton2("undo_topbar.png", "Undo");
 
     paintButton = createPaintButton("paintbrush.png", "Paint");
 
@@ -370,8 +370,8 @@ public void MergerImage(){
     // Top panel
     topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    topPanel.add(saveButton);
-    topPanel.add(loadButton);
+    // topPanel.add(saveButton);
+    // topPanel.add(loadButton);
 
     undoButton.addActionListener(
         new ActionListener() {
@@ -773,6 +773,42 @@ public void MergerImage(){
     // Image image = imageIcon.getImage(); // transform it
 
     Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+    System.out.println(newimg.toString());
+
+    ImageIcon imageIcon = new ImageIcon(newimg);
+
+    JButton button = new JButton(imageIcon);
+    button.setToolTipText(toolTipText);
+
+    button.addMouseListener(
+        new MouseAdapter() {
+          @Override
+          public void mouseEntered(MouseEvent e) {
+            button.setBackground(Color.LIGHT_GRAY); // change background color on hover
+          }
+
+          @Override
+          public void mouseExited(MouseEvent e) {
+            button.setBackground(UIManager.getColor("Button.background")); // reset background color when mouse exits
+          }
+
+          public void mouseClicked(MouseEvent e) {
+            sidebarStatus = toolTipText;
+            toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+          }
+        });
+
+    return button;
+  }
+  private JButton createButton2(String iconPath, String toolTipText) {
+    BufferedImage image2 = loadImage(iconPath);
+    System.out.println(iconPath);
+    Image image = (Image) image2;
+    // ImageIcon imageIcon = new ImageIcon("./" + iconPath);
+    // System.out.println(imageIcon.toString());
+    // Image image = imageIcon.getImage(); // transform it
+
+    Image newimg = image.getScaledInstance(15, 15, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
     System.out.println(newimg.toString());
 
     ImageIcon imageIcon = new ImageIcon(newimg);
