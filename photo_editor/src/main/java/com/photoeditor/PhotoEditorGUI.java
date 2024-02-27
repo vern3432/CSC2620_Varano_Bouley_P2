@@ -9,6 +9,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,19 @@ public class PhotoEditorGUI extends JFrame {
   private BufferedImage image;
 
   public HashMap<String,CardObject> GeneratedImages=new HashMap<>();
+
+
+
+public void setImage(BufferedImage inputimage){
+this.image=inputimage;
+
+
+}
+public BufferedImage getImage(){
+    return this.image;    
+  
+  }
+
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
 

@@ -11,10 +11,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 
-
 public class FilterButton extends JButton {
     public BufferedImage image;
     PhotoEditorGUI mainGui;
+
+    public BufferedImage convertToGrayscale(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        BufferedImage grayscaleImage = new BufferedImage(
+            width,
+            height,
+            BufferedImage.TYPE_BYTE_GRAY);
+        java.awt.Graphics g = grayscaleImage.getGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return grayscaleImage;
+      }
+    
+
+
+
+
     public FilterButton(String iconPath, String toolTipText, BufferedImage image,PhotoEditorGUI mainGui) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
@@ -42,6 +59,9 @@ public class FilterButton extends JButton {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("View the image in greyscale");
+                        BufferedImage gray=convertToGrayscale(mainGui.getImage());
+                        mainGui.addCardImageToState("GrayScale",gray);
+                        
                     }
                 });
 
