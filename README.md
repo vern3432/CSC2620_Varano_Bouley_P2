@@ -1,5 +1,6 @@
 
 # Photo Editor User Guide
+Run:PhotoEditorGUI.java
 1. File Menu:
    - New: Create a new blank image.
      Shortcut: Ctrl + N
