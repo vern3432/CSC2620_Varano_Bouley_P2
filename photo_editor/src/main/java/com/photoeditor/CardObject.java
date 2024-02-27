@@ -8,9 +8,9 @@ public class CardObject{
     public BufferedImage AssociatedImag;
 
 
-    CardObject(BufferedImage AssociatedImage,String Name){
-        this.title=title;
-        this.AssociatedImag=AssociatedImage;
+    CardObject(BufferedImage input,String Name){
+        this.title=Name;
+        this.AssociatedImag=input;
 
 
 

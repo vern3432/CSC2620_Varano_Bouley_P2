@@ -61,7 +61,8 @@ public class FilterButton extends JButton {
                         System.out.println("View the image in greyscale");
                         BufferedImage gray=convertToGrayscale(mainGui.getImage());
                         mainGui.addCardImageToState("GrayScale",gray);
-                        
+                        System.out.println("image returned");
+
                     }
                 });
 
