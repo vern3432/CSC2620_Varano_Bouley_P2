@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 
 public class FilterButton extends JButton {
     public BufferedImage image;
-    public FilterButton(String iconPath, String toolTipText, BufferedImage image) {
+    public FilterButton(String iconPath, String toolTipText, BufferedImage image,PhotoEditorGUI mainGui) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
     
@@ -197,7 +197,7 @@ public class FilterButton extends JButton {
 
     public static void main(String[] args) {
         BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-        FilterButton button = new FilterButton("folder.png", "ToolTipText", image);
+        // FilterButton button = new FilterButton("folder.png", "ToolTipText", image);
     }
 
     public void setImage(BufferedImage image) {

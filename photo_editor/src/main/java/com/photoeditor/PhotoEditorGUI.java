@@ -355,7 +355,7 @@ public class PhotoEditorGUI extends JFrame {
     colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
 
     // JButton Filter = new FilterButton("filter2.png", "Apply Filter",this.image);
-    Filter = new FilterButton("filter2.png", "Apply Filter", this.image);
+    Filter = new FilterButton("filter2.png", "Apply Filter", this.image,this);
 
     sidebarPanel.add(Filter);
     sidebarPanel.add(colorPickerButton);
