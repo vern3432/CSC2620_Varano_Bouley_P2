@@ -17,7 +17,6 @@ public class ImageFlipper extends JFrame {
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
-        setVisible(true);
     }
 
     private void initComponents() {

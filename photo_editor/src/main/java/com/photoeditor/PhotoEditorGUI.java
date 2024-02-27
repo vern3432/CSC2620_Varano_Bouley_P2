@@ -249,6 +249,9 @@ public void MergerImage(){
 
   // private JButton filterButton;
   private JButton selectToolButton;
+  private JButton RefelectButton;
+  private JButton FlipButton;
+
   private JButton straightLineMenuItem;
   private JSlider toleranceSlider; // New tolerance slider
   private FilterButton Filter;
@@ -345,9 +348,12 @@ public void MergerImage(){
     textButton = createButton("text_feild.png", "Text");
 
     // filterButton = createButton("saveicon.png", "Filter");
-    selectToolButton = createButton("select_tool_box.png", "Select Tool");
-    straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
+    // selectToolButton = createButton("select_tool_box.png", "Select Tool");
+    // straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
     // colorPickerButton
+    RefelectButton = createButton("reflect.png", "Reflect Horizontially");
+    FlipButton = createButton("flipvvertical.png", "Reflect Horizontially");
+
     colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
     toleranceSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, fillTolerance);
@@ -362,14 +368,11 @@ public void MergerImage(){
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
-    JPanel cards;
-
-    JPanel card1 = new JPanel();
-    JPanel card2 = new JPanel();
 
     // Top panel
     topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+    
     // topPanel.add(saveButton);
     // topPanel.add(loadButton);
 
@@ -392,7 +395,43 @@ public void MergerImage(){
           }
         });
 
+
+        RefelectButton.addActionListener(
+          new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              MergerImage();
+              String selectedValue = (String) comboBox.getSelectedItem();
+              System.out.println("selecting:"+selectedValue);
+              selectCombobox(selectedValue);
+              ImageFlipper flipper=new ImageFlipper();
+              BufferedImage flipped =flipper.flipImage( image,  "Horizontal");
+              GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
+              setImage(flipped);
+            }
+          });
+
+          FlipButton.addActionListener(
+            new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                MergerImage();
+                String selectedValue = (String) comboBox.getSelectedItem();
+                System.out.println("selecting:"+selectedValue);
+                selectCombobox(selectedValue);
+                ImageFlipper flipper1=new ImageFlipper();
+                BufferedImage flipped =flipper1.flipImage( image,  "Vertical");
+                GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
+                setImage(flipped);
+              }
+            });
+
+
+
+
     topPanel.add(undoButton);
+
+
     topPanel.add(comboBox);
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -418,10 +457,11 @@ public void MergerImage(){
     sidebarPanel.add(paintButton);
     sidebarPanel.add(fillButton);
     sidebarPanel.add(textButton);
-
+    sidebarPanel.add(FlipButton);
+    sidebarPanel.add(RefelectButton);
     // sidebarPanel.add(filterButton);
-    sidebarPanel.add(selectToolButton);
-    sidebarPanel.add(straightLineMenuItem);
+    // sidebarPanel.add(selectToolButton);
+    // sidebarPanel.add(straightLineMenuItem);
     colorPickerButton.addActionListener(new ColorPickerListener()); // add ActionListener to colorPickerButton
     System.out.println("color picker added");
     colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
