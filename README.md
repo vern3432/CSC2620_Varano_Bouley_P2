@@ -1,6 +1,5 @@
 
-#Photo Editor User Guide
-
+# Photo Editor User Guide
 1. File Menu:
    - New: Create a new blank image.
      Shortcut: Ctrl + N
