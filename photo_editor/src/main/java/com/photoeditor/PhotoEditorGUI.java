@@ -14,6 +14,8 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.jar.Attributes.Name;
+
 import javax.imageio.ImageIO;
 import javax.print.DocFlavor.STRING;
 import javax.sound.sampled.Line;
@@ -76,6 +78,7 @@ public void MergerImage(){
 
   public void selectCombobox(String name) {
     GeneratedImages.get(SelectedImage).setAssociatedImag(image);
+
     setImage(GeneratedImages.get(name).getAssociatedImag());
     drawingPanel.repaint(); 
 
@@ -95,6 +98,7 @@ public void MergerImage(){
     GeneratedImages.put(Name, new CardObject(image, Name));
     UpdatedCombobox();
     selectCombobox(Name);
+    SelectedImage=Name;
   }
 
   public void UpdatedCombobox() {
