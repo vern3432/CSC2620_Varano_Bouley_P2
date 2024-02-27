@@ -10,9 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor.STRING;
 import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -22,7 +23,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicSliderUI;
 
-public class PhotoEditorGUI extends JFrame implements ItemListener{
+public class PhotoEditorGUI extends JFrame {
 
   private static boolean trace = true; // Turn tracing on and off
 
@@ -35,12 +36,41 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
   private Color selectedColor = Color.BLACK;
   private JButton colorPickerButton;
   private String Filename = "";
+  public HashMap<String,CardObject> GeneratedImages=new HashMap<>();
+  JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
-  /**
-   * Loads an image from a file
-   * @param filename
-   * @return
-   */
+
+
+  public void UpdatedCombobox(){
+    comboBox = new JComboBox(GeneratedImages.keySet().toArray());
+    JComboBox comboBoxtemp=null;
+    Component[] components2 = topPanel.getComponents();
+
+    System.out.println("Current Value"+GeneratedImages.keySet().toArray().toString());
+    String[] strings = GeneratedImages.keySet().toArray(new String[GeneratedImages.size()]);
+    comboBox = new JComboBox(strings);
+
+    for (Component component : components2) {
+      if (component instanceof JComboBox) {
+        comboBoxtemp = (JComboBox) component;
+        break;
+      }
+    }
+    if (comboBoxtemp != null) {
+      topPanel.remove(comboBoxtemp);
+      topPanel.add(comboBox);
+
+    }
+
+
+    System.out.println(GeneratedImages.keySet());
+
+
+  }
+
+
+
+
   public BufferedImage loadImage(String filename) {
     BufferedImage iconImage = null;
     try {
@@ -116,7 +146,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     );
   }
 
-  // Basic buttons
   private JButton saveButton;
   private JButton loadButton;
   private JButton undoButton;
@@ -124,7 +153,7 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
   private JButton fillButton;
   private JButton textButton;
 
-  // private JButton filterButton
+  // private JButton filterButton;
   private JButton selectToolButton;
   private JButton straightLineMenuItem;
   private JSlider toleranceSlider; // New tolerance slider
@@ -142,29 +171,13 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
   private int fillTolerance = 10; // changes this for sensitivity of bucket fill
   JPanel sidebarPanel;
   JPanel topPanel;
-  JPanel mainPanel;
-  JPanel cards;
-  JPanel view1;
-  JPanel view2;
-  JPanel view3;
-  
-  private String image1 = "Image 1";
-  private String image2 = "Image 2";
-  private String image3 = "Image 3";
-  private String comboBoxItems[] = {image1, image2, image3}; 
-
-  JComboBox cb = new JComboBox(comboBoxItems);
-  
-   // Number of images loaded
-  int imageCount = 0;
-  private ArrayList<Image> imageArray = new ArrayList<>();
 
   public PhotoEditorGUI() {
     // set up the JFrame
-    super("Photo Editor");
+    setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setPreferredSize(new Dimension(600, 400));
-    
+
     // create components
     loadButton = createLoadButton("folder.png", "Load", "type");
     saveButton = createSaveButton("saveicon.png", "Save", "type");
@@ -259,137 +272,26 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
 
     // Set up layout using GridBagLayout
     // Main Panel
-    // Begin
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
-    JPanel cards = new JPanel(new CardLayout());
 
-    view1 = new JPanel() {
-      @Override
-      protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawingPanel.setLayout(new CardLayout());
-        if (image != null) {
-          g.drawImage(image, 0, 0, this);
-        }
-        if (!fillBucketMode) {
-          for (Line line : lines) {
-            line.draw(g);
-          }
-        }
-      }
-    };
+    JPanel cards;
 
-    view1.addMouseListener(
-      new MouseAdapter() {
-        @Override
-        public void mousePressed(MouseEvent e) {
-          if (fillBucketMode) {
-            fillBucket(e.getPoint());
 
-            drawingPanel.repaint();
-            drawingPanel.repaint();
-          } else {
-            startPoint = e.getPoint();
-            isDrawing = true;
-          }
-        }
 
-        @Override
-        public void mouseReleased(MouseEvent e) {
-          if (isDrawing && !fillBucketMode) {
-            endPoint = e.getPoint();
-            if (drawStraightLineMode) {
-              lines.add(new Line(startPoint, endPoint, selectedColor));
-            } else {
-              lines.add(new Line(startPoint, startPoint, selectedColor)); // add single point for freehand drawing
-            }
-            isDrawing = false;
-            drawingPanel.repaint();
-          }
-        }
-      }
-    );
-    view1.addMouseMotionListener(
-      new MouseMotionAdapter() {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-          if (isDrawing && !fillBucketMode) {
-            endPoint = e.getPoint();
-            if (!drawStraightLineMode) {
-              lines.add(new Line(startPoint, endPoint, selectedColor));
-            }
-            startPoint = endPoint;
-            drawingPanel.repaint();
-          }
-        }
-      }
-    );
+    JPanel card1 = new JPanel();
+    JPanel card2 = new JPanel();
 
-    view2 = new JPanel() {
-      @Override
-      protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawingPanel.setLayout(new CardLayout());
-        if (image != null) {
-          g.drawImage(image, 0, 0, this);
-        }
-        if (!fillBucketMode) {
-          for (Line line : lines) {
-            line.draw(g);
-          }
-        }
-      }
-    };
-
-    view3 = new JPanel() {
-      @Override
-      protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawingPanel.setLayout(new CardLayout());
-        if (image != null) {
-          g.drawImage(image, 0, 0, this);
-        }
-        if (!fillBucketMode) {
-          for (Line line : lines) {
-            line.draw(g);
-          }
-        }
-      }
-    };
-
-    view2.add(new JButton("Test"));
-    cards.add(view1, image1);
-    cards.add(view2, image2);
-    cards.add(view3, image3);
-    mainPanel.add(cards, BorderLayout.CENTER);
-
-        // Top panel
-    JPanel topPanel = new JPanel();
+    // Top panel
+     topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     topPanel.add(saveButton);
     topPanel.add(loadButton);
-
-    cb.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        
-      CardLayout cardLayout = (CardLayout) (cards.getLayout());
-      cardLayout.show(cards, (String) cb.getSelectedItem());
-      System.out.println((String) cb.getSelectedItem());
-
-
-      }
-      
-    });
-      
-    //Undo button action listener
+    
     undoButton.addActionListener(
       new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-          
           int size = lines.size(); // List size
           if (lines.size() != 0) {
             lines.remove(size - 1); // remove the last drawn line
@@ -407,7 +309,7 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     );
 
     topPanel.add(undoButton);
-    topPanel.add(cb);
+    topPanel.add(comboBox);
 
     mainPanel.add(topPanel, BorderLayout.NORTH);
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
@@ -421,7 +323,7 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
 
     mainPanel.add(imageStatusLabel, BorderLayout.SOUTH);
 
-    System.out.println("top bar picker added");
+    System.out.println("top bar  picker added");
 
     // add sidebar
     sidebarPanel = new JPanel();
@@ -474,6 +376,12 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
               updateImageinfo(image);
               FilterButton filterButton = null;
               Component[] components = sidebarPanel.getComponents();
+
+              GeneratedImages.clear();
+              String title="primImage";
+              CardObject primImage=new CardObject(image,title);
+              GeneratedImages.put(title,primImage);
+              UpdatedCombobox();
 
               for (Component component : components) {
                 if (component instanceof FilterButton) {
@@ -671,13 +579,12 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     // toolMenu.add(fillBucketMenuItem);
     // toolMenu.add(straightLineMenuItem);
     // menuBar.add(toolMenu);
-   
+
     drawingPanel =
-      new JPanel(new CardLayout()) {
+      new JPanel() {
         @Override
         protected void paintComponent(Graphics g) {
           super.paintComponent(g);
-          
           if (image != null) {
             g.drawImage(image, 0, 0, this);
           }
@@ -735,12 +642,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     );
     mainPanel.add(drawingPanel);
 
-    //finish
-
-    drawingPanel.add(view1, image1);
-    drawingPanel.add(view2, image2);
-    drawingPanel.add(view3, image3);
-
     // add main panel to content pane
     getContentPane().add(mainPanel);
 
@@ -749,14 +650,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     setLocationRelativeTo(null);
     setVisible(true);
   }
-
-  public void itemStateChanged(ItemEvent evt) {
-    CardLayout cl = (CardLayout) (cards.getLayout());
-    cl.show(cards, (String) evt.getItem());
-    }
-
- 
-  
 
   // private JTextField createToleranceTextField() {
   // JTextField toleranceTextField = new JTextField("10", 5); // Default value is
@@ -793,7 +686,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
   // fillTolerance = 10;
   // }
   // }
-
   private class Line {
 
     Point start;
@@ -811,8 +703,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
       g.drawLine(start.x, start.y, end.x, end.y);
     }
   }
-
-  
 
   private void fillBucket(Point point) {
     if (image != null) {
@@ -1119,7 +1009,8 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
     return button;
   }
 
- 
+  // Number of images loaded
+  int imageCount = 0;
 
   // Create the buttons
   private JButton createLoadButton(
@@ -1161,7 +1052,7 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
 
         public void mouseClicked(MouseEvent e) {
           FileNameExtensionFilter imageFilter = new FileNameExtensionFilter(
-            "Image Files",
+            "Image files",
             ImageIO.getReaderFileSuffixes()
           );
           System.out.println(imageFilter);
@@ -1177,10 +1068,6 @@ public class PhotoEditorGUI extends JFrame implements ItemListener{
               "Selected File: " + selectedFile.getAbsolutePath()
             );
             imageCount = imageCount + 1;
-            imageArray.add(image);
-            System.out.println(imageArray.size());
-
-            
             System.out.println("Number of images: " + imageCount);
           } else {
             System.out.println("No file selected");
