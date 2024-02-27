@@ -159,10 +159,9 @@ public void MergerImage(){
         public void keyTyped(KeyEvent e) {}
     });
       
-        topPanel.add(comboBox);
-        topPanel.add(comboBox);
-
-        topPanel.repaint();       
+        topPanel.add(comboBox);       
+        topPanel.revalidate();
+        topPanel.repaint();
         System.out.println("combo box done");
         drawingPanel.repaint(); 
   }
@@ -585,7 +584,7 @@ public void MergerImage(){
               CardObject primImage = new CardObject(image, title);
               GeneratedImages.put(title, primImage);
               UpdatedCombobox();
-              
+
               FilterButton filterButton = null;
               Component[] components = sidebarPanel.getComponents();
 
