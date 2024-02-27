@@ -40,7 +40,11 @@ public class PhotoEditorGUI extends JFrame {
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
 
-
+      public void addCardImageToState(String Name,BufferedImage image){
+        GeneratedImages.put(Name,new CardObject(image, Name));
+        UpdatedCombobox();
+      }
+      
   public void UpdatedCombobox(){
     comboBox = new JComboBox(GeneratedImages.keySet().toArray());
     JComboBox comboBoxtemp=null;
