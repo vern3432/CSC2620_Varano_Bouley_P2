@@ -246,6 +246,7 @@ public class PhotoEditorGUI extends JFrame {
   private JButton paintButton;
   private JButton fillButton;
   private JButton textButton;
+  private JButton clearButton;
 
   // private JButton filterButton;
   private JButton selectToolButton;
@@ -278,6 +279,7 @@ public class PhotoEditorGUI extends JFrame {
     // loadButton = createLoadButton("folder.png", "Load", "type");
     // saveButton = createSaveButton("saveicon.png", "Save", "type");
     undoButton = createButton2("undo_topbar.png", "Undo");
+    clearButton = createButton2("broom.png", "Clear All");
 
     paintButton = createPaintButton("paintbrush.png", "Paint");
 
@@ -394,6 +396,19 @@ public class PhotoEditorGUI extends JFrame {
             }
           }
         });
+    
+    clearButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e){
+        if (lines.size() > 0){
+          lines.clear();
+          drawingPanel.repaint();
+        }
+        else {
+          System.out.println("The panel is cleared");
+        }
+      }
+    });
 
     RefelectButton.addActionListener(
         new ActionListener() {
@@ -426,6 +441,7 @@ public class PhotoEditorGUI extends JFrame {
         });
 
     topPanel.add(undoButton);
+    topPanel.add(clearButton);
 
     topPanel.add(comboBox);
 
