@@ -46,26 +46,26 @@ public class PhotoEditorGUI extends JFrame {
   public HashMap<String, CardObject> GeneratedImages = new HashMap<>();
   public String[] keysImage;
   // public int selectedImage = 0;
-  public String SelectedImage="";
+  public String SelectedImage = "";
 
-public void MergerImage(){
-      BufferedImage combinedImage = new BufferedImage(
-              image.getWidth(),
-              image.getHeight(),
-              BufferedImage.TYPE_INT_ARGB);
-          Graphics2D g2d = combinedImage.createGraphics();
-          g2d.drawImage(image, 0, 0, null);
+  public void MergerImage() {
+    BufferedImage combinedImage = new BufferedImage(
+        image.getWidth(),
+        image.getHeight(),
+        BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = combinedImage.createGraphics();
+    g2d.drawImage(image, 0, 0, null);
 
-          // Draw the lines on the combined image
-          g2d.setColor(selectedColor);
-          for (Line line : lines) {
-            g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
-          }
-          image = combinedImage;
-          g2d.dispose();
-          lines.clear();
+    // Draw the lines on the combined image
+    g2d.setColor(selectedColor);
+    for (Line line : lines) {
+      g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
+    }
+    image = combinedImage;
+    g2d.dispose();
+    lines.clear();
 
-}
+  }
 
   public void setImage(BufferedImage inputimage) {
     this.image = inputimage;
@@ -81,10 +81,9 @@ public void MergerImage(){
     GeneratedImages.get(SelectedImage).setAssociatedImag(image);
 
     setImage(GeneratedImages.get(name).getAssociatedImag());
-    drawingPanel.repaint(); 
+    drawingPanel.repaint();
 
   }
-
 
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
@@ -99,7 +98,7 @@ public void MergerImage(){
     GeneratedImages.put(Name, new CardObject(image, Name));
     UpdatedCombobox();
     selectCombobox(Name);
-    SelectedImage=Name;
+    SelectedImage = Name;
   }
 
   public void UpdatedCombobox() {
@@ -120,50 +119,51 @@ public void MergerImage(){
       }
     }
 
-        if(comboBoxtemp !=null){
-          topPanel.remove(comboBoxtemp);
-          topPanel.repaint();
+    if (comboBoxtemp != null) {
+      topPanel.remove(comboBoxtemp);
+      topPanel.repaint();
 
-        }  
-        
-        
-        comboBox.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            MergerImage();
+    }
 
-              String selectedValue = (String) comboBox.getSelectedItem();
-              System.out.println("selecting:"+selectedValue);
-              selectCombobox(selectedValue);
-            System.out.println("previously selected: "+SelectedImage);
-              SelectedImage=selectedValue;
-              
-          }
+    comboBox.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        MergerImage();
 
-      });
-      comboBox.addKeyListener(new KeyListener() {
-        int selectedIndex = 0;
+        String selectedValue = (String) comboBox.getSelectedItem();
+        System.out.println("selecting:" + selectedValue);
+        selectCombobox(selectedValue);
+        System.out.println("previously selected: " + SelectedImage);
+        SelectedImage = selectedValue;
 
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_T) {
-                // Cycle to the next option
-                selectedIndex = (selectedIndex + 1) % comboBox.getItemCount();
-                comboBox.setSelectedIndex(selectedIndex);
-            }
-        }
+      }
 
-        @Override
-        public void keyReleased(KeyEvent e) {}
-
-        @Override
-        public void keyTyped(KeyEvent e) {}
     });
-      
-        topPanel.add(comboBox);       
-        topPanel.revalidate();
-        topPanel.repaint();
-        System.out.println("combo box done");
-        drawingPanel.repaint(); 
+    comboBox.addKeyListener(new KeyListener() {
+      int selectedIndex = 0;
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_T) {
+          // Cycle to the next option
+          selectedIndex = (selectedIndex + 1) % comboBox.getItemCount();
+          comboBox.setSelectedIndex(selectedIndex);
+        }
+      }
+
+      @Override
+      public void keyReleased(KeyEvent e) {
+      }
+
+      @Override
+      public void keyTyped(KeyEvent e) {
+      }
+    });
+
+    topPanel.add(comboBox);
+    topPanel.revalidate();
+    topPanel.repaint();
+    System.out.println("combo box done");
+    drawingPanel.repaint();
   }
 
   public BufferedImage loadImage(String filename) {
@@ -349,7 +349,8 @@ public void MergerImage(){
 
     // filterButton = createButton("saveicon.png", "Filter");
     // selectToolButton = createButton("select_tool_box.png", "Select Tool");
-    // straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line Tool"); // Initialize
+    // straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line
+    // Tool"); // Initialize
     // colorPickerButton
     RefelectButton = createButton("reflect.png", "Reflect Horizontially");
     FlipButton = createButton("flipvvertical.png", "Reflect Horizontially");
@@ -368,11 +369,10 @@ public void MergerImage(){
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
-
     // Top panel
     topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    
+
     // topPanel.add(saveButton);
     // topPanel.add(loadButton);
 
@@ -395,42 +395,37 @@ public void MergerImage(){
           }
         });
 
+    RefelectButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            MergerImage();
+            String selectedValue = (String) comboBox.getSelectedItem();
+            System.out.println("selecting:" + selectedValue);
+            selectCombobox(selectedValue);
+            ImageFlipper flipper = new ImageFlipper();
+            BufferedImage flipped = flipper.flipImage(image, "Horizontal");
+            GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
+            setImage(flipped);
+          }
+        });
 
-        RefelectButton.addActionListener(
-          new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              MergerImage();
-              String selectedValue = (String) comboBox.getSelectedItem();
-              System.out.println("selecting:"+selectedValue);
-              selectCombobox(selectedValue);
-              ImageFlipper flipper=new ImageFlipper();
-              BufferedImage flipped =flipper.flipImage( image,  "Horizontal");
-              GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
-              setImage(flipped);
-            }
-          });
-
-          FlipButton.addActionListener(
-            new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                MergerImage();
-                String selectedValue = (String) comboBox.getSelectedItem();
-                System.out.println("selecting:"+selectedValue);
-                selectCombobox(selectedValue);
-                ImageFlipper flipper1=new ImageFlipper();
-                BufferedImage flipped =flipper1.flipImage( image,  "Vertical");
-                GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
-                setImage(flipped);
-              }
-            });
-
-
-
+    FlipButton.addActionListener(
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            MergerImage();
+            String selectedValue = (String) comboBox.getSelectedItem();
+            System.out.println("selecting:" + selectedValue);
+            selectCombobox(selectedValue);
+            ImageFlipper flipper1 = new ImageFlipper();
+            BufferedImage flipped = flipper1.flipImage(image, "Vertical");
+            GeneratedImages.get(SelectedImage).setAssociatedImag(flipped);
+            setImage(flipped);
+          }
+        });
 
     topPanel.add(undoButton);
-
 
     topPanel.add(comboBox);
 
@@ -504,7 +499,7 @@ public void MergerImage(){
                 GeneratedImages.clear();
 
                 String title = "primImage";
-                SelectedImage=title;
+                SelectedImage = title;
 
                 CardObject primImage = new CardObject(image, title);
                 GeneratedImages.put(title, primImage);
@@ -619,7 +614,7 @@ public void MergerImage(){
               GeneratedImages.clear();
 
               String title = "primImage";
-              SelectedImage=title;
+              SelectedImage = title;
 
               CardObject primImage = new CardObject(image, title);
               GeneratedImages.put(title, primImage);
@@ -840,6 +835,7 @@ public void MergerImage(){
 
     return button;
   }
+
   private JButton createButton2(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
