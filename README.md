@@ -22,6 +22,7 @@ Run:PhotoEditorGUI.java
    - Apply Filter: Apply a filter to the image.
     Features:
               Grayscale Conversion (Ctrl + G): Convert an image to grayscale.
+     
               Inverted Colors (Ctrl + I): View the image with inverted colors.
               Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.
               Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.
