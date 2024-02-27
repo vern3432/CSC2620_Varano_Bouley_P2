@@ -160,6 +160,8 @@ public void MergerImage(){
     });
       
         topPanel.add(comboBox);
+        topPanel.add(comboBox);
+
         topPanel.repaint();       
         System.out.println("combo box done");
         drawingPanel.repaint(); 
@@ -575,7 +577,15 @@ public void MergerImage(){
 
               image = bufferedImage;
               drawingPanel.repaint();
+              GeneratedImages.clear();
 
+              String title = "primImage";
+              SelectedImage=title;
+
+              CardObject primImage = new CardObject(image, title);
+              GeneratedImages.put(title, primImage);
+              UpdatedCombobox();
+              
               FilterButton filterButton = null;
               Component[] components = sidebarPanel.getComponents();
 
