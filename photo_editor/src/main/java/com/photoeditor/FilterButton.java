@@ -14,10 +14,11 @@ import javax.imageio.ImageIO;
 
 public class FilterButton extends JButton {
     public BufferedImage image;
+    PhotoEditorGUI mainGui;
     public FilterButton(String iconPath, String toolTipText, BufferedImage image,PhotoEditorGUI mainGui) {
         BufferedImage image2 = loadImage(iconPath);
         System.out.println(iconPath);
-    
+        this.mainGui=mainGui;
         Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
     
         ImageIcon imageIcon = new ImageIcon(newimg);
