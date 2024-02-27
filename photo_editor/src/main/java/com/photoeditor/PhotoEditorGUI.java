@@ -137,7 +137,36 @@ public void MergerImage(){
               SelectedImage=selectedValue;
               
           }
+
+
+
+          
+
+
       });
+      comboBox.addKeyListener(new KeyListener() {
+        int selectedIndex = 0;
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_T) {
+                // Cycle to the next option
+                selectedIndex = (selectedIndex + 1) % comboBox.getItemCount();
+                comboBox.setSelectedIndex(selectedIndex);
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {}
+
+        @Override
+        public void keyTyped(KeyEvent e) {}
+    });
+
+
+
+
+      
         topPanel.add(comboBox);
         topPanel.repaint();       
         System.out.println("combo box done");
