@@ -4,9 +4,8 @@ import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 
 public class CardObject{
-    public String title="";
+    public String title = " ";
     public BufferedImage AssociatedImag;
-
 
     CardObject(BufferedImage input,String Name){
         this.title=Name;

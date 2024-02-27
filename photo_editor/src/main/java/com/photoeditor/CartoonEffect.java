@@ -18,7 +18,7 @@ public class CartoonEffect extends JFrame {
   private JSlider thresholdSlider;
 
   public CartoonEffect() {
-    setTitle("Cartoon Effect App");
+    super("Cartoon Effect App");
     setSize(800, 600);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

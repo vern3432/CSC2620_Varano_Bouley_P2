@@ -32,12 +32,12 @@ public class PhotoEditorGUI extends JFrame {
   private static boolean trace = true; // Turn tracing on and off
 
   private JLabel toolStatusLabel; // JLabel to display currently selected tool
-  private JLabel imageStatusLabel;
+  private JLabel imageStatusLabel; // Status of the image
   private String sidebarStatus = "Paint"; // Initialized sidebarStatus
   private String saveDirectory = "";
   private String loadedImageDirectory = "";
   private boolean Undo = false;
-  private Color selectedColor = Color.BLACK;
+  private Color selectedColor = Color.BLACK; // Start colot
   private JButton colorPickerButton;
   private String Filename = "";
 
@@ -45,9 +45,12 @@ public class PhotoEditorGUI extends JFrame {
   public BufferedImage image;
   public HashMap<String, CardObject> GeneratedImages = new HashMap<>();
   public String[] keysImage;
-  // public int selectedImage = 0;
   public String SelectedImage = "";
 
+
+  /**
+   * Combine images
+   */
   public void MergerImage() {
     BufferedImage combinedImage = new BufferedImage(
         image.getWidth(),
@@ -67,16 +70,28 @@ public class PhotoEditorGUI extends JFrame {
 
   }
 
+  /**
+   * Set the current image
+   * @param inputimage
+   */
   public void setImage(BufferedImage inputimage) {
     this.image = inputimage;
 
   }
 
+  /**
+   * Get the current image
+   * @return
+   */
   public BufferedImage getImage() {
     return this.image;
 
   }
 
+  /**
+   * Get the combo box for the cards
+   * @param name
+   */
   public void selectCombobox(String name) {
     GeneratedImages.get(SelectedImage).setAssociatedImag(image);
 
@@ -87,9 +102,14 @@ public class PhotoEditorGUI extends JFrame {
 
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
+
+  /**
+   * Add a new card with an associated image
+   * @param Name
+   * @param image
+   */
   public void addCardImageToState(String Name, BufferedImage image) {
 
-    System.out.println("guessing this is it ");
     if (GeneratedImages.containsKey(Name)) {
       Name = Name + "2";
 
@@ -101,6 +121,9 @@ public class PhotoEditorGUI extends JFrame {
     SelectedImage = Name;
   }
 
+  /**
+   * Update the combo box with a new component
+   */
   public void UpdatedCombobox() {
 
     JComboBox comboBoxtemp = null;
@@ -125,6 +148,7 @@ public class PhotoEditorGUI extends JFrame {
 
     }
 
+    // If combo box clicked
     comboBox.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         MergerImage();
@@ -138,6 +162,8 @@ public class PhotoEditorGUI extends JFrame {
       }
 
     });
+
+    // If bombo box item selected
     comboBox.addKeyListener(new KeyListener() {
       int selectedIndex = 0;
 
@@ -162,10 +188,16 @@ public class PhotoEditorGUI extends JFrame {
     topPanel.add(comboBox);
     topPanel.revalidate();
     topPanel.repaint();
-    System.out.println("combo box done");
+
+    System.out.println("Combo box done");
     drawingPanel.repaint();
   }
 
+  /**
+   * Loads a new image from a file
+   * @param filename
+   * @return
+   */
   public BufferedImage loadImage(String filename) {
     BufferedImage iconImage = null;
     try {
@@ -183,6 +215,9 @@ public class PhotoEditorGUI extends JFrame {
     return iconImage;
   }
 
+  /*
+   * Round numbers
+   */
   public static double round(double value, int places) {
     if (places < 0)
       throw new IllegalArgumentException();
@@ -266,9 +301,10 @@ public class PhotoEditorGUI extends JFrame {
   private boolean fillBucketMode = false;
   private boolean drawStraightLineMode = false;
   private int fillTolerance = 10; // changes this for sensitivity of bucket fill
-  JPanel sidebarPanel;
-  JPanel topPanel;
+  private JPanel sidebarPanel;
+  private JPanel topPanel;
 
+  // Begin the demo
   public PhotoEditorGUI() {
     // set up the JFrame
     setTitle("Photo Editor");
@@ -276,8 +312,6 @@ public class PhotoEditorGUI extends JFrame {
     setPreferredSize(new Dimension(600, 400));
 
     // create components
-    // loadButton = createLoadButton("folder.png", "Load", "type");
-    // saveButton = createSaveButton("saveicon.png", "Save", "type");
     undoButton = createButton2("undo_topbar.png", "Undo");
     clearButton = createButton2("broom.png", "Clear All");
 
@@ -347,18 +381,12 @@ public class PhotoEditorGUI extends JFrame {
               }
             });
 
-    textButton = createButton("text_feild.png", "Text");
-
-    // filterButton = createButton("saveicon.png", "Filter");
-    // selectToolButton = createButton("select_tool_box.png", "Select Tool");
-    // straightLineMenuItem = createStraightButton("straightLine.png", "Straigt Line
-    // Tool"); // Initialize
-    // colorPickerButton
-    RefelectButton = createButton("reflect.png", "Reflect Horizontially");
-    FlipButton = createButton("flipvvertical.png", "Reflect Horizontially");
-
+    textButton = createButton("text_feild.png", "Text"); // new text button
+    RefelectButton = createButton("reflect.png", "Reflect Horizontially"); // new reflect button
+    FlipButton = createButton("flipvvertical.png", "Reflect Horizontially"); // new flip button
     colorPickerButton = new JButton("Select Color"); // Initialize colorPickerButton
 
+    // For the sliders
     toleranceSlider = new JSlider(JSlider.HORIZONTAL, 0, 50, fillTolerance);
     toleranceSlider.setMajorTickSpacing(10);
     toleranceSlider.setMinorTickSpacing(5);
@@ -371,13 +399,11 @@ public class PhotoEditorGUI extends JFrame {
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
-    // Top panel
+    // The top panel
     topPanel = new JPanel(new CardLayout());
     topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-    // topPanel.add(saveButton);
-    // topPanel.add(loadButton);
-
+    // If undo button is clicked
     undoButton.addActionListener(
         new ActionListener() {
           @Override
@@ -397,6 +423,7 @@ public class PhotoEditorGUI extends JFrame {
           }
         });
     
+    // If clear button is clicked
     clearButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e){
@@ -410,6 +437,7 @@ public class PhotoEditorGUI extends JFrame {
       }
     });
 
+    //If reflect button is clicked
     RefelectButton.addActionListener(
         new ActionListener() {
           @Override
@@ -425,6 +453,7 @@ public class PhotoEditorGUI extends JFrame {
           }
         });
 
+    // If flip button is clicked
     FlipButton.addActionListener(
         new ActionListener() {
           @Override
@@ -440,12 +469,15 @@ public class PhotoEditorGUI extends JFrame {
           }
         });
 
+    // Add the buttons to the top panel
     topPanel.add(undoButton);
     topPanel.add(clearButton);
-
     topPanel.add(comboBox);
 
+    // Add the top panel to the main panel
     mainPanel.add(topPanel, BorderLayout.NORTH);
+
+    // Initialize the status bar
     toolStatusLabel = new JLabel("Selected Tool: " + sidebarStatus);
     toolStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
     toolStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -453,47 +485,41 @@ public class PhotoEditorGUI extends JFrame {
     imageStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
     imageStatusLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-    mainPanel.add(toolStatusLabel, BorderLayout.SOUTH);
+    mainPanel.add(toolStatusLabel, BorderLayout.SOUTH); // Add label
+    mainPanel.add(imageStatusLabel, BorderLayout.SOUTH); // Add label
 
-    mainPanel.add(imageStatusLabel, BorderLayout.SOUTH);
-
-    System.out.println("top bar  picker added");
-
+    if (trace) {
+      System.out.println("top bar picker added");
+    }
+    
     // add sidebar
     sidebarPanel = new JPanel();
     sidebarPanel.setLayout(new GridLayout(0, 1));
     sidebarPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     sidebarPanel.setPreferredSize(new Dimension(70, 70));
 
+    // Add components to the side bar panel
     sidebarPanel.add(paintButton);
     sidebarPanel.add(fillButton);
     sidebarPanel.add(textButton);
     sidebarPanel.add(FlipButton);
     sidebarPanel.add(RefelectButton);
-    // sidebarPanel.add(filterButton);
-    // sidebarPanel.add(selectToolButton);
-    // sidebarPanel.add(straightLineMenuItem);
     colorPickerButton.addActionListener(new ColorPickerListener()); // add ActionListener to colorPickerButton
     System.out.println("color picker added");
     colorPickerButton.setBackground(selectedColor); // Set initial background color of colorPickerButton
 
-    // JButton Filter = new FilterButton("filter2.png", "Apply Filter",this.image);
+    // Filter button 
     Filter = new FilterButton("filter2.png", "Apply Filter", this.image, this);
 
     sidebarPanel.add(Filter);
     sidebarPanel.add(colorPickerButton);
-
-    // // JTextField toleranceSlider = createToleranceTextField();
-    // sidebarPanel.add(toleranceSlider);
-    // sidebarPanel.add(toleranceSlider);
-
     mainPanel.add(sidebarPanel, BorderLayout.EAST);
 
     JMenuBar menuBar = new JMenuBar();
-
     JMenu fileMenu = new JMenu("File");
     JMenuItem openMenuItem = new JMenuItem("Open");
 
+    // If menu item is clicked
     openMenuItem.addActionListener(
         new ActionListener() {
           @Override
@@ -519,7 +545,7 @@ public class PhotoEditorGUI extends JFrame {
 
                 CardObject primImage = new CardObject(image, title);
                 GeneratedImages.put(title, primImage);
-                UpdatedCombobox();
+                UpdatedCombobox(); // Update the combo box
 
                 for (Component component : components) {
                   if (component instanceof FilterButton) {
@@ -545,6 +571,8 @@ public class PhotoEditorGUI extends JFrame {
         });
 
     JMenuItem saveMenuItem = new JMenuItem("Save As");
+
+    // If save menu item is clicked
     saveMenuItem.addActionListener(
         new ActionListener() {
           @Override
@@ -587,6 +615,7 @@ public class PhotoEditorGUI extends JFrame {
 
     JMenuItem newImage = new JMenuItem("New");
 
+    // New image
     newImage.addActionListener(
         new ActionListener() {
           @Override
@@ -675,6 +704,7 @@ public class PhotoEditorGUI extends JFrame {
     menuBar.add(fileMenu);
     setJMenuBar(menuBar);
 
+    // Create the drawing panel
     drawingPanel = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
