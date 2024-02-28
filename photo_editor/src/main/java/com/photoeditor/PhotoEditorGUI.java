@@ -1231,6 +1231,8 @@ public class PhotoEditorGUI extends JFrame {
     sidebarPanel.setLayout(new GridLayout(0, 1));
     sidebarPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     sidebarPanel.setPreferredSize(new Dimension(70, 70));
+    paintButton.setToolTipText("Select Paint");
+    fillButton.setToolTipText("Select Paint");
 
     // Add components to the side bar panel
     sidebarPanel.add(paintButton);

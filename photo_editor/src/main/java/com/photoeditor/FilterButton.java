@@ -36,7 +36,7 @@ public class FilterButton extends JButton {
         Image newimg = image2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
 
         ImageIcon imageIcon = new ImageIcon(newimg);
-
+        this.setToolTipText("Select Filter");
         JButton button = new JButton(imageIcon);
         button.setToolTipText(toolTipText);
 
