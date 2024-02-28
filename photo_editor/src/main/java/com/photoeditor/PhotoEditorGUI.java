@@ -907,6 +907,8 @@ public class PhotoEditorGUI extends JFrame {
             Action paintAction = new AbstractAction() {
               @Override
               public void actionPerformed(ActionEvent e) {
+                paintButton.doClick();
+
                 sidebarStatus = "Paint"; // Set sidebarStatus when button is clicked
                 toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
                 fillBucketMode = false;
@@ -921,6 +923,20 @@ public class PhotoEditorGUI extends JFrame {
           actionMap2.put("buttonAction", paintAction);
   
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
+    fillButton
+        .getActionMap()
+        .put(
+            "fillAction",
+            new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                // Perform the same action as clicking the button
+                paintButton.doClick();
+              }
+            });
+            
+
+
     fillButton.addMouseListener(
         new MouseAdapter() {
           @Override
@@ -951,51 +967,9 @@ public class PhotoEditorGUI extends JFrame {
 
 
         // Define an action
-        Action fillAction = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            // Your mouseClicked action here
-            BufferedImage combinedImage = new BufferedImage(
-                image.getWidth(),
-                image.getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = combinedImage.createGraphics();
-            g2d.drawImage(image, 0, 0, null);
-
-            // Draw the lines on the combined image
-            g2d.setColor(selectedColor);
-            for (Line line : lines) {
-              g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
-            }
-            image = combinedImage;
-            g2d.dispose();
-
-            // sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
-            // toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update
-            // toolStatusLabel
-            fillBucketMode = true;
-            drawStraightLineMode = false;
-            }
-        };
-
-        ActionMap actionMap = fillButton.getActionMap();
+   
 
 
-        // Map the action to the desired key stroke
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK), "fillAction");
-        actionMap.put("fillAction", fillAction);
-
-    fillButton
-        .getActionMap()
-        .put(
-            "buttonAction",
-            new AbstractAction() {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                // Perform the same action as clicking the button
-                fillButton.doClick();
-              }
-            });
 
     textButton = createButton("text_feild.png", "Text"); // new text button
     RefelectButton = createButton("reflect.png", "Reflect Horizontially"); // new reflect button
