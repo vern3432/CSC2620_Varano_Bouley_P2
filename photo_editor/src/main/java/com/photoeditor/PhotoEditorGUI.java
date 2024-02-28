@@ -26,6 +26,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicSliderUI;
+import java.util.regex.*;
+
 
 public class PhotoEditorGUI extends JFrame {
 
@@ -40,8 +42,6 @@ public class PhotoEditorGUI extends JFrame {
   private Color selectedColor = Color.BLACK; // Start colot
   private JButton colorPickerButton;
   private String Filename = "";
-  private int windowWidth = 800;
-  private int windowHeight = 600;
 
   // primary image
   public BufferedImage image;
@@ -105,22 +105,54 @@ public class PhotoEditorGUI extends JFrame {
   JComboBox comboBox = new JComboBox(GeneratedImages.keySet().toArray());
 
 
+  public static String incrementTrailingInteger(String input) {
+    StringBuilder base = new StringBuilder();
+    StringBuilder number = new StringBuilder();
+
+    // Find the base string and the trailing integer
+    boolean foundNumber = false;
+    for (int i = input.length() - 1; i >= 0; i--) {
+        char ch = input.charAt(i);
+        if (Character.isDigit(ch)) {
+            number.insert(0, ch); // prepend digit to number
+            foundNumber = true;
+        } else if (foundNumber) {
+            base.insert(0, ch); // prepend non-digit character to base
+        } else {
+            base.insert(0, ch); // prepend non-digit character to base
+        }
+    }
+
+    // If no integer found, add 2 to the end
+    if (number.length() == 0) {
+        return input + "2";
+    }
+
+    // Increment the integer value
+    int intValue = Integer.parseInt(number.toString()) + 1;
+
+    return base.toString() + intValue;
+}
+
   /**
    * Add a new card with an associated image
    * @param Name
    * @param image
+   * 
+   * 
+   * 
    */
   public void addCardImageToState(String Name, BufferedImage image) {
 
-    if (GeneratedImages.containsKey(Name)) {
-      Name = Name + "2";
+    while(GeneratedImages.containsKey(Name)) {
+      Name=incrementTrailingInteger(Name);
 
     }
 
-    GeneratedImages.put(Name, new CardObject(image, Name));
-    UpdatedCombobox();
-    selectCombobox(Name);
-    SelectedImage = Name;
+      GeneratedImages.put(Name, new CardObject(image, Name));
+      UpdatedCombobox();
+      selectCombobox(Name);
+      SelectedImage = Name;
   }
 
   /**
@@ -311,7 +343,7 @@ public class PhotoEditorGUI extends JFrame {
     // set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setPreferredSize(new Dimension(windowWidth, windowHeight));
+    setPreferredSize(new Dimension(600, 400));
 
     // create components
     undoButton = createButton2("undo_topbar.png", "Undo");
