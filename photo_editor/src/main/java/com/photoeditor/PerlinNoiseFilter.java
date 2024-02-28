@@ -6,6 +6,10 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+
+/**
+ * The PerlinNoiseFilter is a class that applies perlin noise to a filter
+ */
 public class PerlinNoiseFilter {
     private int threshold;
 

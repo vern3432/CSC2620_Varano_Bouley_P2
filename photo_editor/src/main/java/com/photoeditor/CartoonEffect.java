@@ -9,6 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
+/**
+ * CartoonEffect is a subclass of JFrame and allows for the creation of a cartoon effect on an image.
+ */
 public class CartoonEffect extends JFrame {
 
   private BufferedImage originalImage;
@@ -93,6 +97,12 @@ public class CartoonEffect extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param image
+   * @param threshold
+   * @return BufferedImage
+   */
   public BufferedImage applyCartoonEffect(BufferedImage image, int threshold) {
     int width = image.getWidth();
     int height = image.getHeight();

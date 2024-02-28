@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-
+/**
+ * The PerlinNoiseGUI class is a subclass of JFrame. This class creates a new JFrame indepentantly for applying perlin noise to an image.
+ */
 public class PerlinNoiseGUI extends JFrame {
     private JLabel originalImageLabel;
     private JLabel noiseImageLabel;
@@ -65,6 +67,10 @@ public class PerlinNoiseGUI extends JFrame {
         setVisible(true);
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

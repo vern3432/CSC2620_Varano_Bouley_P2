@@ -4,6 +4,10 @@ import javafx.scene.effect.Light.Point;
 import javafx.scene.paint.Color;
 import java.awt.Graphics;
 
+
+/**
+ * The line class creates a new line appearing on a JPanel
+ */
 public class Line {
 
     Point start;
@@ -16,6 +20,10 @@ public class Line {
         this.color = color;
     }
 
+    
+    /** 
+     * @param g
+     */
     public void draw(Graphics g) {
         g.setColor(color);
         g.drawLine(0, 0, 0, 0);

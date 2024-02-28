@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * A class for creating a cartoon effect on an image. This class inherits from JFrame
+ */
 public class BWCartoonEffect extends JFrame {
 
     private JLabel imageLabel;
@@ -87,6 +90,12 @@ public class BWCartoonEffect extends JFrame {
         getContentPane().add(scrollPane, BorderLayout.CENTER);
     }
 
+    
+    /** 
+     * @param image
+     * @param threshold
+     * @return BufferedImage
+     */
     public BufferedImage applyBWCartoonEffect(BufferedImage image, int threshold) {
         int width = image.getWidth();
         int height = image.getHeight();

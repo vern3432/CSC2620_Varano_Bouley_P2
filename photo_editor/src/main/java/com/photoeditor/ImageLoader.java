@@ -11,8 +11,16 @@ import java.lang.reflect.Field;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The ImageLoader class allows for loading an image from a file
+ */
 public class ImageLoader {
 
+    
+    /** 
+     * @param target
+     * @return boolean
+     */
     public static boolean allNull(Object target) {
         return Arrays.stream(target.getClass()
                 .getDeclaredFields())

@@ -9,6 +9,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.Random;
 
+
+/*
+ * The FilmBlurWithNoise class is a subclass of JFrame
+ */
 public class FilmBlurWithNoise extends JFrame {
 
     private BufferedImage originalImage;
@@ -77,6 +81,11 @@ public class FilmBlurWithNoise extends JFrame {
         }
     }
 
+    
+    /** 
+     * @param image
+     * @return BufferedImage
+     */
     private BufferedImage applyFilmBlurWithNoise(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();

@@ -7,6 +7,9 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 
+/*
+ * The Image Flipper class is a subclass of JFrame. This class provides a means of flipping an image horizontal or vertical
+ */
 public class ImageFlipper extends JFrame {
     private BufferedImage originalImage;
     private JLabel imageLabel;
@@ -61,6 +64,12 @@ public class ImageFlipper extends JFrame {
         setContentPane(contentPane);
     }
 
+    
+    /** 
+     * @param image
+     * @param flipType
+     * @return BufferedImage
+     */
     public BufferedImage flipImage(BufferedImage image, String flipType) {
         int width = image.getWidth();
         int height = image.getHeight();

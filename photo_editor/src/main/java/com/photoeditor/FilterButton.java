@@ -12,10 +12,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 
+/**
+ * The FilterButton class is a subclass of JButton. This class initilizes a filter button on the main panel.
+ */
 public class FilterButton extends JButton {
     public BufferedImage image;
     PhotoEditorGUI mainGui;
 
+    
+    /** 
+     * @param image
+     * @return BufferedImage
+     */
     public BufferedImage convertToGrayscale(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();

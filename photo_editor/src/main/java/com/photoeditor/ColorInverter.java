@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * ColorInverter class is a subclass of JFrame. It allows for a inverting color effect on images.
+ */
 public class ColorInverter extends JFrame {
 
   private BufferedImage originalImage;
@@ -77,6 +80,11 @@ public class ColorInverter extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param image
+   * @return BufferedImage
+   */
   public BufferedImage invertColors(BufferedImage image) {
     int width = image.getWidth();
     int height = image.getHeight();

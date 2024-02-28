@@ -9,6 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
+/*
+ * The GrayscaleConverter class is a subclass of JFrame. This class applies a grayscale effect on an iamge.
+ */
 public class GrayscaleConverter extends JFrame {
 
   private BufferedImage originalImage;
@@ -76,6 +80,11 @@ public class GrayscaleConverter extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param image
+   * @return BufferedImage
+   */
   public BufferedImage convertToGrayscale(BufferedImage image) {
     int width = image.getWidth();
     int height = image.getHeight();

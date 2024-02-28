@@ -4,7 +4,18 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
+
+/**
+ * The GaussianBlur class adds a blur effect to an image.
+ */
 public class GaussianBlur {
+
+/** 
+ * @param image
+ * @param radius
+ * @param threshold
+ * @return BufferedImage
+ */
 //source for implimentation https://stackoverflow.com/questions/39684820/java-implementation-of-gaussian-blur
 
 public static BufferedImage apply(BufferedImage image, int radius, int threshold) {

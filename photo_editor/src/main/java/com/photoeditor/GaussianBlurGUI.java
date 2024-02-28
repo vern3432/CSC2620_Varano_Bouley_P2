@@ -8,6 +8,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
+/**
+ * The GaussianBlurBUI is a subclass of JFrame. This class can be used to create a seperate JFrame for this effect which blurs an image/
+ */
 public class GaussianBlurGUI extends JFrame {
 
     private BufferedImage originalImage;
@@ -87,6 +91,10 @@ public class GaussianBlurGUI extends JFrame {
         }
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GaussianBlurGUI().setVisible(true));
     }
