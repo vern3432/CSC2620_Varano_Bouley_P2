@@ -1118,11 +1118,39 @@ public class PhotoEditorGUI extends JFrame {
             setImage(flipped);
           }
         });
-
-        RefelectButton.getInputMap()
+        RefelectButton
+        .getInputMap()
         .put(
             KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK),
-            "buttonAction");
+            "buttonAction5");
+    
+    RefelectButton
+        .getActionMap()
+        .put(
+            "buttonAction",
+            new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                RefelectButton.doClick();
+              }
+            });
+            Action refAction = new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                RefelectButton.doClick();
+                sidebarStatus = "Paint"; // Set sidebarStatus when button is clicked
+                toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+                fillBucketMode = false;
+                drawStraightLineMode = false;
+              }
+          };
+    
+          InputMap inputMap8= RefelectButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+          ActionMap actionMap3 = RefelectButton.getActionMap();
+    
+          inputMap8.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK), "buttonAction5");
+          actionMap3.put("buttonAction5", refAction);
+    
 
     // If flip button is clicked
     FlipButton.addActionListener(
@@ -1139,11 +1167,39 @@ public class PhotoEditorGUI extends JFrame {
             setImage(flipped);
           }
         });
-
-        FlipButton.getInputMap()
+        FlipButton
+        .getInputMap()
         .put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.CTRL_DOWN_MASK),
-            "buttonAction");
+            KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK),
+            "buttonAction5");
+    
+    FlipButton
+        .getActionMap()
+        .put(
+            "buttonAction",
+            new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                // Perform the same action as clicking the button
+                FlipButton.doClick();
+              }
+            });
+            Action flipfAction = new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                FlipButton.doClick();
+                sidebarStatus = "Paint"; // Set sidebarStatus when button is clicked
+                toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+                fillBucketMode = false;
+                drawStraightLineMode = false;
+              }
+          };
+    
+          InputMap inputMap9= FlipButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+          ActionMap actionMap4 = FlipButton.getActionMap();
+    
+          inputMap9.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.CTRL_DOWN_MASK), "buttonAction5");
+          actionMap4.put("buttonAction5", flipfAction);
 
     // Add the buttons to the top panel
     topPanel.add(undoButton);
