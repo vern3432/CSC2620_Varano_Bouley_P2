@@ -39,8 +39,9 @@ public class FilterButton extends JButton {
         this.setToolTipText("Select Filter");
         JButton button = new JButton(imageIcon);
         button.setToolTipText(toolTipText);
-
         this.image = image;
+        this.setIcon(imageIcon);
+
 
         this.addActionListener(new ActionListener() {
             @Override
