@@ -40,6 +40,8 @@ public class PhotoEditorGUI extends JFrame {
   private Color selectedColor = Color.BLACK; // Start colot
   private JButton colorPickerButton;
   private String Filename = "";
+  private int windowWidth = 800;
+  private int windowHeight = 600;
 
   // primary image
   public BufferedImage image;
@@ -309,7 +311,7 @@ public class PhotoEditorGUI extends JFrame {
     // set up the JFrame
     setTitle("Photo Editor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setPreferredSize(new Dimension(600, 400));
+    setPreferredSize(new Dimension(windowWidth, windowHeight));
 
     // create components
     undoButton = createButton2("undo_topbar.png", "Undo");

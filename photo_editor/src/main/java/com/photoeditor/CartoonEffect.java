@@ -96,23 +96,32 @@ public class CartoonEffect extends JFrame {
   public BufferedImage applyCartoonEffect(BufferedImage image, int threshold) {
     int width = image.getWidth();
     int height = image.getHeight();
-    BufferedImage cartoonImage = new BufferedImage(
-      width,
-      height,
-      BufferedImage.TYPE_INT_RGB
-    );
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        int rgb = image.getRGB(x, y);
-        int red = (rgb >> 16) & 0xFF;
-        int green = (rgb >> 8) & 0xFF;
-        int blue = rgb & 0xFF;
-        int gray = (red + green + blue) / 3;
-        if (gray < threshold) {
-          cartoonImage.setRGB(x, y, Color.BLACK.getRGB());
-        } else {
-          cartoonImage.setRGB(x, y, rgb);
-        }
+
+    int windowWidth = 10;
+    int windowHeight = 10;
+
+    int edgex = windowWidth / 2;
+    int edgey = windowHeight / 2;
+
+    BufferedImage cartoonImage = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
+
+    for (int x = edgex; x < image.getWidth() - edgex; x++) {
+      for (int y = edgey; y < image.getHeight() - edgey; y++) {
+          int[] window = new int[windowWidth * windowHeight];
+          int i = 0;
+
+          //Populate the window with pixel values
+          for (int fx = 0; fx < windowWidth; fx++) {
+              for (int fy = 0; fy < windowHeight; fy++) {
+                  window[i] = image.getRGB(x + fx - edgex, y + fy - edgey);
+                  i++;
+              }
+          }
+
+
+        java.util.Arrays.sort(window);
+
+        cartoonImage.setRGB(x, y, window[10 * 10 / 2]);
       }
     }
     return cartoonImage;
