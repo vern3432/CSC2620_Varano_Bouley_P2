@@ -28,15 +28,20 @@ Run:PhotoEditorGUI.java
      
     Features: <br>
                  Grayscale Conversion (Ctrl + G): Convert an image to grayscale.<br>
+                 
                  Inverted Colors (Ctrl + I): View the image with inverted colors.<br>
+   
                  Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.<br>
+   
                  Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.<br>
+   
                  Cartoonify (Ctrl + K): Generate a cartoonified version of the image.<br>
+   
                  Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)<br>
    
    - Select Color: Choose the drawing color.
 
-4. Drawing Panel:
+5. Drawing Panel:
    - Left-click and drag to draw lines (Paint mode).
    - Click to fill an area with color (Fill mode).
    - Use keyboard shortcuts for quick access to tools.
