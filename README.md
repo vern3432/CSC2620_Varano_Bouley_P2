@@ -15,19 +15,23 @@ Run:PhotoEditorGUI.java
 
 3. Side Bar:
    - Paint: Activate the paintbrush tool.
+      Shortcut: Ctrl + B
    - Fill: Activate the fill tool.
+      Shortcut: Ctrl + Z
    - Text: Add text to the image.
    - Reflect Horizontally: Flip the image horizontally.
+         Shortcut: Ctrl + Arrow Left(⬅️)
    - Reflect Vertically: Flip the image vertically.
+         Shortcut: Ctrl + Arrow UP(⬆️)
    - Apply Filter: Apply a filter to the image.
+         Shortcut: Ctrl + F
     Features:
               Grayscale Conversion (Ctrl + G): Convert an image to grayscale.
-     
               Inverted Colors (Ctrl + I): View the image with inverted colors.
               Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.
               Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.
               Cartoonify (Ctrl + K): Generate a cartoonified version of the image.
-              Save as Text (Ctrl + T): Save the image as ASCII art.
+              Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)
    
    - Select Color: Choose the drawing color.
 
