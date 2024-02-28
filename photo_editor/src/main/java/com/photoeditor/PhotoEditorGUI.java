@@ -137,7 +137,543 @@ public class PhotoEditorGUI extends JFrame {
   /**
    * Add a new card with an associated image
    * @param Name
-   * @param image
+   * @param image│                           │   ├── FailableFunctionsTest$9.class
+│                           │   ├── FailableFunctionsTest$CloseableObject.class
+│                           │   ├── FailableFunctionsTest$FailureOnOddInvocations.class
+│                           │   ├── FailableFunctionsTest$SomeException.class
+│                           │   ├── FailableFunctionsTest$Testable.class
+│                           │   ├── FailableFunctionsTest.class
+│                           │   ├── FailableSupplierTest.class
+│                           │   ├── FunctionsTest.class
+│                           │   ├── IntToCharFunctionTest.class
+│                           │   ├── MethodFixtures.class
+│                           │   ├── MethodInvokersBiConsumerTest.class
+│                           │   ├── MethodInvokersBiFunctionTest.class
+│                           │   ├── MethodInvokersFailableBiConsumerTest.class
+│                           │   ├── MethodInvokersFailableBiFunctionTest.class
+│                           │   ├── MethodInvokersFailableFunctionTest.class
+│                           │   ├── MethodInvokersFailableSupplierTest.class
+│                           │   ├── MethodInvokersFunctionTest.class
+│                           │   ├── MethodInvokersSupplierTest.class
+│                           │   ├── Objects.class
+│                           │   ├── ObjectsTest$TestableFailableSupplier.class
+│                           │   ├── ObjectsTest$TestableSupplier.class
+│                           │   ├── ObjectsTest.class
+│                           │   ├── SuppliersTest.class
+│                           │   ├── ToBooleanBiFunctionTest.class
+│                           │   ├── TriConsumerTest.class
+│                           │   └── TriFunctionTest.class
+│                           ├── FunctionsTest$10.class
+│                           ├── FunctionsTest$11.class
+│                           ├── FunctionsTest$12.class
+│                           ├── FunctionsTest$13.class
+│                           ├── FunctionsTest$14.class
+│                           ├── FunctionsTest$15.class
+│                           ├── FunctionsTest$16.class
+│                           ├── FunctionsTest$17.class
+│                           ├── FunctionsTest$18.class
+│                           ├── FunctionsTest$1.class
+│                           ├── FunctionsTest$2.class
+│                           ├── FunctionsTest$3.class
+│                           ├── FunctionsTest$4.class
+│                           ├── FunctionsTest$5.class
+│                           ├── FunctionsTest$6.class
+│                           ├── FunctionsTest$7.class
+│                           ├── FunctionsTest$8.class
+│                           ├── FunctionsTest$9.class
+│                           ├── FunctionsTest$CloseableObject.class
+│                           ├── FunctionsTest$FailureOnOddInvocations.class
+│                           ├── FunctionsTest$SomeException.class
+│                           ├── FunctionsTest$Testable.class
+│                           ├── FunctionsTest.class
+│                           ├── HashSetvBitSetTest.class
+│                           ├── IntegerRangeTest.class
+│                           ├── JavaVersionTest.class
+│                           ├── LocaleUtilsTest.class
+│                           ├── LongRangeTest.class
+│                           ├── math
+│                           │   ├── FractionTest.class
+│                           │   ├── IEEE754rUtilsTest.class
+│                           │   └── NumberUtilsTest.class
+│                           ├── Month.class
+│                           ├── mutable
+│                           │   ├── MutableBooleanTest.class
+│                           │   ├── MutableByteTest.class
+│                           │   ├── MutableDoubleTest.class
+│                           │   ├── MutableFloatTest.class
+│                           │   ├── MutableIntTest.class
+│                           │   ├── MutableLongTest.class
+│                           │   ├── MutableObjectTest.class
+│                           │   ├── MutableShortTest.class
+│                           │   └── PrintAtomicVsMutable.class
+│                           ├── NotImplementedExceptionTest.class
+│                           ├── ObjectUtilsTest$CharSequenceComparator.class
+│                           ├── ObjectUtilsTest$CloneableString.class
+│                           ├── ObjectUtilsTest$NonComparableCharSequence.class
+│                           ├── ObjectUtilsTest$UncloneableString.class
+│                           ├── ObjectUtilsTest.class
+│                           ├── RandomStringUtilsTest$1.class
+│                           ├── RandomStringUtilsTest.class
+│                           ├── RandomUtilsTest.class
+│                           ├── RangeTest$AbstractComparable.class
+│                           ├── RangeTest$DerivedComparableA.class
+│                           ├── RangeTest$DerivedComparableB.class
+│                           ├── RangeTest.class
+│                           ├── reflect
+│                           │   ├── AAAClass$BBBClass.class
+│                           │   ├── AAAClass.class
+│                           │   ├── AAClass$BBClass.class
+│                           │   ├── AAClass.class
+│                           │   ├── AClass$AInterface.class
+│                           │   ├── AClass$BClass.class
+│                           │   ├── AClass$CClass.class
+│                           │   ├── AClass$DClass.class
+│                           │   ├── AClass$EClass.class
+│                           │   ├── AClass$FClass.class
+│                           │   ├── AClass$GClass.class
+│                           │   ├── AClass.class
+│                           │   ├── ConstructorUtilsTest$BaseClass.class
+│                           │   ├── ConstructorUtilsTest$PrivateClass$PublicInnerClass.class
+│                           │   ├── ConstructorUtilsTest$PrivateClass.class
+│                           │   ├── ConstructorUtilsTest$SubClass.class
+│                           │   ├── ConstructorUtilsTest$TestBean.class
+│                           │   ├── ConstructorUtilsTest.class
+│                           │   ├── FieldUtilsTest.class
+│                           │   ├── InheritanceUtilsTest.class
+│                           │   ├── Lang1703Test.class
+│                           │   ├── MethodUtilsTest$AbstractGetMatchingMethod.class
+│                           │   ├── MethodUtilsTest$ChildInterface.class
+│                           │   ├── MethodUtilsTest$ChildObject.class
+│                           │   ├── MethodUtilsTest$GetMatchingMethodClass.class
+│                           │   ├── MethodUtilsTest$GetMatchingMethodImpl.class
+│                           │   ├── MethodUtilsTest$GrandParentObject.class
+│                           │   ├── MethodUtilsTest$InheritanceBean.class
+│                           │   ├── MethodUtilsTest$MethodDescriptor.class
+│                           │   ├── MethodUtilsTest$ParentObject.class
+│                           │   ├── MethodUtilsTest$PrivateInterface.class
+│                           │   ├── MethodUtilsTest$TestBean.class
+│                           │   ├── MethodUtilsTest$TestBeanWithInterfaces.class
+│                           │   ├── MethodUtilsTest$TestMutable.class
+│                           │   ├── MethodUtilsTest.class
+│                           │   ├── Test1.class
+│                           │   ├── testbed
+│                           │   │   ├── Ambig.class
+│                           │   │   ├── Annotated.class
+│                           │   │   ├── AnotherChild.class
+│                           │   │   ├── AnotherParent.class
+│                           │   │   ├── Bar.class
+│                           │   │   ├── Foo.class
+│                           │   │   ├── GenericConsumer.class
+│                           │   │   ├── GenericParent.class
+│                           │   │   ├── GenericTypeHolder.class
+│                           │   │   ├── Grandchild.class
+│                           │   │   ├── Parent.class
+│                           │   │   ├── PrivatelyShadowedChild.class
+│                           │   │   ├── PublicChild.class
+│                           │   │   ├── PubliclyShadowedChild.class
+│                           │   │   ├── StaticContainerChild.class
+│                           │   │   ├── StaticContainer.class
+│                           │   │   └── StringParameterizedChild.class
+│                           │   ├── TypeLiteralTest$10.class
+│                           │   ├── TypeLiteralTest$11.class
+│                           │   ├── TypeLiteralTest$12.class
+│                           │   ├── TypeLiteralTest$2.class
+│                           │   ├── TypeLiteralTest$3.class
+│                           │   ├── TypeLiteralTest$4.class
+│                           │   ├── TypeLiteralTest$5.class
+│                           │   ├── TypeLiteralTest$6.class
+│                           │   ├── TypeLiteralTest$7.class
+│                           │   ├── TypeLiteralTest$8.class
+│                           │   ├── TypeLiteralTest$9.class
+│                           │   ├── TypeLiteralTest.class
+│                           │   ├── TypeUtilsTest$And.class
+│                           │   ├── TypeUtilsTest$ClassWithSuperClassWithGenericType.class
+│                           │   ├── TypeUtilsTest$MyInnerClass.class
+│                           │   ├── TypeUtilsTest$Other.class
+│                           │   ├── TypeUtilsTest$Tester.class
+│                           │   ├── TypeUtilsTest$That.class
+│                           │   ├── TypeUtilsTest$The.class
+│                           │   ├── TypeUtilsTest$Thing.class
+│                           │   ├── TypeUtilsTest$This.class
+│                           │   └── TypeUtilsTest.class
+│                           ├── RegExUtilsTest.class
+│                           ├── SerializationUtilsTest$1.class
+│                           ├── SerializationUtilsTest.class
+│                           ├── stream
+│                           │   ├── FailableStreamTest.class
+│                           │   ├── IntStreamsTest.class
+│                           │   ├── LangCollectorsTest$Fixture.class
+│                           │   ├── LangCollectorsTest.class
+│                           │   └── StreamsTest.class
+│                           ├── StreamsTest.class
+│                           ├── StringEscapeUtilsTest.class
+│                           ├── StringUtilsContainsTest.class
+│                           ├── StringUtilsEmptyBlankTest.class
+│                           ├── StringUtilsEqualsIndexOfTest$CustomCharSequence.class
+│                           ├── StringUtilsEqualsIndexOfTest.class
+│                           ├── StringUtilsIsMixedCaseTest.class
+│                           ├── StringUtilsIsTest.class
+│                           ├── StringUtilsStartsEndsWithTest.class
+│                           ├── StringUtilsSubstringTest.class
+│                           ├── StringUtilsTest$1.class
+│                           ├── StringUtilsTest.class
+│                           ├── StringUtilsTrimStripTest.class
+│                           ├── StringUtilsValueOfTest.class
+│                           ├── Supplementary.class
+│                           ├── SystemPropertiesTest.class
+│                           ├── SystemUtilsTest.class
+│                           ├── test
+│                           │   ├── NotVisibleExceptionFactory$NotVisibleException.class
+│                           │   └── NotVisibleExceptionFactory.class
+│                           ├── text
+│                           │   ├── CompositeFormatTest$1.class
+│                           │   ├── CompositeFormatTest$2.class
+│                           │   ├── CompositeFormatTest.class
+│                           │   ├── ExtendedMessageFormatTest$LowerCaseFormat.class
+│                           │   ├── ExtendedMessageFormatTest$LowerCaseFormatFactory.class
+│                           │   ├── ExtendedMessageFormatTest$OtherExtendedMessageFormat.class
+│                           │   ├── ExtendedMessageFormatTest$OverrideShortDateFormatFactory.class
+│                           │   ├── ExtendedMessageFormatTest$UpperCaseFormat.class
+│                           │   ├── ExtendedMessageFormatTest$UpperCaseFormatFactory.class
+│                           │   ├── ExtendedMessageFormatTest.class
+│                           │   ├── FormattableUtilsTest.class
+│                           │   ├── StrBuilderAppendInsertTest$10.class
+│                           │   ├── StrBuilderAppendInsertTest$11.class
+│                           │   ├── StrBuilderAppendInsertTest$12.class
+│                           │   ├── StrBuilderAppendInsertTest$1.class
+│                           │   ├── StrBuilderAppendInsertTest$2.class
+│                           │   ├── StrBuilderAppendInsertTest$3.class
+│                           │   ├── StrBuilderAppendInsertTest$4.class
+│                           │   ├── StrBuilderAppendInsertTest$5.class
+│                           │   ├── StrBuilderAppendInsertTest$6.class
+│                           │   ├── StrBuilderAppendInsertTest$7.class
+│                           │   ├── StrBuilderAppendInsertTest$8.class
+│                           │   ├── StrBuilderAppendInsertTest$9.class
+│                           │   ├── StrBuilderAppendInsertTest.class
+│                           │   ├── StrBuilderTest$1.class
+│                           │   ├── StrBuilderTest$MockReadable.class
+│                           │   ├── StrBuilderTest.class
+│                           │   ├── StrLookupTest.class
+│                           │   ├── StrMatcherTest.class
+│                           │   ├── StrSubstitutorTest$1.class
+│                           │   ├── StrSubstitutorTest.class
+│                           │   ├── StrTokenizerTest$1.class
+│                           │   ├── StrTokenizerTest$2.class
+│                           │   ├── StrTokenizerTest$3.class
+│                           │   ├── StrTokenizerTest.class
+│                           │   ├── translate
+│                           │   │   ├── EntityArraysTest.class
+│                           │   │   ├── LookupTranslatorTest.class
+│                           │   │   ├── NumericEntityEscaperTest.class
+│                           │   │   ├── NumericEntityUnescaperTest.class
+│                           │   │   ├── OctalUnescaperTest.class
+│                           │   │   ├── UnicodeEscaperTest.class
+│                           │   │   ├── UnicodeUnescaperTest.class
+│                           │   │   └── UnicodeUnpairedSurrogateRemoverTest.class
+│                           │   └── WordUtilsTest.class
+│                           ├── ThreadUtilsTest$TestThread.class
+│                           ├── ThreadUtilsTest.class
+│                           ├── time
+│                           │   ├── CalendarUtilsTest.class
+│                           │   ├── DateFormatUtilsTest.class
+│                           │   ├── DateUtilsFragmentTest.class
+│                           │   ├── DateUtilsRoundingTest.class
+│                           │   ├── DateUtilsTest.class
+│                           │   ├── DurationFormatUtilsTest.class
+│                           │   ├── DurationUtilsTest.class
+│                           │   ├── FastDateFormat_PrinterTest.class
+│                           │   ├── FastDateFormatTest$1.class
+│                           │   ├── FastDateFormatTest.class
+│                           │   ├── FastDateParser_MoreOrLessTest.class
+│                           │   ├── FastDateParserSDFTest.class
+│                           │   ├── FastDateParserTest$Expected1806.class
+│                           │   ├── FastDateParserTest.class
+│                           │   ├── FastDateParser_TimeZoneStrategyTest.class
+│                           │   ├── FastDatePrinterTest$Expected1806.class
+│                           │   ├── FastDatePrinterTest.class
+│                           │   ├── FastDatePrinterTimeZonesTest.class
+│                           │   ├── FastTimeZoneTest.class
+│                           │   ├── GmtTimeZoneTest.class
+│                           │   ├── Java15BugFastDateParserTest.class
+│                           │   ├── StopWatchTest.class
+│                           │   └── WeekYearTest.class
+│                           ├── TooMany.class
+│                           ├── Traffic2.class
+│                           ├── Traffic.class
+│                           ├── tuple
+│                           │   ├── ImmutablePairTest.class
+│                           │   ├── ImmutableTripleTest.class
+│                           │   ├── MutablePairTest.class
+│                           │   ├── MutableTripleTest.class
+│                           │   ├── PairTest.class
+│                           │   └── TripleTest.class
+│                           ├── util
+│                           │   └── FluentBitSetTest.class
+│                           ├── ValidateTest$ExclusiveBetween$WithComparable$WithMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithComparable$WithoutMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithComparable.class
+│                           ├── ValidateTest$ExclusiveBetween$WithDouble$WithMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithDouble$WithoutMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithDouble.class
+│                           ├── ValidateTest$ExclusiveBetween$WithLong$WithMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithLong$WithoutMessage.class
+│                           ├── ValidateTest$ExclusiveBetween$WithLong.class
+│                           ├── ValidateTest$ExclusiveBetween.class
+│                           ├── ValidateTest$Finite$WithMessage.class
+│                           ├── ValidateTest$Finite$WithoutMessage.class
+│                           ├── ValidateTest$Finite.class
+│                           ├── ValidateTest$InclusiveBetween$WithComparable$WithMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithComparable$WithoutMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithComparable.class
+│                           ├── ValidateTest$InclusiveBetween$WithDouble$WithMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithDouble$WithoutMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithDouble.class
+│                           ├── ValidateTest$InclusiveBetween$WithLong$WithMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithLong$WithoutMessage.class
+│                           ├── ValidateTest$InclusiveBetween$WithLong.class
+│                           ├── ValidateTest$InclusiveBetween.class
+│                           ├── ValidateTest$IsAssignable$WithMessage.class
+│                           ├── ValidateTest$IsAssignable$WithoutMessage.class
+│                           ├── ValidateTest$IsAssignable.class
+│                           ├── ValidateTest$IsInstanceOf$WithMessage.class
+│                           ├── ValidateTest$IsInstanceOf$WithMessageTemplate.class
+│                           ├── ValidateTest$IsInstanceOf$WithoutMessage.class
+│                           ├── ValidateTest$IsInstanceOf.class
+│                           ├── ValidateTest$IsTrue$WithDoubleTemplate.class
+│                           ├── ValidateTest$IsTrue$WithLongTemplate.class
+│                           ├── ValidateTest$IsTrue$WithMessage.class
+│                           ├── ValidateTest$IsTrue$WithObjectTemplate.class
+│                           ├── ValidateTest$IsTrue$WithoutMessage.class
+│                           ├── ValidateTest$IsTrue.class
+│                           ├── ValidateTest$MatchesPattern$WithMessage.class
+│                           ├── ValidateTest$MatchesPattern$WithoutMessage.class
+│                           ├── ValidateTest$MatchesPattern.class
+│                           ├── ValidateTest$NoNullElements$WithArray$WithMessage.class
+│                           ├── ValidateTest$NoNullElements$WithArray$WithoutMessage.class
+│                           ├── ValidateTest$NoNullElements$WithArray.class
+│                           ├── ValidateTest$NoNullElements$WithCollection$WithMessage.class
+│                           ├── ValidateTest$NoNullElements$WithCollection$WithoutMessage.class
+│                           ├── ValidateTest$NoNullElements$WithCollection.class
+│                           ├── ValidateTest$NoNullElements.class
+│                           ├── ValidateTest$NotBlank$WithMessage.class
+│                           ├── ValidateTest$NotBlank$WithoutMessage.class
+│                           ├── ValidateTest$NotBlank.class
+│                           ├── ValidateTest$NotEmpty$WithArray$WithMessage.class
+│                           ├── ValidateTest$NotEmpty$WithArray$WithoutMessage.class
+│                           ├── ValidateTest$NotEmpty$WithArray.class
+│                           ├── ValidateTest$NotEmpty$WithCharSequence$WithMessage.class
+│                           ├── ValidateTest$NotEmpty$WithCharSequence$WithoutMessage.class
+│                           ├── ValidateTest$NotEmpty$WithCharSequence.class
+│                           ├── ValidateTest$NotEmpty$WithCollection$WithMessage.class
+│                           ├── ValidateTest$NotEmpty$WithCollection$WithoutMessage.class
+│                           ├── ValidateTest$NotEmpty$WithCollection.class
+│                           ├── ValidateTest$NotEmpty$WithMap$WithMessage.class
+│                           ├── ValidateTest$NotEmpty$WithMap$WithoutMessage.class
+│                           ├── ValidateTest$NotEmpty$WithMap.class
+│                           ├── ValidateTest$NotEmpty.class
+│                           ├── ValidateTest$NotNaN$WithMessage.class
+│                           ├── ValidateTest$NotNaN$WithoutMessage.class
+│                           ├── ValidateTest$NotNaN.class
+│                           ├── ValidateTest$NotNull$WithMessage.class
+│                           ├── ValidateTest$NotNull$WithoutMessage.class
+│                           ├── ValidateTest$NotNull.class
+│                           ├── ValidateTest$UtilClassConventions.class
+│                           ├── ValidateTest$ValidIndex$WithArray$WithMessage.class
+│                           ├── ValidateTest$ValidIndex$WithArray$WithoutMessage.class
+│                           ├── ValidateTest$ValidIndex$WithArray.class
+│                           ├── ValidateTest$ValidIndex$WithCharSequence$WithMessage.class
+│                           ├── ValidateTest$ValidIndex$WithCharSequence$WithoutMessage.class
+│                           ├── ValidateTest$ValidIndex$WithCharSequence.class
+│                           ├── ValidateTest$ValidIndex$WithCollection$WithMessage.class
+│                           ├── ValidateTest$ValidIndex$WithCollection$WithoutMessage.class
+│                           ├── ValidateTest$ValidIndex$WithCollection.class
+│                           ├── ValidateTest$ValidIndex.class
+│                           ├── ValidateTest$ValidState$WithoutMessage.class
+│                           ├── ValidateTest$ValidState$WitMessage.class
+│                           ├── ValidateTest$ValidState.class
+│                           └── ValidateTest.class
+├── junkfunctoins.txt
+├── libs
+│   ├── libopencv_java320.dylib
+│   ├── libopencv_java320.so
+│   └── opencv_java320.dll
+├── photo_editor
+│   ├── pom.xml
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   ├── com
+│   │       │   │   └── photoeditor
+│   │       │   │       ├── BWCartoonEffect.java
+│   │       │   │       ├── CardObject.java
+│   │       │   │       ├── CartoonEffect.java
+│   │       │   │       ├── ColorInverter.java
+│   │       │   │       ├── currentConfig.json
+│   │       │   │       ├── FilmBlurWithNoise.java
+│   │       │   │       ├── FilterButton.java
+│   │       │   │       ├── GaussianBlurGUI.java
+│   │       │   │       ├── GaussianBlur.java
+│   │       │   │       ├── GrayscaleConverter.java
+│   │       │   │       ├── ImageFlipper.java
+│   │       │   │       ├── ImageLoader.java
+│   │       │   │       ├── Line.java
+│   │       │   │       ├── MouseHandler.java
+│   │       │   │       ├── PerlinNoiseFilter.java
+│   │       │   │       ├── PerlinNoiseGUI.java
+│   │       │   │       ├── PhotoEditorGUI.java
+│   │       │   │       └── systemworking directory
+│   │       │   │           └── junk.txt
+│   │       │   └── org
+│   │       │       └── openjfx
+│   │       │           ├── App.java
+│   │       │           └── SystemInfo.java
+│   │       └── resources
+│   │           ├── icon
+│   │           │   ├── broom.png
+│   │           │   ├── filter2.png
+│   │           │   ├── filter.png
+│   │           │   ├── flipvvertical.png
+│   │           │   ├── folder.png
+│   │           │   ├── mirrorsidebar2.png
+│   │           │   ├── mirrorsidebar.png
+│   │           │   ├── paintbrush.png
+│   │           │   ├── paintbrushsidebar.png
+│   │           │   ├── paintbucketsidebar.png
+│   │           │   ├── reflect.png
+│   │           │   ├── saveicon.png
+│   │           │   ├── select_tool_box.png
+│   │           │   ├── select_tool_lasso.png
+│   │           │   ├── straightLine.png
+│   │           │   ├── text_feild.png
+│   │           │   └── undo_topbar.png
+│   │           ├── opencv_java320
+│   │           │   ├── libopencv_java320.dylib
+│   │           │   ├── libopencv_java320.so
+│   │           │   ├── opencv-320.jar
+│   │           │   └── opencv_java320.dll
+│   │           └── TestImages
+│   │               ├── ff9.jpg
+│   │               └── fullsized.jpg
+│   └── target
+│       ├── classes
+│       │   ├── com
+│       │   │   └── photoeditor
+│       │   │       ├── BWCartoonEffect$1.class
+│       │   │       ├── BWCartoonEffect$2.class
+│       │   │       ├── BWCartoonEffect$3.class
+│       │   │       ├── BWCartoonEffect.class
+│       │   │       ├── CardObject.class
+│       │   │       ├── CartoonEffect$1.class
+│       │   │       ├── CartoonEffect$ApplyButtonListener.class
+│       │   │       ├── CartoonEffect$OpenMenuItemListener.class
+│       │   │       ├── CartoonEffect.class
+│       │   │       ├── ColorInverter$1.class
+│       │   │       ├── ColorInverter$ApplyButtonListener.class
+│       │   │       ├── ColorInverter$OpenMenuItemListener.class
+│       │   │       ├── ColorInverter.class
+│       │   │       ├── currentConfig.json
+│       │   │       ├── FilmBlurWithNoise$1.class
+│       │   │       ├── FilmBlurWithNoise$ApplyButtonListener.class
+│       │   │       ├── FilmBlurWithNoise$OpenMenuItemListener.class
+│       │   │       ├── FilmBlurWithNoise.class
+│       │   │       ├── FilterButton$1$1.class
+│       │   │       ├── FilterButton$1$2.class
+│       │   │       ├── FilterButton$1$3.class
+│       │   │       ├── FilterButton$1$4.class
+│       │   │       ├── FilterButton$1$5.class
+│       │   │       ├── FilterButton$1$6.class
+│       │   │       ├── FilterButton$1$7.class
+│       │   │       ├── FilterButton$1.class
+│       │   │       ├── FilterButton$2.class
+│       │   │       ├── FilterButton.class
+│       │   │       ├── GaussianBlur.class
+│       │   │       ├── GaussianBlurGUI$OpenMenuItemListener.class
+│       │   │       ├── GaussianBlurGUI.class
+│       │   │       ├── GrayscaleConverter$1.class
+│       │   │       ├── GrayscaleConverter$ApplyButtonListener.class
+│       │   │       ├── GrayscaleConverter$OpenMenuItemListener.class
+│       │   │       ├── GrayscaleConverter.class
+│       │   │       ├── ImageFlipper$1.class
+│       │   │       ├── ImageFlipper$2.class
+│       │   │       ├── ImageFlipper$3.class
+│       │   │       ├── ImageFlipper.class
+│       │   │       ├── ImageLoader.class
+│       │   │       ├── Line.class
+│       │   │       ├── MouseHandler.class
+│       │   │       ├── PerlinNoiseFilter.class
+│       │   │       ├── PerlinNoiseGUI$1.class
+│       │   │       ├── PerlinNoiseGUI$2.class
+│       │   │       ├── PerlinNoiseGUI.class
+│       │   │       ├── PhotoEditorGUI$10.class
+│       │   │       ├── PhotoEditorGUI$11.class
+│       │   │       ├── PhotoEditorGUI$12.class
+│       │   │       ├── PhotoEditorGUI$13.class
+│       │   │       ├── PhotoEditorGUI$14.class
+│       │   │       ├── PhotoEditorGUI$15.class
+│       │   │       ├── PhotoEditorGUI$16.class
+│       │   │       ├── PhotoEditorGUI$17.class
+│       │   │       ├── PhotoEditorGUI$18.class
+│       │   │       ├── PhotoEditorGUI$19.class
+│       │   │       ├── PhotoEditorGUI$1.class
+│       │   │       ├── PhotoEditorGUI$20.class
+│       │   │       ├── PhotoEditorGUI$21.class
+│       │   │       ├── PhotoEditorGUI$22.class
+│       │   │       ├── PhotoEditorGUI$23.class
+│       │   │       ├── PhotoEditorGUI$2.class
+│       │   │       ├── PhotoEditorGUI$3.class
+│       │   │       ├── PhotoEditorGUI$4.class
+│       │   │       ├── PhotoEditorGUI$5.class
+│       │   │       ├── PhotoEditorGUI$6.class
+│       │   │       ├── PhotoEditorGUI$7.class
+│       │   │       ├── PhotoEditorGUI$8.class
+│       │   │       ├── PhotoEditorGUI$9.class
+│       │   │       ├── PhotoEditorGUI$ColorPickerListener.class
+│       │   │       ├── PhotoEditorGUI$Line.class
+│       │   │       ├── PhotoEditorGUI$ToleranceSliderListener.class
+│       │   │       ├── PhotoEditorGUI.class
+│       │   │       └── systemworking directory
+│       │   │           └── junk.txt
+│       │   ├── icon
+│       │   │   ├── broom.png
+│       │   │   ├── filter2.png
+│       │   │   ├── filter.png
+│       │   │   ├── flipvvertical.png
+│       │   │   ├── folder.png
+│       │   │   ├── mirrorsidebar2.png
+│       │   │   ├── mirrorsidebar.png
+│       │   │   ├── paintbrush.png
+│       │   │   ├── paintbrushsidebar.png
+│       │   │   ├── paintbucketsidebar.png
+│       │   │   ├── reflect.png
+│       │   │   ├── saveicon.png
+│       │   │   ├── select_tool_box.png
+│       │   │   ├── select_tool_lasso.png
+│       │   │   ├── straightLine.png
+│       │   │   ├── text_feild.png
+│       │   │   └── undo_topbar.png
+│       │   ├── opencv_java320
+│       │   │   ├── libopencv_java320.dylib
+│       │   │   ├── libopencv_java320.so
+│       │   │   ├── opencv-320.jar
+│       │   │   └── opencv_java320.dll
+│       │   ├── org
+│       │   │   └── openjfx
+│       │   │       ├── App.class
+│       │   │       └── SystemInfo.class
+│       │   └── TestImages
+│       │       ├── ff9.jpg
+│       │       └── fullsized.jpg
+│       └── test-classes
+├── README.md
+└── trash
+    └── junk.txt
+        ├── BWCartoonEffectApp.java
+        ├── CartoonEffectAppv1.java
+        ├── CartoonifyApp.java
+        ├── CartoonizerApp.java
+        ├── GaussianBlurWithNoise.java
+        ├── ImageFilterGUI.java
+        └── weirdbloodplatter.java
    * 
    * 
    * 
@@ -607,18 +1143,28 @@ public class PhotoEditorGUI extends JFrame {
     JMenuItem saveMenuItem = new JMenuItem("Save As");
 
     // If save menu item is clicked
-    saveMenuItem.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            // Your save logic here
-            if (image != null) {
+    saveMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+          // Your save logic here
+          if (image != null) {
               JFileChooser fileChooser = new JFileChooser();
               int result = fileChooser.showSaveDialog(PhotoEditorGUI.this);
-
+  
               if (result == JFileChooser.APPROVE_OPTION) {
-                File outputFile = fileChooser.getSelectedFile();
-
+                  File outputFile = fileChooser.getSelectedFile();
+  
+                  // Check if the file already exists
+                  if (outputFile.exists()) {
+                      int overwriteResult = JOptionPane.showConfirmDialog(PhotoEditorGUI.this,
+                              "File already exists. Do you want to overwrite it?",
+                              "Confirm Overwrite", JOptionPane.YES_NO_OPTION);
+                      if (overwriteResult != JOptionPane.YES_OPTION) {
+                          // User chose not to overwrite, return without saving
+                          return;
+                      }
+                  }
+  
                 // Create a new BufferedImage to draw the lines on
                 BufferedImage combinedImage = new BufferedImage(
                     image.getWidth(),
