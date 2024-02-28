@@ -99,6 +99,8 @@ public class PhotoEditorGUI extends JFrame {
 
     setImage(GeneratedImages.get(name).getAssociatedImag());
     drawingPanel.repaint();
+    updateImageinfo(this.image);
+
 
   }
 
