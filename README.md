@@ -25,6 +25,7 @@ Run:PhotoEditorGUI.java
      Shortcut: Ctrl + Arrow UP(⬆️)
    - Apply Filter: Apply a filter to the image.
      Shortcut: Ctrl + F
+     
     Features:
               Grayscale Conversion (Ctrl + G): Convert an image to grayscale.
               Inverted Colors (Ctrl + I): View the image with inverted colors.
