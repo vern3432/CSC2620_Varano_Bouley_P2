@@ -14,25 +14,25 @@ Run:PhotoEditorGUI.java
    - Image Selection: Choose from the list of loaded images.
 
 3. Side Bar:
-   - Paint: Activate the paintbrush tool.
-     Shortcut: Ctrl + B
-   - Fill: Activate the fill tool.
-     Shortcut: Ctrl + Z
-   - Text: Add text to the image.
-   - Reflect Horizontally: Flip the image horizontally.
-     	 Shortcut: Ctrl + Arrow Left(⬅️)
-   - Reflect Vertically: Flip the image vertically.
-     Shortcut: Ctrl + Arrow UP(⬆️)
-   - Apply Filter: Apply a filter to the image.
-     Shortcut: Ctrl + F
+   - Paint: Activate the paintbrush tool.<br>
+     Shortcut: Ctrl + B<br>
+   - Fill: Activate the fill tool.<br>
+     Shortcut: Ctrl + Z<br>
+   - Text: Add text to the image.<br>
+   - Reflect Horizontally: Flip the image horizontally.<br>
+     	 Shortcut: Ctrl + Arrow Left(⬅️)<br>
+   - Reflect Vertically: Flip the image vertically.<br>
+     Shortcut: Ctrl + Arrow UP(⬆️)<br>
+   - Apply Filter: Apply a filter to the image.<br>
+     Shortcut: Ctrl + F<br>
      
-    Features:
-              Grayscale Conversion (Ctrl + G): Convert an image to grayscale.<br>
-              Inverted Colors (Ctrl + I): View the image with inverted colors.<br>
-              Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.<br>
-              Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.<br>
-              Cartoonify (Ctrl + K): Generate a cartoonified version of the image.<br>
-              Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)<br>
+    Features: <br>
+                 Grayscale Conversion (Ctrl + G): Convert an image to grayscale.<br>
+                 Inverted Colors (Ctrl + I): View the image with inverted colors.<br>
+                 Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.<br>
+                 Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.<br>
+                 Cartoonify (Ctrl + K): Generate a cartoonified version of the image.<br>
+                 Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)<br>
    
    - Select Color: Choose the drawing color.
 
