@@ -904,6 +904,22 @@ public class PhotoEditorGUI extends JFrame {
                 paintButton.doClick();
               }
             });
+            Action paintAction = new AbstractAction() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                sidebarStatus = "Paint"; // Set sidebarStatus when button is clicked
+                toolStatusLabel.setText("Selected Tool: " + sidebarStatus); // Update toolStatusLabel
+                fillBucketMode = false;
+                drawStraightLineMode = false;
+              }
+          };
+
+          InputMap inputMap = paintButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+          ActionMap actionMap2 = paintButton.getActionMap();
+
+          inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK), "buttonAction");
+          actionMap2.put("buttonAction", paintAction);
+  
     fillButton = createBucketButton("paintbucketsidebar.png", "Fill");
     fillButton.addMouseListener(
         new MouseAdapter() {
@@ -933,11 +949,41 @@ public class PhotoEditorGUI extends JFrame {
           }
         });
 
-    fillButton
-        .getInputMap()
-        .put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK),
-            "buttonAction");
+
+        // Define an action
+        Action fillAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            // Your mouseClicked action here
+            BufferedImage combinedImage = new BufferedImage(
+                image.getWidth(),
+                image.getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = combinedImage.createGraphics();
+            g2d.drawImage(image, 0, 0, null);
+
+            // Draw the lines on the combined image
+            g2d.setColor(selectedColor);
+            for (Line line : lines) {
+              g2d.drawLine(line.start.x, line.start.y, line.end.x, line.end.y);
+            }
+            image = combinedImage;
+            g2d.dispose();
+
+            // sidebarStatus = toolTipText; // Set sidebarStatus when button is clicked
+            // toolStatusLabel.setText("Selected Tool: " + toolTipText); // Update
+            // toolStatusLabel
+            fillBucketMode = true;
+            drawStraightLineMode = false;
+            }
+        };
+
+        ActionMap actionMap = fillButton.getActionMap();
+
+
+        // Map the action to the desired key stroke
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK), "fillAction");
+        actionMap.put("fillAction", fillAction);
 
     fillButton
         .getActionMap()
@@ -1023,6 +1069,11 @@ public class PhotoEditorGUI extends JFrame {
           }
         });
 
+        RefelectButton.getInputMap()
+        .put(
+            KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.CTRL_DOWN_MASK),
+            "buttonAction");
+
     // If flip button is clicked
     FlipButton.addActionListener(
         new ActionListener() {
@@ -1038,6 +1089,11 @@ public class PhotoEditorGUI extends JFrame {
             setImage(flipped);
           }
         });
+
+        FlipButton.getInputMap()
+        .put(
+            KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.CTRL_DOWN_MASK),
+            "buttonAction");
 
     // Add the buttons to the top panel
     topPanel.add(undoButton);
