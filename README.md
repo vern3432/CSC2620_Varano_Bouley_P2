@@ -27,12 +27,12 @@ Run:PhotoEditorGUI.java
      Shortcut: Ctrl + F
      
     Features:
-              Grayscale Conversion (Ctrl + G): Convert an image to grayscale.
-              Inverted Colors (Ctrl + I): View the image with inverted colors.
-              Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.
-              Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.
-              Cartoonify (Ctrl + K): Generate a cartoonified version of the image.
-              Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)
+              Grayscale Conversion (Ctrl + G): Convert an image to grayscale.<br>
+              Inverted Colors (Ctrl + I): View the image with inverted colors.<br>
+              Blur with Gaussian Noise (Ctrl + Q): Apply blur effect with Gaussian noise.<br>
+              Static with Perlin Noise (Ctrl + L): Add static to the image using Perlin noise.<br>
+              Cartoonify (Ctrl + K): Generate a cartoonified version of the image.<br>
+              Save as Text (Ctrl + T): Save the image as ASCII art.(Saves as Text File)<br>
    
    - Select Color: Choose the drawing color.
 
