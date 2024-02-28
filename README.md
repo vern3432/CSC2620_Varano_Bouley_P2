@@ -15,16 +15,16 @@ Run:PhotoEditorGUI.java
 
 3. Side Bar:
    - Paint: Activate the paintbrush tool.
-      Shortcut: Ctrl + B
+     Shortcut: Ctrl + B
    - Fill: Activate the fill tool.
-      Shortcut: Ctrl + Z
+     Shortcut: Ctrl + Z
    - Text: Add text to the image.
    - Reflect Horizontally: Flip the image horizontally.
-         Shortcut: Ctrl + Arrow Left(⬅️)
+     Shortcut: Ctrl + Arrow Left(⬅️)
    - Reflect Vertically: Flip the image vertically.
-         Shortcut: Ctrl + Arrow UP(⬆️)
+     Shortcut: Ctrl + Arrow UP(⬆️)
    - Apply Filter: Apply a filter to the image.
-         Shortcut: Ctrl + F
+     Shortcut: Ctrl + F
     Features:
               Grayscale Conversion (Ctrl + G): Convert an image to grayscale.
               Inverted Colors (Ctrl + I): View the image with inverted colors.
