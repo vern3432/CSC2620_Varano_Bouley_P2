@@ -27,6 +27,7 @@ Run:PhotoEditorGUI.java
      Shortcut: Ctrl + F<br>
      
     Features: <br>
+    
                  Grayscale Conversion (Ctrl + G): Convert an image to grayscale.<br>
                  
                  Inverted Colors (Ctrl + I): View the image with inverted colors.<br>
