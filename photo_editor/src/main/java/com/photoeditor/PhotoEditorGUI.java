@@ -256,6 +256,12 @@ public class PhotoEditorGUI extends JFrame {
     return iconImage;
   }
 
+  
+  /** 
+   * @param value
+   * @param places
+   * @return double
+   */
   /*
    * Round numbers
    */
@@ -269,6 +275,10 @@ public class PhotoEditorGUI extends JFrame {
     return (double) tmp / factor;
   }
 
+  
+  /** 
+   * @param updated
+   */
   private void updateImageinfo(BufferedImage updated) {
     int width = updated.getWidth();
     int height = updated.getHeight();
@@ -1006,6 +1016,10 @@ public class PhotoEditorGUI extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param point
+   */
   private void fillBucket(Point point) {
     if (image != null) {
       int targetColor = image.getRGB(point.x, point.y);
@@ -1016,6 +1030,13 @@ public class PhotoEditorGUI extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param x
+   * @param y
+   * @param targetColor
+   * @param replacementColor
+   */
   private void floodFill(int x, int y, int targetColor, int replacementColor) {
     if (x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
       return;
@@ -1030,6 +1051,13 @@ public class PhotoEditorGUI extends JFrame {
     floodFill(x, y - 1, targetColor, replacementColor);
   }
 
+  
+  /** 
+   * @param color1
+   * @param color2
+   * @param tolerance
+   * @return boolean
+   */
   private boolean isWithinTolerance(int color1, int color2, int tolerance) {
     int red1 = (color1 >> 16) & 0xFF;
     int green1 = (color1 >> 8) & 0xFF;
@@ -1060,6 +1088,12 @@ public class PhotoEditorGUI extends JFrame {
     }
   }
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @return JButton
+   */
   private JButton createButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -1095,6 +1129,12 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @return JButton
+   */
   private JButton createButton2(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -1132,6 +1172,12 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @return JButton
+   */
   private JButton createPaintButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -1173,6 +1219,12 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @return JButton
+   */
   private JButton createBucketButton(String iconPath, String toolTipText) {
     BufferedImage image2 = loadImage(iconPath);
     System.out.println(iconPath);
@@ -1344,6 +1396,13 @@ public class PhotoEditorGUI extends JFrame {
   // Number of images loaded
   int imageCount = 0;
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @param type
+   * @return JButton
+   */
   // Create the buttons
   private JButton createLoadButton(
       String iconPath,
@@ -1407,6 +1466,13 @@ public class PhotoEditorGUI extends JFrame {
     return button;
   }
 
+  
+  /** 
+   * @param iconPath
+   * @param toolTipText
+   * @param type
+   * @return JButton
+   */
   private JButton createSaveButton(
       String iconPath,
       String toolTipText,
@@ -1502,6 +1568,10 @@ public class PhotoEditorGUI extends JFrame {
     updateToleranceSliderVisibility();
   }
 
+  
+  /** 
+   * @param args
+   */
   public static void main(String[] args) {
     System.out.println("Testing Space");
 

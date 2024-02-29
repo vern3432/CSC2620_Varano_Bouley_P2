@@ -29,6 +29,12 @@ public class ImageLoader {
                 .allMatch(Objects::isNull);
     }
 
+    
+    /** 
+     * @param field
+     * @param target
+     * @return Object
+     */
     public static Object getFieldValue(Field field, Object target) {
         try {
             return field.get(target);
@@ -36,6 +42,11 @@ public class ImageLoader {
             throw new RuntimeException(e);
         }
     }
+
+    
+    /** 
+     * @param args
+     */
 
     public static void main(String[] args) {
 
@@ -69,6 +80,11 @@ public class ImageLoader {
         // Display the image in a window
     }
 
+    
+    /** 
+     * @param filename
+     * @return BufferedImage
+     */
     public static BufferedImage loadImage(String filename) {
         BufferedImage image = null;
         try {
@@ -79,6 +95,10 @@ public class ImageLoader {
         return image;
     }
 
+    
+    /** 
+     * @param image
+     */
     public static void displayImage(BufferedImage image) {
         JFrame frame = new JFrame();
         JLabel label = new JLabel(new ImageIcon(image));

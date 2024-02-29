@@ -103,6 +103,10 @@ public class ColorInverter extends JFrame {
     return invertedImage;
   }
 
+  
+  /** 
+   * @param args
+   */
   public static void main(String[] args) {
     SwingUtilities.invokeLater(
       new Runnable() {

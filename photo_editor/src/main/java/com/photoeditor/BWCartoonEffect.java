@@ -132,11 +132,19 @@ public class BWCartoonEffect extends JFrame {
         return outputImage;
     }
 
+    
+    /** 
+     * @param image
+     */
     private void displayImage(BufferedImage image) {
         ImageIcon icon = new ImageIcon(image);
         imageLabel.setIcon(icon);
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

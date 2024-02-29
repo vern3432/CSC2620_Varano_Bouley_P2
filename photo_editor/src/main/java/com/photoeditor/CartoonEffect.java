@@ -137,6 +137,10 @@ public class CartoonEffect extends JFrame {
     return cartoonImage;
   }
 
+  
+  /** 
+   * @param args
+   */
   public static void main(String[] args) {
     SwingUtilities.invokeLater(
       new Runnable() {

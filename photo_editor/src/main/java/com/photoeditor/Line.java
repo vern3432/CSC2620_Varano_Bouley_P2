@@ -29,10 +29,18 @@ public class Line {
         g.drawLine(0, 0, 0, 0);
     }
 
+    
+    /** 
+     * @return Point
+     */
     public Point getStartPoint() {
         return start;
     }
 
+    
+    /** 
+     * @return Point
+     */
     public Point getEndPoint() {
         return end;
     }

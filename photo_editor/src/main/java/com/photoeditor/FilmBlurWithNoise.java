@@ -123,10 +123,21 @@ public class FilmBlurWithNoise extends JFrame {
         return blurredImage;
     }
 
+    
+    /** 
+     * @param value
+     * @return int
+     */
     private int clamp(int value) {
         return Math.min(Math.max(value, 0), 255);
     }
 
+    
+    /** 
+     * @param size
+     * @param sigma
+     * @return float[][]
+     */
     private float[][] generateFilmKernel(int size, float sigma) {
         float[][] kernel = new float[size][size];
         float constant = 1 / (2 * (float) Math.PI * sigma * sigma);
@@ -150,6 +161,12 @@ public class FilmBlurWithNoise extends JFrame {
         return kernel;
     }
 
+    
+    /** 
+     * @param image
+     * @param kernel
+     * @return BufferedImage
+     */
     private BufferedImage applyConvolution(BufferedImage image, float[][] kernel) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -189,6 +206,10 @@ public class FilmBlurWithNoise extends JFrame {
         return result;
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(
                 new Runnable() {

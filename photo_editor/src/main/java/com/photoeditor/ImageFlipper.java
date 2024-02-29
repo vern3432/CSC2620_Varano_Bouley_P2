@@ -84,6 +84,10 @@ public class ImageFlipper extends JFrame {
         return flippedImage;
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

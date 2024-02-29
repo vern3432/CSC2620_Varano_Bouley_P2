@@ -17,6 +17,11 @@ public class PerlinNoiseFilter {
         this.threshold = threshold;
     }
 
+    
+    /** 
+     * @param inputImage
+     * @return BufferedImage
+     */
     public BufferedImage applyFilter(BufferedImage inputImage) {
         int width = inputImage.getWidth();
         int height = inputImage.getHeight();
@@ -45,10 +50,20 @@ public class PerlinNoiseFilter {
         return staticedImage;
     }
 
+    
+    /** 
+     * @param threshold
+     */
     public void setThreshold(int threshold) {
         this.threshold = threshold;
     }
 
+    
+    /** 
+     * @param colorValue
+     * @param noise
+     * @return int
+     */
     private int applyThreshold(int colorValue, int noise) {
         int newValue = colorValue + noise;
         if (newValue < 0) {

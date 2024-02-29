@@ -24,6 +24,12 @@ public static BufferedImage apply(BufferedImage image, int radius, int threshold
     return applyGaussianBlur(blurredImage, radius);
 }
 
+
+/** 
+ * @param image
+ * @param radius
+ * @return BufferedImage
+ */
 private static BufferedImage applyGaussianBlur(BufferedImage image, int radius) {
     int size = radius * 2 + 1;
     float[] matrix = new float[size * size];

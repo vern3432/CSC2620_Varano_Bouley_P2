@@ -98,6 +98,10 @@ public class GrayscaleConverter extends JFrame {
     return grayscaleImage;
   }
 
+  
+  /** 
+   * @param args
+   */
   public static void main(String[] args) {
     SwingUtilities.invokeLater(
         new Runnable() {

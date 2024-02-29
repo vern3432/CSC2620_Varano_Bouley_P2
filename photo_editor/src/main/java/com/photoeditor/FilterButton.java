@@ -190,6 +190,10 @@ public class FilterButton extends JButton {
 
     }
 
+    
+    /** 
+     * @param image
+     */
     public void saveAsciiArt(BufferedImage image) {
         String resolutionInput = JOptionPane.showInputDialog(null, "Enter resolution percentage (1-100):");
         if (resolutionInput != null) {
@@ -239,12 +243,23 @@ public class FilterButton extends JButton {
         }
     }
 
+    
+    /** 
+     * @param pixel
+     * @return int
+     */
     private int getBrightness(int pixel) {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = pixel & 0xff;
         return (red + green + blue) / 3;
     }
+
+    
+    /** 
+     * @param filename
+     * @return BufferedImage
+     */
 
     public BufferedImage loadImage(String filename) {
         BufferedImage iconImage = null;
@@ -264,11 +279,19 @@ public class FilterButton extends JButton {
 
     private static final String ASCIICHARS = "`^\",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         // FilterButton button = new FilterButton("folder.png", "ToolTipText", image);
     }
 
+    
+    /** 
+     * @param image
+     */
     public void setImage(BufferedImage image) {
         if (this.image == null) {
             this.image = image;
@@ -277,6 +300,10 @@ public class FilterButton extends JButton {
         }
     }
 
+    
+    /** 
+     * @return BufferedImage
+     */
     public BufferedImage getImage() {
         return image;
     }
